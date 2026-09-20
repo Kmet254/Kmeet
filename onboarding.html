@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Brings You Joy? - Kmeet</title>
+    
+    <!-- Google Fonts: Poppins & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121016;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            
+            /* Smooth page fade-in on load */
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Container Box */
+        .onboarding-container {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Top Bar & Progress Elements */
+        .top-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .back-btn {
+            color: #a09a9f;
+            font-size: 16px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: #ffffff;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .progress-step {
+            height: 4px;
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        .progress-step.completed,
+        .progress-step.active {
+            background-color: #e07a5f;
+        }
+
+        /* Typography Header */
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .onboarding-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: #fceee9;
+            margin-bottom: 10px;
+        }
+
+        .onboarding-header p {
+            font-size: 13px;
+            color: #a09a9f;
+            line-height: 1.5;
+            font-weight: 300;
+            padding: 0 10px;
+        }
+
+        /* Interests Form & Grid */
+        .interests-form {
+            width: 100%;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        /* Interactive Card Item */
+        .interest-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .interest-card input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .card-content {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .card-content i {
+            font-size: 22px;
+            color: #b5adb5;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .card-content span {
+            font-size: 12px;
+            color: #d6cfd5;
+            font-weight: 400;
+        }
+
+        .interest-card:hover .card-content {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Selected State */
+        .interest-card input[type="checkbox"]:checked + .card-content {
+            background-color: rgba(224, 122, 95, 0.15);
+            border-color: #e07a5f;
+        }
+
+        .interest-card input[type="checkbox"]:checked + .card-content i {
+            color: #e07a5f;
+            transform: scale(1.1);
+        }
+
+        .interest-card input[type="checkbox"]:checked + .card-content span {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* Submit Button */
+        .footer-action {
+            width: 100%;
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="onboarding-container">
+        
+        <!-- Top Bar with Back Button & Progress Bar -->
+        <div class="top-bar">
+            <a href="myweb.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            
+            <div class="progress-bar-container">
+                <div class="progress-step completed"></div>
+                <div class="progress-step active"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="onboarding-header">
+            <h1>What brings you joy?</h1>
+            <p>Select a few interests to help us curate your perfect matches. Choose up to 5.</p>
+        </div>
+
+        <!-- Interest Grid Form -->
+        <form id="interestsForm" class="interests-form">
+            <div class="interests-grid">
+                
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="music">
+                    <div class="card-content">
+                        <i class="fa-solid fa-headphones"></i>
+                        <span>Music</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="movies">
+                    <div class="card-content">
+                        <i class="fa-solid fa-film"></i>
+                        <span>Movies</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="travel">
+                    <div class="card-content">
+                        <i class="fa-solid fa-plane"></i>
+                        <span>Travel</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="fitness">
+                    <div class="card-content">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        <span>Fitness</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="cooking">
+                    <div class="card-content">
+                        <i class="fa-solid fa-utensils"></i>
+                        <span>Cooking</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="art">
+                    <div class="card-content">
+                        <i class="fa-solid fa-palette"></i>
+                        <span>Art</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="reading">
+                    <div class="card-content">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Reading</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="photography">
+                    <div class="card-content">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>Photography</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="gaming">
+                    <div class="card-content">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>Gaming</span>
+                    </div>
+                </label>
+
+                <label class="interest-card">
+                    <input type="checkbox" name="interests" value="nature">
+                    <div class="card-content">
+                        <i class="fa-solid fa-tree"></i>
+                        <span>Nature</span>
+                    </div>
+                </label>
+
+            </div>
+
+            <!-- Submit Button -->
+            <div class="footer-action">
+                <button type="submit" class="btn-continue">Continue</button>
+            </div>
+        </form>
+
+    </main>
+
+    <!-- Selection Logic & Navigation Script -->
+    <script>
+        const checkboxes = document.querySelectorAll('.interest-card input[type="checkbox"]');
+        const continueBtn = document.querySelector('.btn-continue');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const checkedCount = document.querySelectorAll('.interest-card input[type="checkbox"]:checked').length;
+                
+                // Max 5 selection limit
+                if (checkedCount > 5) {
+                    checkbox.checked = false;
+                    alert('You can select up to 5 interests.');
+                    return;
+                }
+
+                // Highlight button on selection
+                if (checkedCount > 0) {
+                    continueBtn.style.backgroundColor = '#e07a5f';
+                    continueBtn.style.cursor = 'pointer';
+                } else {
+                    continueBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                }
+            });
+        });
+
+        document.getElementById('interestsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const selectedInterests = Array.from(
+                document.querySelectorAll('.interest-card input[type="checkbox"]:checked')
+            ).map(cb => cb.value);
+
+            if (selectedInterests.length === 0) {
+                alert('Please select at least one interest to continue.');
+                return;
+            }
+
+            // Save selected choices to local storage
+            localStorage.setItem('userInterests', JSON.stringify(selectedInterests));
+            
+            // Proceed to the next step
+            window.location.href = 'photos-upload.html';
+        });
+    </script>
+
+</body>
+</html>

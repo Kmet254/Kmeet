@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Kmeet</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(img/bg34.jpg) no-repeat center center fixed;
+      background-size: cover;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .top-nav-bar {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #333;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .back-btn:hover {
+      background-color: #ffffff;
+      color: #e91e63;
+    }
+    .profile-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 600px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .profile-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 16px auto;
+      border: 4px solid #ffffff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    .profile-name {
+      margin: 0 0 4px 0;
+      font-size: 26px;
+      font-weight: 600;
+      color: #222;
+    }
+    .profile-location {
+      margin: 0 0 20px 0;
+      font-size: 15px;
+      color: #666;
+      font-weight: 500;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      text-align: left;
+      margin: 20px 0 10px 0;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 6px;
+    }
+    .profile-bio {
+      margin: 0 0 20px 0;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      text-align: left;
+    }
+    .interests-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .interest-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: #f0f2f5;
+      border: 1px solid #e4e6eb;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #444;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+    .interest-tag i {
+      color: #e91e63;
+    }
+    .loading-text {
+      color: #fff;
+      font-size: 16px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-nav-bar">
+    <a href="discover.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i> Back to Discover
+    </a>
+  </div>
+
+  <div id="profileContainer" class="loading-text">Loading profile...</div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
+      authDomain: "kmeet-database.firebaseapp.com",
+      projectId: "kmeet-database",
+      storageBucket: "kmeet-database.firebasestorage.app",
+      messagingSenderId: "123313610325",
+      appId: "1:123313610325:web:255c467996eff14d72bedc"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const interestIcons = {
+      music: "fa-headphones",
+      movies: "fa-film",
+      travel: "fa-plane",
+      fitness: "fa-dumbbell",
+      cooking: "fa-utensils",
+      art: "fa-palette",
+      reading: "fa-book-open",
+      photography: "fa-camera",
+      gaming: "fa-gamepad",
+      nature: "fa-tree"
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      let profileId = urlParams.get('id');
+
+      if (!profileId && user) {
+        profileId = user.uid;
+      }
+
+      if (!profileId) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const container = document.getElementById('profileContainer');
+
+      try {
+        const docRef = doc(db, "users", profileId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          renderProfile(docSnap.data());
+        } else if (user && profileId === user.uid) {
+          const defaultData = {
+            username: user.email ? user.email.split('@')[0] : 'Kmeet User',
+            age: 24,
+            location: 'Mombasa, Kenya',
+            bio: 'Excited to connect with new people and share good vibes!',
+            interests: ['music', 'travel', 'nature'],
+            avatar: user.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80'
+          };
+          await setDoc(docRef, defaultData, { merge: true });
+          renderProfile(defaultData);
+        } else {
+          container.innerHTML = `<p style="color: #fff;">Profile not found.</p>`;
+        }
+      } catch (err) {
+        container.innerHTML = `<p style="color: #fff;">Error loading profile data.</p>`;
+      }
+    });
+
+    function renderProfile(data) {
+      const container = document.getElementById('profileContainer');
+      const name = data.username || data.displayName || 'User';
+      const age = data.age ? `, ${data.age}` : '';
+      const location = data.location || 'Kenya';
+      const bio = data.bio || 'No bio provided yet.';
+      const avatar = data.avatar || data.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80';
+      const userInterests = data.interests || [];
+
+      let interestsHTML = '';
+      if (userInterests.length > 0) {
+        userInterests.forEach(interest => {
+          const icon = interestIcons[interest.toLowerCase()] || 'fa-heart';
+          interestsHTML += `
+            <span class="interest-tag">
+              <i class="fa-solid ${icon}"></i> ${interest}
+            </span>
+          `;
+        });
+      } else {
+        interestsHTML = '<p style="color: #777; font-size: 13px; text-align: left;">No interests selected yet.</p>';
+      }
+
+      container.className = "profile-card";
+      container.innerHTML = `
+        <img src="${avatar}" alt="${name}" class="profile-avatar">
+        <h2 class="profile-name">${name}${age}</h2>
+        <p class="profile-location"><i class="fa-solid fa-location-dot"></i> ${location}</p>
+
+        <div class="section-title"><i class="fa-solid fa-user"></i> About Me</div>
+        <p class="profile-bio">${bio}</p>
+
+        <div class="section-title"><i class="fa-solid fa-face-smile"></i> What Brings Me Joy</div>
+        <div class="interests-container">
+          ${interestsHTML}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
