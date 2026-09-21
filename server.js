@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const app = express();
 
-// Enable CORS for local cross-origin requests
+// Enable CORS for cross-origin requests
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
@@ -18,13 +18,13 @@ app.use(express.json());
 // Serve static files from the project root directory
 app.use(express.static(__dirname));
 
-// Serve chat.html on http://localhost:5000
+// Serve myweb.html as the root entry point (landing/registration page)
 app.get('/', (req, res) => {
-  const filePath = path.join(__dirname, 'chat.html');
+  const filePath = path.join(__dirname, 'myweb.html');
   res.sendFile(filePath, (err) => {
     if (err) {
       console.error('File Send Error:', err.message);
-      res.status(404).send('<h1>chat.html not found!</h1><p>Please make sure chat.html is in the same folder as server.js.</p>');
+      res.status(404).send('<h1>myweb.html not found!</h1><p>Please make sure myweb.html is in the same folder as server.js.</p>');
     }
   });
 });
@@ -53,7 +53,7 @@ const getOAuthToken = async (req, res, next) => {
   }
 };
 
-// Route to initiate STK Push
+// Route to initiate STK Push (triggered later in your payment flow)
 app.post('/api/stkpush', getOAuthToken, async (req, res) => {
   const { phone, amount } = req.body;
 
@@ -84,8 +84,8 @@ app.post('/api/stkpush', getOAuthToken, async (req, res) => {
     PartyB: process.env.MPESA_SHORTCODE,
     PhoneNumber: phone,
     CallBackURL: process.env.MPESA_CALLBACK_URL,
-    AccountReference: 'WebChatPayment',
-    TransactionDesc: 'Payment for Chat Service',
+    AccountReference: 'KmeetPayment',
+    TransactionDesc: 'Payment for Kmeet Service',
   };
 
   try {
