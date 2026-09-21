@@ -15,8 +15,10 @@ app.use(cors({
 
 app.use(express.json());
 
-// Serve static files from the project root directory
-app.use(express.static(__dirname));
+// Explicitly serve static files and folders from the project root directory
+app.use(express.static(path.join(__dirname)));
+app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/img', express.static(path.join(__dirname, 'img')));
 
 // Serve myweb.html as the root entry point (landing/registration page)
 app.get('/', (req, res) => {

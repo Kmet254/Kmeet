@@ -3,201 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat App - M-Pesa Test</title>
+  <title>Chat App - M-Pesa</title>
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f7fafc;
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
       margin: 0;
-      padding: 20px;
     }
-
-    .chat-container {
+    .chat-card {
       background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      width: 100%;
-      max-width: 450px;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #edf2f7;
-      padding-bottom: 12px;
-      margin-bottom: 20px;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .username {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 700;
-      color: #1a202c;
-    }
-
-    .convos-pill {
-      background-color: #ebf8ff;
-      color: #2b6cb0;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 4px 12px;
+      padding: 24px;
       border-radius: 12px;
-      margin-top: 4px;
-      display: inline-block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
     }
-
-    .btn-group {
-      display: flex;
-      gap: 8px;
-    }
-
     .renew-btn {
       background-color: #10b981;
       color: white;
       border: none;
-      padding: 8px 14px;
-      font-size: 14px;
-      font-weight: 700;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
       border-radius: 20px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: background 0.2s ease;
     }
-
     .renew-btn:hover {
       background-color: #059669;
-    }
-
-    .reset-btn {
-      background-color: #ef4444;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 600;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .reset-btn:hover {
-      background-color: #dc2626;
-    }
-
-    .chat-body {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .message-bubble {
-      background-color: #f1f5f9;
-      color: #334155;
-      padding: 12px 16px;
-      border-radius: 16px;
-      border-bottom-left-radius: 4px;
-      max-width: 85%;
-      align-self: flex-start;
-      font-size: 15px;
-    }
-
-    .timestamp {
-      font-size: 11px;
-      color: #94a3b8;
-      text-align: right;
-      margin-top: 4px;
-    }
-
-    #payment-success-box {
-      display: none;
-      background-color: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      border-radius: 16px;
-      padding: 16px;
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .success-title {
-      color: #065f46;
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    .success-desc {
-      color: #1e293b;
-      font-size: 14px;
-      margin-top: 6px;
-    }
-
-    .success-badge {
-      color: #047857;
-      font-weight: 700;
-      font-size: 15px;
-      margin-top: 6px;
     }
   </style>
 </head>
 <body>
 
-  <div class="chat-container">
-    <div class="header">
-      <div class="user-info">
-        <div>
-          <!-- Change your displayed chat name below -->
-          <h2 class="username" id="username-display">User</h2>
-          <span class="convos-pill">Convos Left: 3</span>
-        </div>
-      </div>
-      <div class="btn-group">
-        <button onclick="triggerMpesaPayment()" class="renew-btn">⚡ Renew</button>
-        <button onclick="clearSavedData()" class="reset-btn" title="Clear saved data & reset">🗑️ Reset Data</button>
-      </div>
-    </div>
-
-    <div class="chat-body">
-      <div class="message-bubble">
-        Hey! Send a message to start this conversation.
-        <div class="timestamp">10:14 PM</div>
-      </div>
-
-      <!-- Green Payment Status Box -->
-      <div id="payment-success-box">
-        <div class="success-title">✔ Package Unlocked!</div>
-        <div class="success-desc">
-          M-Pesa prompt sent to <strong id="mpesa-phone-display">07XXXXXXXX</strong>
-        </div>
-        <div class="success-badge">Added +3 Conversations (KES 49)</div>
-      </div>
-    </div>
+  <div class="chat-card">
+    <h2>Amina</h2>
+    <p>Convos Left: 3</p>
+    <button onclick="triggerMpesaPayment()" class="renew-btn">⚡ Renew</button>
   </div>
 
   <script>
-  // Function to clear browser cache / local storage data
-  function clearSavedData() {
-    localStorage.clear();
-    sessionStorage.clear();
-    
-    // Hide payment box if visible
-    const successBox = document.getElementById('payment-success-box');
-    if (successBox) successBox.style.display = 'none';
-
-    console.log("Cleared Local Storage and Session Storage.");
-    alert("Saved browser data cleared successfully!");
-  }
-
   async function triggerMpesaPayment() {
     let inputPhone = prompt("Enter your Safaricom phone number:", "0723535019");
 
@@ -214,8 +63,6 @@
 
     const amount = 49;
 
-    console.log(`Sending STK Push request for phone: ${formattedPhone}`);
-
     try {
       const response = await fetch('/api/stkpush', {
         method: 'POST',
@@ -228,33 +75,17 @@
         }),
       });
 
-      console.log("Server response status:", response.status);
       const data = await response.json();
-      console.log("Server response payload:", data);
 
       if (response.ok && data.ResponseCode === '0') {
-        const phoneDisplay = document.getElementById('mpesa-phone-display');
-        if (phoneDisplay) {
-          phoneDisplay.innerText = inputPhone;
-        }
-
-        const successBox = document.getElementById('payment-success-box');
-        if (successBox) {
-          successBox.style.display = 'block';
-        }
-
-        // Store last successful transaction locally
-        localStorage.setItem('lastPhone', formattedPhone);
-
-        alert(`STK Push prompt sent to ${formattedPhone}! Check your phone for the M-Pesa PIN prompt.`);
-
+        alert(`M-Pesa STK Push sent to ${formattedPhone}! Please enter your PIN on your phone.`);
       } else {
-        alert('Payment Request Failed: ' + (data.error || data.errorMessage || 'Unable to complete request.'));
+        alert('Payment Error: ' + (data.error || data.errorMessage || 'Failed to initiate payment.'));
+        console.error('M-Pesa Response Error:', data);
       }
-
     } catch (err) {
-      console.error('Network / Firewall Error Details:', err);
-      alert('Failed to reach server. If your server is running, check if Windows Firewall or antivirus is blocking connection to port 5000.');
+      console.error('Network Error:', err);
+      alert('Failed to connect to the payment server. Make sure run.bat is active.');
     }
   }
   </script>
