@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Kmeet</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(img/bg34.jpg) no-repeat center center fixed;
+      background-size: cover;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .auth-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 400px;
+      padding: 32px;
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 24px;
+      color: #222;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #444;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+    }
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
+    }
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background-color 0.2s ease;
+      font-family: inherit;
+    }
+    .auth-btn:hover {
+      background-color: #0056b3;
+    }
+    .error-msg {
+      color: #dc3545;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+    .switch-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+    .switch-link a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .switch-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <h2>Create Your Account</h2>
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="userId">User ID</label>
+        <input type="text" id="userId" required placeholder="Choose a unique User ID (e.g., alex_99)">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="Create a password (min 6 chars)">
+      </div>
+      <button type="submit" class="auth-btn">Sign Up</button>
+      <p id="errorMsg" class="error-msg"></p>
+    </form>
+    <div class="switch-link">
+      Already have an account? <a href="login.html">Log in</a>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
+      authDomain: "kmeet-database.firebaseapp.com",
+      projectId: "kmeet-database",
+      storageBucket: "kmeet-database.firebasestorage.app",
+      messagingSenderId: "123313610325",
+      appId: "1:123313610325:web:255c467996eff14d72bedc"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const signupForm = document.getElementById('signupForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.textContent = "";
+
+      const userId = document.getElementById('userId').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        // 1. Create account
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 2. Set Firebase Auth display name as User ID
+        await updateProfile(user, { displayName: userId });
+
+        // 3. Initialize Firestore document with User ID
+        await setDoc(doc(db, "users", user.uid), {
+          userId: userId,
+          email: email,
+          createdAt: new Date().toISOString()
+        }, { merge: true });
+
+        // 4. Redirect to onboarding
+        window.location.href = "interests.html";
+      } catch (error) {
+        errorMsg.textContent = error.message;
+      }
+    });
+  </script>
+</body>
+</html>

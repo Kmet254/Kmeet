@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kmeet - Find Your Connection</title>
+
+    <!-- Forces all anchor tags and form actions to stay in the current tab -->
+    <base target="_self">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/star.png">
+    <link rel="stylesheet" href="css/myweb.css">
+</head>
+<body>
+
+    <section class="header">
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="#">
+                    <img src="img/Kmeet.jpg.jfif" alt="Kmeet Logo" width="50" height="40">
+                </a>
+            </div>
+            
+            <h2>
+                <i class="fa-solid fa-heart heart-icon"></i>
+                Kmeet your heart's true echo.
+            </h2>
+
+            <div class="nav-links">
+                <ul>
+                    <li><a href="discover.html">DISCOVER</a></li>
+                    <li id="navProfileLink"><a href="login.html">LOG IN</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="hero-content" id="heroCard">
+            <div id="guestState">
+                <h2>KMEET YOUR HEARTS TRUE ECHO</h2>
+                <p>Find a connection built for intentional,<br> romantic courtship</p>
+                <p>A sanctuary for intentional courtship</p>
+                <form id="signupForm" class="auth-form">
+                    <div class="input-group">
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="Enter your email address" 
+                            required 
+                        >
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+
+                <div class="login-option">
+                    <span>Already have an account?</span>
+                    <a href="login.html" class="btn-link">Log In</a>
+                </div>
+            </div>
+
+            <!-- STATE 2: LOGGED IN USER -->
+            <div id="userState" style="display: none;">
+                <div class="home-profile-preview">
+                    <img id="homeUserAvatar" src="" alt="Profile Photo" class="home-avatar">
+                    <h2 id="homeUserName">Welcome Back</h2>
+                    <p id="homeUserEmail" class="home-email"></p>
+                    
+                    <div class="home-interests-tags" id="homeInterests"></div>
+
+                    <div class="home-profile-actions">
+                         <a href="discover.html" class="btn btn-primary" style="margin-bottom: 6px;">
+                            <i class="fa-solid fa-compass"></i> Discover People
+                         </a>
+                         <a href="profile.html" class="btn btn-primary">View Full Profile</a>
+                         <button id="homeLogoutBtn" class="btn-link-logout">Log Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const guestState = document.getElementById('guestState');
+            const userState = document.getElementById('userState');
+            const navProfileLink = document.getElementById('navProfileLink');
+
+            // 1. Check LocalStorage for existing profile data
+            const savedEmail = localStorage.getItem('userEmail');
+            const savedAvatar = localStorage.getItem('userAvatar');
+            const savedInterests = JSON.parse(localStorage.getItem('userInterests')) || [];
+
+            if (savedEmail) {
+                // User is logged in: swap signup form with profile display
+                guestState.style.display = 'none';
+                userState.style.display = 'block';
+
+                // Set nav link to Profile page
+                navProfileLink.innerHTML = `<a href="profile.html">MY PROFILE</a>`;
+
+                // Set User Details
+                document.getElementById('homeUserEmail').textContent = savedEmail;
+                const username = savedEmail.split('@')[0];
+                document.getElementById('homeUserName').textContent = username.charAt(0).toUpperCase() + username.slice(1);
+
+                // Set User Avatar
+                if (savedAvatar) {
+                    document.getElementById('homeUserAvatar').src = savedAvatar;
+                } else {
+                    document.getElementById('homeUserAvatar').src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80';
+                }
+
+                // Render Interests Tags
+                const interestsContainer = document.getElementById('homeInterests');
+                if (savedInterests.length > 0) {
+                    interestsContainer.innerHTML = savedInterests.slice(0, 4).map(item => `
+                        <span class="home-tag">${item}</span>
+                    `).join('');
+                }
+            }
+
+            // 2. Signup Form Submission & Smooth Redirection
+            const signupForm = document.getElementById('signupForm');
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const emailInput = this.querySelector('input[type="email"]').value;
+                    localStorage.setItem('userEmail', emailInput);
+                    
+                    document.body.classList.add('fade-out');
+                    
+                    setTimeout(function() {
+                        window.location.href = 'onboarding.html';
+                    }, 400);
+                });
+            }
+
+            // 3. Logout Action on Home Page
+            const homeLogoutBtn = document.getElementById('homeLogoutBtn');
+            if (homeLogoutBtn) {
+                homeLogoutBtn.addEventListener('click', function() {
+                    localStorage.clear();
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>''

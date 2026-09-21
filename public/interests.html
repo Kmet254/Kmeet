@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Brings You Joy? - Kmeet</title>
+  
+  <!-- External CSS Link -->
+  <link rel="stylesheet" href="onboarding.css">
+
+  <!-- Embedded CSS Fallback -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(img/bg34.jpg) no-repeat center center fixed;
+      background-size: cover;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .interests-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 520px;
+      padding: 36px 32px;
+      text-align: center;
+    }
+    .interests-container h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: #222;
+      font-size: 26px;
+      font-weight: 700;
+    }
+    .interests-container p {
+      color: #555;
+      font-size: 15px;
+      margin-bottom: 28px;
+      line-height: 1.4;
+    }
+    .interests-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .interest-checkbox {
+      display: none;
+    }
+    .interest-pill {
+      display: inline-block;
+      padding: 10px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 25px;
+      background-color: #ffffff;
+      color: #475569;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .interest-pill:hover {
+      border-color: #007bff;
+      color: #007bff;
+      transform: translateY(-1px);
+    }
+    .interest-checkbox:checked + .interest-pill {
+      background-color: #007bff;
+      color: #ffffff;
+      border-color: #007bff;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      font-family: inherit;
+    }
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+    .submit-btn:active {
+      transform: scale(0.99);
+    }
+    .error-msg {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="interests-container">
+    <h2>What brings you joy?</h2>
+    <p>Select your interests so we can personalize your experience on Kmeet.</p>
+
+    <form id="interestsForm">
+      <div class="interests-grid">
+        <label>
+          <input type="checkbox" name="interest" value="Music" class="interest-checkbox">
+          <span class="interest-pill">🎵 Music</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Sports" class="interest-checkbox">
+          <span class="interest-pill">⚽ Sports</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Gaming" class="interest-checkbox">
+          <span class="interest-pill">🎮 Gaming</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Cooking" class="interest-checkbox">
+          <span class="interest-pill">🍳 Cooking</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Travel" class="interest-checkbox">
+          <span class="interest-pill">✈️ Travel</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Art" class="interest-checkbox">
+          <span class="interest-pill">🎨 Art & Design</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Tech" class="interest-checkbox">
+          <span class="interest-pill">💻 Tech & Coding</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Fitness" class="interest-checkbox">
+          <span class="interest-pill">🏋️ Fitness</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Movies" class="interest-checkbox">
+          <span class="interest-pill">🎬 Movies</span>
+        </label>
+        <label>
+          <input type="checkbox" name="interest" value="Reading" class="interest-checkbox">
+          <span class="interest-pill">📚 Reading</span>
+        </label>
+      </div>
+
+      <button type="submit" class="submit-btn">Continue</button>
+      <p id="errorMsg" class="error-msg"></p>
+    </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
+      authDomain: "kmeet-database.firebaseapp.com",
+      projectId: "kmeet-database",
+      storageBucket: "kmeet-database.firebasestorage.app",
+      messagingSenderId: "123313610325",
+      appId: "1:123313610325:web:255c467996eff14d72bedc"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('interestsForm');
+    const errorMsg = document.getElementById('errorMsg');
+    let currentUser = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.textContent = "";
+
+      if (!currentUser) {
+        errorMsg.textContent = "User authentication error. Please log in again.";
+        return;
+      }
+
+      const selected = Array.from(document.querySelectorAll('input[name="interest"]:checked'))
+                           .map(cb => cb.value);
+
+      if (selected.length === 0) {
+        errorMsg.textContent = "Please select at least one interest to continue.";
+        return;
+      }
+
+      try {
+        await setDoc(doc(db, "users", currentUser.uid), {
+          interests: selected,
+          onboardingCompleted: true
+        }, { merge: true });
+
+        window.location.href = "discover.html";
+      } catch (err) {
+        errorMsg.textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>
