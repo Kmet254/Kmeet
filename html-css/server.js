@@ -3,9 +3,10 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static('public'));
+// Serve all static files (CSS, images, etc.) from the public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve myweb.html as the welcoming homepage
+// Explicitly serve myweb.html as the homepage
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'myweb.html'));
 });
