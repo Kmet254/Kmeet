@@ -1,9 +1,14 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// This automatically serves your index.html and other frontend files from the public folder
 app.use(express.static('public'));
+
+// Serve myweb.html as the welcoming homepage
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'myweb.html'));
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
