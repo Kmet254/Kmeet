@@ -259,13 +259,233 @@
     <!-- Main Layout Container -->
     <div class="discover-layout">
         
-        <!-- Left: Discover Grid -->
+        <!-- Left: Discover Grid (Static HTML Render to Guarantee Display) -->
         <div class="discover-main">
             <h2>Intentional Profiles</h2>
             <p>Connect securely with verified members looking for serious courtship. Pay KES 11 per match to unlock direct communication.</p>
 
             <div class="matches-grid" id="matchesGrid">
-                <!-- Profile Cards dynamically rendered here -->
+                
+                <!-- 1 -->
+                <div class="match-card" data-name="Brian, 26">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80" alt="Brian, 26" class="match-avatar">
+                    <h3>Brian, 26</h3>
+                    <p>Passionate about tech, deep conversations, and building an intentional partnership.</p>
+                    <button onclick="handleChatClick('Brian, 26')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 2 -->
+                <div class="match-card" data-name="Brenda, 24">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Brenda, 24" class="match-avatar">
+                    <h3>Brenda, 24</h3>
+                    <p>Loves interior design, faith-centered living, and meaningful family-oriented values.</p>
+                    <button onclick="handleChatClick('Brenda, 24')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 3 -->
+                <div class="match-card" data-name="David, 28">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80" alt="David, 28" class="match-avatar">
+                    <h3>David, 28</h3>
+                    <p>Enjoys outdoor hiking, entrepreneurship, and looking for a genuine lifelong companion.</p>
+                    <button onclick="handleChatClick('David, 28')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 4 -->
+                <div class="match-card" data-name="Sharon, 25">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80" alt="Sharon, 25" class="match-avatar">
+                    <h3>Sharon, 25</h3>
+                    <p>Healthcare professional seeking someone honest, supportive, and ready to settle down.</p>
+                    <button onclick="handleChatClick('Sharon, 25')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 5 -->
+                <div class="match-card" data-name="Kevin, 30">
+                    <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80" alt="Kevin, 30" class="match-avatar">
+                    <h3>Kevin, 30</h3>
+                    <p>Architect and music lover looking for a partner with shared core values.</p>
+                    <button onclick="handleChatClick('Kevin, 30')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 6 -->
+                <div class="match-card" data-name="Mercy, 27">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80" alt="Mercy, 27" class="match-avatar">
+                    <h3>Mercy, 27</h3>
+                    <p>Passionate educator who values honesty, good communication, and shared laughter.</p>
+                    <button onclick="handleChatClick('Mercy, 27')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 7 -->
+                <div class="match-card" data-name="Collins, 29">
+                    <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80" alt="Collins, 29" class="match-avatar">
+                    <h3>Collins, 29</h3>
+                    <p>Software engineer seeking a serious relationship built on trust and mutual respect.</p>
+                    <button onclick="handleChatClick('Collins, 29')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 8 -->
+                <div class="match-card" data-name="Faith, 23">
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80" alt="Faith, 23" class="match-avatar">
+                    <h3>Faith, 23</h3>
+                    <p>Creative writer looking for an authentic connection and someone loyal.</p>
+                    <button onclick="handleChatClick('Faith, 23')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 9 -->
+                <div class="match-card" data-name="Ian, 27">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80" alt="Ian, 27" class="match-avatar">
+                    <h3>Ian, 27</h3>
+                    <p>Finance analyst who loves board games, cooking, and purposeful courtship.</p>
+                    <button onclick="handleChatClick('Ian, 27')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 10 -->
+                <div class="match-card" data-name="Audrey, 26">
+                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80" alt="Audrey, 26" class="match-avatar">
+                    <h3>Audrey, 26</h3>
+                    <p>Digital marketer seeking a purposeful partner for life’s adventures.</p>
+                    <button onclick="handleChatClick('Audrey, 26')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 11 -->
+                <div class="match-card" data-name="Victor, 31">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80" alt="Victor, 31" class="match-avatar">
+                    <h3>Victor, 31</h3>
+                    <p>Business owner looking for stability, mutual growth, and family goals.</p>
+                    <button onclick="handleChatClick('Victor, 31')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 12 -->
+                <div class="match-card" data-name="Joy, 25">
+                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80" alt="Joy, 25" class="match-avatar">
+                    <h3>Joy, 25</h3>
+                    <p>Lawyer in training with a passion for volunteering and quiet Sunday walks.</p>
+                    <button onclick="handleChatClick('Joy, 25')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 13 -->
+                <div class="match-card" data-name="Dennis, 29">
+                    <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80" alt="Dennis, 29" class="match-avatar">
+                    <h3>Dennis, 29</h3>
+                    <p>Civil engineer seeking a God-fearing partner for an intentional future.</p>
+                    <button onclick="handleChatClick('Dennis, 29')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 14 -->
+                <div class="match-card" data-name="Cynthia, 24">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80" alt="Cynthia, 24" class="match-avatar">
+                    <h3>Cynthia, 24</h3>
+                    <p>Graphic designer who loves art galleries, acoustic music, and deep conversations.</p>
+                    <button onclick="handleChatClick('Cynthia, 24')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 15 -->
+                <div class="match-card" data-name="Eric, 28">
+                    <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&auto=format&fit=crop&q=80" alt="Eric, 28" class="match-avatar">
+                    <h3>Eric, 28</h3>
+                    <p>Agripreneur passionate about sustainable living and finding a lifelong mate.</p>
+                    <button onclick="handleChatClick('Eric, 28')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 16 -->
+                <div class="match-card" data-name="Esther, 26">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80" alt="Esther, 26" class="match-avatar">
+                    <h3>Esther, 26</h3>
+                    <p>Accountant looking for someone dependable, kind, and family-oriented.</p>
+                    <button onclick="handleChatClick('Esther, 26')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 17 -->
+                <div class="match-card" data-name="Allan, 32">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80" alt="Allan, 32" class="match-avatar">
+                    <h3>Allan, 32</h3>
+                    <p>Consultant valuing transparency, emotional intelligence, and true partnership.</p>
+                    <button onclick="handleChatClick('Allan, 32')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 18 -->
+                <div class="match-card" data-name="Gloria, 25">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Gloria, 25" class="match-avatar">
+                    <h3>Gloria, 25</h3>
+                    <p>Pharmacist seeking a mature relationship built on mutual support.</p>
+                    <button onclick="handleChatClick('Gloria, 25')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 19 -->
+                <div class="match-card" data-name="Samuel, 27">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80" alt="Samuel, 27" class="match-avatar">
+                    <h3>Samuel, 27</h3>
+                    <p>Logistics coordinator who enjoys traveling and building a peaceful home.</p>
+                    <button onclick="handleChatClick('Samuel, 27')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 20 -->
+                <div class="match-card" data-name="Diana, 24">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80" alt="Diana, 24" class="match-avatar">
+                    <h3>Diana, 24</h3>
+                    <p>Event planner looking for an ambitious and intentional gentleman.</p>
+                    <button onclick="handleChatClick('Diana, 24')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 21 -->
+                <div class="match-card" data-name="Felix, 30">
+                    <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80" alt="Felix, 30" class="match-avatar">
+                    <h3>Felix, 30</h3>
+                    <p>Pilot who loves exploring new cultures and settling down with the right person.</p>
+                    <button onclick="handleChatClick('Felix, 30')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
+                <!-- 22 -->
+                <div class="match-card" data-name="Rachel, 27">
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80" alt="Rachel, 27" class="match-avatar">
+                    <h3>Rachel, 27</h3>
+                    <p>HR professional seeking genuine chemistry and long-term commitment.</p>
+                    <button onclick="handleChatClick('Rachel, 27')" class="btn-chat">
+                        <i class="fa-solid fa-lock"></i> Chat (KES 11)
+                    </button>
+                </div>
+
             </div>
         </div>
 
@@ -280,55 +500,23 @@
     </div>
 
     <script>
-        // 22 Full Active Intentional Profiles
-        const profiles = [
-            { id: 1, name: 'Brian, 26', desc: 'Passionate about tech, deep conversations, and building an intentional partnership.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80' },
-            { id: 2, name: 'Brenda, 24', desc: 'Loves interior design, faith-centered living, and meaningful family-oriented values.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80' },
-            { id: 3, name: 'David, 28', desc: 'Enjoys outdoor hiking, entrepreneurship, and looking for a genuine lifelong companion.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80' },
-            { id: 4, name: 'Sharon, 25', desc: 'Healthcare professional seeking someone honest, supportive, and ready to settle down.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80' },
-            { id: 5, name: 'Kevin, 30', desc: 'Architect and music lover looking for a partner with shared core values.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80' },
-            { id: 6, name: 'Mercy, 27', desc: 'Passionate educator who values honesty, good communication, and shared laughter.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80' },
-            { id: 7, name: 'Collins, 29', desc: 'Software engineer seeking a serious relationship built on trust and mutual respect.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80' },
-            { id: 8, name: 'Faith, 23', desc: 'Creative writer looking for an authentic connection and someone loyal.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80' },
-            { id: 9, name: 'Ian, 27', desc: 'Finance analyst who loves board games, cooking, and purposeful courtship.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80' },
-            { id: 10, name: 'Audrey, 26', desc: 'Digital marketer seeking a purposeful partner for life’s adventures.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80' },
-            { id: 11, name: 'Victor, 31', desc: 'Business owner looking for stability, mutual growth, and family goals.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80' },
-            { id: 12, name: 'Joy, 25', desc: 'Lawyer in training with a passion for volunteering and quiet Sunday walks.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80' },
-            { id: 13, name: 'Dennis, 29', desc: 'Civil engineer seeking a God-fearing partner for an intentional future.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80' },
-            { id: 14, name: 'Cynthia, 24', desc: 'Graphic designer who loves art galleries, acoustic music, and deep conversations.', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80' },
-            { id: 15, name: 'Eric, 28', desc: 'Agripreneur passionate about sustainable living and finding a lifelong mate.', img: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&auto=format&fit=crop&q=80' },
-            { id: 16, name: 'Esther, 26', desc: 'Accountant looking for someone dependable, kind, and family-oriented.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80' },
-            { id: 17, name: 'Allan, 32', desc: 'Consultant valuing transparency, emotional intelligence, and true partnership.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80' },
-            { id: 18, name: 'Gloria, 25', desc: 'Pharmacist seeking a mature relationship built on mutual support.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80' },
-            { id: 19, name: 'Samuel, 27', desc: 'Logistics coordinator who enjoys traveling and building a peaceful home.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80' },
-            { id: 20, name: 'Diana, 24', desc: 'Event planner looking for an ambitious and intentional gentleman.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80' },
-            { id: 21, name: 'Felix, 30', desc: 'Pilot who loves exploring new cultures and settling down with the right person.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80' },
-            { id: 22, name: 'Rachel, 27', desc: 'HR professional seeking genuine chemistry and long-term commitment.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80' }
-        ];
-
-        function renderDiscoverPage() {
-            const grid = document.getElementById('matchesGrid');
-            const unlockedSidebar = document.getElementById('unlockedList');
-            
+        function updateUI() {
             const paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
+            const cards = document.querySelectorAll('.match-card');
 
-            // Render all profiles safely
-            grid.innerHTML = profiles.map(profile => {
-                const isUnlocked = paidChats.includes(profile.name);
-                return `
-                    <div class="match-card">
-                        <img src="${profile.img}" alt="${profile.name}" class="match-avatar">
-                        <h3>${profile.name}</h3>
-                        <p>${profile.desc}</p>
-                        <button onclick="handleChatClick('${profile.name}')" class="btn-chat ${isUnlocked ? 'unlocked' : ''}">
-                            <i class="fa-solid ${isUnlocked ? 'fa-comment-dots' : 'fa-lock'}"></i> 
-                            ${isUnlocked ? 'Open Chat' : 'Chat (KES 11)'}
-                        </button>
-                    </div>
-                `;
-            }).join('');
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                const btn = card.querySelector('.btn-chat');
+                
+                if (paidChats.includes(name)) {
+                    card.classList.add('unlocked-card');
+                    btn.className = 'btn-chat unlocked';
+                    btn.innerHTML = `<i class="fa-solid fa-comment-dots"></i> Open Chat`;
+                }
+            });
 
             // Render active sidebar chats
+            const unlockedSidebar = document.getElementById('unlockedList');
             if (paidChats.length > 0) {
                 unlockedSidebar.innerHTML = paidChats.map(name => `
                     <div class="unlocked-item">
@@ -365,7 +553,7 @@
             window.location.href = 'chat.html';
         }
 
-        document.addEventListener('DOMContentLoaded', renderDiscoverPage);
+        document.addEventListener('DOMContentLoaded', updateUI);
     </script>
 </body>
 </html>
