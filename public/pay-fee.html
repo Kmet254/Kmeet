@@ -3,146 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kmeet - Response Fee</title>
-
-    <!-- Browser Tab Icon -->
+    <title>Complete Payment - Kmeet</title>
     <link rel="icon" type="image/png" href="/heart.png.png">
     <base target="_self">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body {
-            font-family: 'Poppins', sans-serif;
             background-color: #0d0b0e;
             color: #ffffff;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(rgba(13, 11, 14, 0.55), rgba(4, 9, 30, 0.75)), url('img/bg34.jpg') no-repeat center center fixed;
+            background: linear-gradient(rgba(13, 11, 14, 0.7), rgba(4, 9, 30, 0.85)), url('img/bg34.jpg') no-repeat center center fixed;
             background-size: cover;
             padding: 20px;
         }
-
-        .fee-card {
+        .payment-card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 30px;
+            max-width: 420px;
             width: 100%;
-            max-width: 400px;
-            padding: 36px 28px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .fee-card h2 {
-            font-size: 20px;
-            color: #fceee9;
-            margin-bottom: 12px;
-        }
-
-        .fee-card p {
-            font-size: 13px;
-            color: #d1cdca;
-            line-height: 1.5;
+        h2 { font-size: 22px; color: #fceee9; margin-bottom: 10px; }
+        p { font-size: 13px; color: #d1cdca; margin-bottom: 20px; line-height: 1.5; }
+        .tier-box {
+            background: rgba(224, 122, 95, 0.15);
+            border: 1px solid #e07a5f;
+            border-radius: 10px;
+            padding: 15px;
             margin-bottom: 20px;
         }
-
-        .recipient-highlight {
-            color: #e07a5f;
-            font-weight: 600;
+        .tier-box h3 { font-size: 18px; color: #fceee9; margin-bottom: 5px; }
+        .tier-box span { font-size: 14px; color: #e07a5f; font-weight: 600; }
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; font-size: 12px; color: #d1cdca; margin-bottom: 6px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
         }
-
-        .amount-badge {
-            font-size: 24px;
-            font-weight: 600;
-            color: #e07a5f;
-            margin-bottom: 20px;
-        }
-
+        input:focus { border-color: #e07a5f; }
         .btn-pay {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: none;
             border-radius: 25px;
-            background-color: #2ecc71;
-            color: #ffffff;
+            background-color: #e07a5f;
+            color: white;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background 0.3s;
+            margin-top: 10px;
         }
-
-        .btn-pay:hover {
-            background-color: #27ae60;
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 15px;
-            font-size: 12px;
-            color: #b5ada7;
-            text-decoration: none;
-        }
-
-        .back-link:hover {
-            color: #fff;
-        }
+        .btn-pay:hover { opacity: 0.9; }
+        .back-link { display: block; margin-top: 15px; font-size: 12px; color: #a09a9f; text-decoration: none; }
+        .back-link:hover { color: #fff; }
     </style>
 </head>
 <body>
 
-    <div class="fee-card">
+    <div class="payment-card">
         <h2>Unlock Secure Chat</h2>
-        <p>Opening secure chat with <span id="recipientName" class="recipient-highlight">Brian</span>. A small KES 11 response fee is required to verify genuine courtship interest.</p>
-        
-        <div class="amount-badge">KES 11</div>
+        <p id="paymentDescription">Processing transaction for your selected match connection.</p>
 
-        <button id="payBtn" class="btn-pay">Pay KES 11 & Open Chat</button>
-        <a href="discover.html" class="back-link">Cancel & Return to Discover</a>
+        <div class="tier-box">
+            <h3 id="planTitle">Chat Pass</h3>
+            <span id="planPrice">KES --</span>
+        </div>
+
+        <form id="paymentForm" onsubmit="processPayment(event)">
+            <div class="form-group">
+                <label>M-PESA Phone Number</label>
+                <input type="text" id="mpesaNumber" placeholder="e.g., 0712345678" required>
+            </div>
+            <button type="submit" class="btn-pay" id="payButton">Pay Now</button>
+        </form>
+
+        <a href="discover.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Discover</a>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Retrieve current chat recipient from localStorage
-            const recipient = localStorage.getItem('chatRecipient') || 'Brian';
-            document.getElementById('recipientName').textContent = recipient;
+        // Determine which fee/tier is active based on local storage state or defaults
+        const recipient = localStorage.getItem('chatRecipient') || 'Member';
+        const currentTier = localStorage.getItem('activePaymentTier') || '11'; // default to 11 if receiver fee
 
-            const payBtn = document.getElementById('payBtn');
+        const titleEl = document.getElementById('planTitle');
+        const priceEl = document.getElementById('planPrice');
+        const descEl = document.getElementById('paymentDescription');
+        const payBtn = document.getElementById('payButton');
 
-            payBtn.addEventListener('click', function() {
-                payBtn.textContent = "Processing payment...";
-                payBtn.style.opacity = "0.7";
+        if (currentTier === '49') {
+            titleEl.innerText = "Starter Bundle (3 Chats)";
+            priceEl.innerText = "KES 49";
+            descEl.innerText = `Unlock your ability to start conversations with up to 3 different members.`;
+            payBtn.innerText = "Pay KES 49 via M-Pesa";
+        } else if (currentTier === '100') {
+            titleEl.innerText = "Bonus VIP Bundle (8 Chats)";
+            priceEl.innerText = "KES 100";
+            descEl.innerText = `Unlock your extended pass to start conversations with up to 8 different members.`;
+            payBtn.innerText = "Pay KES 100 via M-Pesa";
+        } else {
+            // Standard KES 11 receiver response fee
+            titleEl.innerText = `Connect with ${recipient}`;
+            priceEl.innerText = "KES 11";
+            descEl.innerText = `Pay the response fee to directly message ${recipient}.`;
+            payBtn.innerText = "Pay KES 11 via M-Pesa";
+        }
 
-                // Simulate payment gateway delay
-                setTimeout(function() {
-                    // 1. Add current recipient to the paidChats array safely
-                    let paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
-                    if (!paidChats.includes(recipient)) {
-                        paidChats.push(recipient);
-                        localStorage.setItem('paidChats', JSON.stringify(paidChats));
-                    }
+        function processPayment(event) {
+            event.preventDefault();
+            const phone = document.getElementById('mpesaNumber').value;
+            if (!phone) {
+                alert("Please enter your M-Pesa phone number.");
+                return;
+            }
 
-                    // 2. Set legacy payment flag
-                    localStorage.setItem('isPaid', 'true');
+            // Simulate successful M-Pesa STK push response
+            alert(`STK Push sent to ${phone}. Simulating successful payment...`);
 
-                    // 3. Redirect into the secure chat room
-                    window.location.href = 'chat.html';
-                }, 1500);
-            });
-        });
+            if (currentTier === '49') {
+                localStorage.setItem('chatQuota', '3');
+                window.location.href = 'discover.html';
+            } else if (currentTier === '100') {
+                localStorage.setItem('chatQuota', '8');
+                window.location.href = 'discover.html';
+            } else {
+                // Record that this specific recipient's chat is unlocked for the user via KES 11
+                let paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
+                if (!paidChats.includes(recipient)) {
+                    paidChats.push(recipient);
+                    localStorage.setItem('paidChats', JSON.stringify(paidChats));
+                }
+                window.location.href = 'chat.html';
+            }
+        }
     </script>
 </body>
 </html>
