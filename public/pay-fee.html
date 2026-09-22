@@ -1,1 +1,119 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kmeet - Response Fee</title>
+
+    <!-- Browser Tab Icon -->
+    <link rel="icon" type="image/png" href="/heart.png.png">
+    <base target="_self">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d0b0e;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(13, 11, 14, 0.55), rgba(4, 9, 30, 0.75)), url('img/bg34.jpg') no-repeat center center fixed;
+            background-size: cover;
+            padding: 20px;
+        }
+        .fee-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            width: 100%;
+            max-width: 400px;
+            padding: 36px 28px;
+            text-align: center;
+        }
+        .fee-card h2 {
+            font-size: 20px;
+            color: #fceee9;
+            margin-bottom: 12px;
+        }
+        .fee-card p {
+            font-size: 13px;
+            color: #d1cdca;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .amount-badge {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e07a5f;
+            margin-bottom: 20px;
+        }
+        .btn-pay {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            background-color: #2ecc71;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn-pay:hover {
+            background-color: #27ae60;
+        }
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #b5ada7;
+            text-decoration: none;
+        }
+        .back-link:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="fee-card">
+        <h2>Unlock Secure Chat</h2>
+        <p>Opening secure chat with Brian. A small intent response fee is required to verify genuine courtship interest.</p>
+        
+        <div class="amount-badge">KES 11</div>
+
+        <button id="payBtn" class="btn-pay">Pay KES 11 & Open Chat</button>
+        <a href="discover.html" class="back-link">Cancel & Return to Discover</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const payBtn = document.getElementById('payBtn');
+
+            payBtn.addEventListener('click', function() {
+                payBtn.textContent = "Processing payment...";
+                payBtn.style.opacity = "0.7";
+
+                // Simulate payment gateway delay (or hook your M-Pesa API response here)
+                setTimeout(function() {
+                    // 1. Mark payment as successful in localStorage
+                    localStorage.setItem('isPaid', 'true');
+                    localStorage.setItem('chatRecipient', 'Brian');
+
+                    // 2. Automatically redirect to the chat page
+                    window.location.href = 'chat.html';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
