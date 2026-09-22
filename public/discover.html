@@ -7,38 +7,26 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f7fafc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      background-color: #f0f2f5;
       margin: 0;
       padding: 20px;
     }
 
-    .discover-container {
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      width: 100%;
-      max-width: 500px;
-      padding: 24px;
-      box-sizing: border-box;
-    }
-
-    .header {
+    .top-bar {
+      max-width: 1200px;
+      margin: 0 auto 20px auto;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #edf2f7;
-      padding-bottom: 12px;
-      margin-bottom: 16px;
+      align-items: center;
+      background: #ffffff;
+      padding: 15px 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    .title {
+    .top-bar h1 {
       margin: 0;
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 20px;
       color: #1a202c;
     }
 
@@ -46,233 +34,323 @@
       background-color: #ef4444;
       color: white;
       border: none;
-      padding: 6px 12px;
-      font-size: 12px;
+      padding: 8px 14px;
+      font-size: 13px;
       font-weight: 600;
       border-radius: 20px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
     }
 
-    .reset-btn:hover {
-      background-color: #dc2626;
+    /* Grid Layout */
+    .grid-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
     }
 
-    /* Scrollable Profile List Container */
-    .profiles-scroll {
-      max-height: 420px;
-      overflow-y: auto;
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      padding-right: 4px;
-    }
-
-    .profile-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .profile-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatar-wrapper {
       position: relative;
     }
 
-    .profile-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    .card-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 240px;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border: 2px solid #e2e8f0;
     }
 
-    .online-indicator {
+    .online-badge {
       position: absolute;
-      bottom: 2px;
-      right: 2px;
-      width: 12px;
-      height: 12px;
+      top: 12px;
+      right: 12px;
       background-color: #10b981;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .profile-info h3 {
-      margin: 0;
-      font-size: 15px;
-      color: #1e293b;
+    .card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
-    .profile-info p {
-      margin: 3px 0 0 0;
-      font-size: 12px;
+    .card-name {
+      margin: 0 0 4px 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a202c;
+    }
+
+    .card-location {
+      margin: 0 0 8px 0;
+      font-size: 13px;
       color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .chat-btn {
-      background-color: #e07a5f;
+    .card-bio {
+      margin: 0 0 16px 0;
+      font-size: 13px;
+      color: #475569;
+      flex-grow: 1;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .btn-say-hi {
+      flex: 1;
+      background-color: #2563eb;
       color: white;
       border: none;
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.2s ease;
-      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
     }
 
-    .chat-btn:hover {
-      background-color: #cf694e;
+    .btn-say-hello {
+      flex: 1;
+      background-color: #64748b;
+      color: white;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
     }
 
+    .btn-view-profile {
+      width: 100%;
+      background-color: #0ea5e9;
+      color: white;
+      border: none;
+      padding: 9px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Modal Styling for Pricing Packages */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .package-option {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+      margin: 10px 0;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+
+    .package-option:hover {
+      border-color: #2563eb;
+      background: #f0fdf4;
+    }
+
+    /* Payment Success Notification Box */
     #payment-success-box {
       display: none;
+      max-width: 500px;
+      margin: 20px auto;
       background-color: #ecfdf5;
       border: 1px solid #a7f3d0;
       border-radius: 12px;
-      padding: 14px;
+      padding: 16px;
       text-align: center;
-      margin-top: 14px;
-    }
-
-    .success-title {
-      color: #065f46;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .success-desc {
-      color: #1e293b;
-      font-size: 12px;
-      margin-top: 3px;
-    }
-
-    .success-badge {
-      color: #047857;
-      font-weight: 700;
-      font-size: 13px;
-      margin-top: 3px;
     }
   </style>
 </head>
 <body>
 
-  <div class="discover-container">
-    <div class="header">
-      <h2 class="title">Discover Profiles (<span id="profile-count">0</span> Online)</h2>
-      <button onclick="clearSavedData()" class="reset-btn" title="Reset payment data">🗑️ Reset Data</button>
+  <div class="top-bar">
+    <h1>Kmeet Discover (<span id="profile-count">0</span> Online)</h1>
+    <button onclick="clearSavedData()" class="reset-btn">🗑️ Reset Payment</button>
+  </div>
+
+  <!-- Green Payment Status Box -->
+  <div id="payment-success-box">
+    <div style="color: #065f46; font-weight: 700; font-size: 15px;">✔ Package Unlocked!</div>
+    <div style="color: #1e293b; font-size: 13px; margin-top: 4px;">
+      M-Pesa prompt sent to <strong id="mpesa-phone-display">07XXXXXXXX</strong>
     </div>
+    <div id="package-badge-desc" style="color: #047857; font-weight: 700; font-size: 14px; margin-top: 4px;">Active Package Unlocked</div>
+  </div>
 
-    <p style="font-size: 13px; color: #64748b; margin: 0 0 12px 0;">Browse active local members. Clicking chat requires KES 49 conversation unlock.</p>
+  <!-- Profile Grid -->
+  <div class="grid-container" id="profilesGrid">
+    <!-- Rendered via JavaScript -->
+  </div>
 
-    <!-- Dynamic Profiles List -->
-    <div class="profiles-scroll" id="profilesContainer">
-      <!-- Profiles rendered via JavaScript -->
-    </div>
-
-    <!-- Green Payment Status Box -->
-    <div id="payment-success-box">
-      <div class="success-title">✔ Package Unlocked!</div>
-      <div class="success-desc">
-        M-Pesa prompt sent to <strong id="mpesa-phone-display">07XXXXXXXX</strong>
+  <!-- Package Selection Modal -->
+  <div class="modal-overlay" id="packageModal">
+    <div class="modal-content">
+      <h3 style="margin-top: 0; color: #1e293b;">Unlock Conversation</h3>
+      <p style="font-size: 13px; color: #64748b;">Choose a package to message <span id="targetProfileName" style="font-weight: 600;"></span> (Note: Receiver pays KES 11 to reply):</p>
+      
+      <div class="package-option" onclick="selectPackage(49, '3 New Chats')">
+        <div style="font-weight: 700; color: #1e293b;">⚡ Starter Package: KES 49</div>
+        <div style="font-size: 12px; color: #64748b;">Includes 3 New Chats</div>
       </div>
-      <div class="success-badge">Added +3 Conversations (KES 49)</div>
+
+      <div class="package-option" onclick="selectPackage(100, '10 Chats Bonus')">
+        <div style="font-weight: 700; color: #2563eb;">🔥 Bonus Package: KES 100</div>
+        <div style="font-size: 12px; color: #64748b;">Includes 10 Chats Bonus</div>
+      </div>
+
+      <button onclick="closeModal()" style="background: #e2e8f0; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 10px;">Cancel</button>
     </div>
   </div>
 
   <script>
-    // Your list of local profiles
     const profiles = [
-      { name: "Brenda, 24", bio: "Intentional courtship", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" },
-      { name: "Brian, 27", bio: "Family-oriented & faithful", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" },
-      { name: "Amina, 23", bio: "Deep conversations & growth", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" },
-      { name: "Kevin, 26", bio: "Looking for a true partner", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" },
-      { name: "Sharon, 25", bio: "Faith, family & future", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" },
-      { name: "David, 28", bio: "Builder, reader & believer", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80" },
-      { name: "Mercy, 22", bio: "Kind-hearted and joyful", avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&auto=format&fit=crop&q=80" },
-      { name: "Daniel, 29", bio: "Seeking meaningful connection", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80" },
-      { name: "Faith, 24", bio: "Loves nature and deep talks", avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&auto=format&fit=crop&q=80" },
-      { name: "Victor, 27", bio: "Driven, honest & warm", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80" },
-      { name: "Joy, 23", bio: "Positive energy & purpose", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&auto=format&fit=crop&q=80" },
-      { name: "Emmanuel, 26", bio: "Christ-centered relationship", avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80" },
-      { name: "Cynthia, 25", bio: "Creative soul and listener", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" },
-      { name: "Ian, 28", bio: "Loyal and growth-focused", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80" },
-      { name: "Esther, 24", bio: "Family values & laughter", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80" },
-      { name: "Collins, 27", bio: "Calm, focused & caring", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" },
-      { name: "Rachel, 26", bio: "Intentional and genuine", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" },
-      { name: "Baraka, 29", bio: "Hardworking & romantic", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" },
-      { name: "Vivian, 23", bio: "Kindness and ambition", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" },
-      { name: "Dennis, 28", bio: "Ready for marriage journey", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80" }
+      { name: "juxleezbetshaz, 20s", location: "📍 Kenya", bio: "Hello! I am new to Kmeet.", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" },
+      { name: "Brian, 27", location: "📍 Nairobi", bio: "Family-oriented & faithful. Passionate about personal growth.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" },
+      { name: "Amina, 23", location: "📍 Mombasa", bio: "Value honesty, laughter, and calm evenings.", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" },
+      { name: "hg, 32", location: "📍 likoko", bio: "hhrr", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80" },
+      { name: "Sharon, 25", location: "📍 Nakuru", bio: "Faith, family & future. Appreciate kind gestures.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80" },
+      { name: "David, 28", location: "📍 Eldoret", bio: "Builder, reader & believer. Looking for purpose.", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&auto=format&fit=crop&q=80" },
+      { name: "Mercy, 22", location: "📍 Kisumu", bio: "Kind-hearted and joyful. Love outdoor walks.", avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop&q=80" },
+      { name: "Daniel, 29", location: "📍 Thika", bio: "Seeking a traditional, intentional courtship.", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&auto=format&fit=crop&q=80" },
+      { name: "Faith, 24", location: "📍 Kiambu", bio: "Loves nature and deep talks over coffee.", avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&auto=format&fit=crop&q=80" },
+      { name: "Victor, 27", location: "📍 Nyeri", bio: "Driven, honest & warm. Clear communication.", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&auto=format&fit=crop&q=80" },
+      { name: "Joy, 23", location: "📍 Machakos", bio: "Positive energy & purpose-driven.", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&auto=format&fit=crop&q=80" },
+      { name: "Emmanuel, 26", location: "📍 Meru", bio: "Christ-centered relationship builder.", avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80" },
+      { name: "Cynthia, 25", location: "📍 Kakamega", bio: "Creative soul and listener.", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" },
+      { name: "Ian, 28", location: "📍 Kisii", bio: "Loyal and growth-focused.", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80" },
+      { name: "Esther, 24", location: "📍 Malindi", bio: "Family values & laughter.", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&auto=format&fit=crop&q=80" },
+      { name: "Collins, 27", location: "📍 Kericho", bio: "Calm, focused & caring.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" },
+      { name: "Rachel, 26", location: "📍 Naivasha", bio: "Intentional and genuine.", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" },
+      { name: "Baraka, 29", location: "📍 Kitale", bio: "Hardworking & romantic.", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80" },
+      { name: "Vivian, 23", location: "📍 Embu", bio: "Kindness, ambition, and grace.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80" },
+      { name: "Dennis, 28", location: "📍 Eldoret", bio: "Ready for the marriage journey.", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&auto=format&fit=crop&q=80" }
     ];
 
+    let selectedTargetUser = "";
+
     document.addEventListener('DOMContentLoaded', () => {
-      // Render profile cards dynamically
-      const container = document.getElementById('profilesContainer');
+      const container = document.getElementById('profilesGrid');
       document.getElementById('profile-count').innerText = profiles.length;
 
-      container.innerHTML = profiles.map(p => `
-        <div class="profile-card">
-          <div class="profile-left">
-            <div class="avatar-wrapper">
-              <img src="${p.avatar}" alt="${p.name}" class="profile-avatar">
-              <span class="online-indicator"></span>
-            </div>
-            <div class="profile-info">
-              <h3>${p.name}</h3>
-              <p>${p.bio}</p>
-            </div>
+      container.innerHTML = profiles.map((p, index) => `
+        <div class="card">
+          <div class="card-img-wrapper">
+            <img src="${p.avatar}" alt="${p.name}" class="card-img">
+            <span class="online-badge">Online</span>
           </div>
-          <button onclick="handleChatClick('${p.name.split(',')[0]}')" class="chat-btn">💬 Chat</button>
+          <div class="card-body">
+            <h3 class="card-name">${p.name}</h3>
+            <p class="card-location">${p.location}</p>
+            <p class="card-bio">${p.bio}</p>
+            
+            <div class="card-actions">
+              <button onclick="openPackageModal('${p.name.split(',')[0]}')" class="btn-say-hi">Say Hi 💬</button>
+              <button onclick="openPackageModal('${p.name.split(',')[0]}')" class="btn-say-hello">Say Hello 👋</button>
+            </div>
+            
+            <button onclick="alert('Viewing full profile for ${p.name.split(',')[0]}')" class="btn-view-profile">View Profile 👤</button>
+          </div>
         </div>
       `).join('');
 
-      // Check payment status on load
       const hasPaid = localStorage.getItem('hasPaid');
       const savedPhone = localStorage.getItem('lastPhone');
+      const savedPackage = localStorage.getItem('packageDesc');
       if (hasPaid === 'true' && savedPhone) {
         document.getElementById('mpesa-phone-display').innerText = savedPhone;
+        document.getElementById('package-badge-desc').innerText = savedPackage || 'Active Package Unlocked';
         document.getElementById('payment-success-box').style.display = 'block';
       }
     });
 
-    // Clears local browser cache / storage
+    function openPackageModal(profileName) {
+      const hasPaid = localStorage.getItem('hasPaid');
+      if (hasPaid === 'true') {
+        alert(`Opening secure chat with ${profileName}... (Receiver pays KES 11 response fee)`);
+        return;
+      }
+      selectedTargetUser = profileName;
+      document.getElementById('targetProfileName').innerText = profileName;
+      document.getElementById('packageModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('packageModal').style.display = 'none';
+    }
+
+    function selectPackage(amount, packageDescription) {
+      closeModal();
+      triggerMpesaPayment(amount, packageDescription);
+    }
+
     function clearSavedData() {
       localStorage.clear();
       sessionStorage.clear();
-      
-      const successBox = document.getElementById('payment-success-box');
-      if (successBox) successBox.style.display = 'none';
-
+      document.getElementById('payment-success-box').style.display = 'none';
       alert("Payment status reset successfully!");
     }
 
-    // Triggered when user clicks Chat on any profile
-    function handleChatClick(profileName) {
-      const hasPaid = localStorage.getItem('hasPaid');
-
-      if (!hasPaid || hasPaid !== 'true') {
-        alert(`To chat with ${profileName}, you need to unlock conversations. Let's process the KES 49 M-Pesa payment.`);
-        triggerMpesaPayment();
-      } else {
-        alert(`Opening secure chat with ${profileName}...`);
-      }
-    }
-
-    // M-Pesa STK Push Trigger
-    async function triggerMpesaPayment() {
-      let inputPhone = prompt("Enter your Safaricom phone number for STK Push:", "072335...");
-
+    async function triggerMpesaPayment(amount, packageDescription) {
+      let inputPhone = prompt(`Enter your Safaricom phone number to pay KES ${amount} for ${packageDescription}:`, "072335...");
       if (!inputPhone) return;
 
       let formattedPhone = inputPhone.replace(/[^0-9]/g, '');
@@ -282,36 +360,28 @@
         formattedPhone = '254' + formattedPhone;
       }
 
-      const amount = 49;
-
       try {
-        const response = aliasFetch('/api/stkpush', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: formattedPhone, amount: amount })
-        }); // standard fetch call below
-
-        const fetchResp = await fetch('/api/stkpush', {
+        const response = await fetch('/api/stkpush', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ phone: formattedPhone, amount: amount }),
         });
 
-        const data = await fetchResp.json();
+        const data = await response.json();
 
-        if (fetchResp.ok && data.ResponseCode === '0') {
+        if (response.ok && data.ResponseCode === '0') {
           document.getElementById('mpesa-phone-display').innerText = inputPhone;
+          document.getElementById('package-badge-desc').innerText = `Unlocked: ${packageDescription} (KES ${amount})`;
           document.getElementById('payment-success-box').style.display = 'block';
 
           localStorage.setItem('hasPaid', 'true');
           localStorage.setItem('lastPhone', inputPhone);
+          localStorage.setItem('packageDesc', `Unlocked: ${packageDescription} (KES ${amount})`);
 
-          alert(`STK Push prompt sent to ${formattedPhone}! Check your phone to complete payment.`);
-
+          alert(`STK Push prompt sent to ${formattedPhone} for KES ${amount}! Enter PIN to complete.`);
         } else {
           alert('Payment Request Failed: ' + (data.error || data.errorMessage || 'Unable to complete request.'));
         }
-
       } catch (err) {
         console.error('Network Error:', err);
         alert('Failed to reach server. Check your connection.');
