@@ -15,18 +15,18 @@ app.use(cors({
 
 app.use(express.json());
 
-// Explicitly serve static files and folders from the project root directory
-app.use(express.static(path.join(__dirname)));
+// Since server.js is inside public, __dirname IS the public folder
+app.use(express.static(__dirname));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/img', express.static(path.join(__dirname, 'img')));
 
-// Serve myweb.html as the root entry point (landing/registration page)
+// Serve myweb.html as the root entry point
 app.get('/', (req, res) => {
   const filePath = path.join(__dirname, 'myweb.html');
   res.sendFile(filePath, (err) => {
     if (err) {
       console.error('File Send Error:', err.message);
-      res.status(404).send('<h1>myweb.html not found!</h1><p>Please make sure myweb.html is in the same folder as server.js.</p>');
+      res.status(404).send('<h1>myweb.html not found!</h1>');
     }
   });
 });
@@ -51,11 +51,11 @@ const getOAuthToken = async (req, res, next) => {
     next();
   } catch (error) {
     console.error('OAuth Token Error:', error.response ? error.response.data : error.message);
-    res.status(500).json({ error: 'Failed to authenticate with Safaricom. Check your .env credentials.' });
+    res.status(500).json({ error: 'Failed to authenticate with Safaricom.' });
   }
 };
 
-// Route to initiate STK Push (triggered later in your payment flow)
+// Route to initiate STK Push
 app.post('/api/stkpush', getOAuthToken, async (req, res) => {
   const { phone, amount } = req.body;
 
