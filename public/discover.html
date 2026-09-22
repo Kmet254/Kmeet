@@ -24,6 +24,32 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .btn-my-profile {
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.2s;
+    }
+
+    .btn-my-profile:hover {
+      background-color: #e2e8f0;
+    }
+
     .top-bar h1 {
       margin: 0;
       font-size: 20px;
@@ -223,7 +249,11 @@
 <body>
 
   <div class="top-bar">
-    <h1>Kmeet Discover (<span id="profile-count">0</span> Online)</h1>
+    <div class="top-bar-left">
+      <!-- Back to My Profile Button -->
+      <a href="/profile" class="btn-my-profile">← My Profile</a>
+      <h1>Kmeet Discover (<span id="profile-count">0</span> Online)</h1>
+    </div>
     <button onclick="clearSavedData()" class="reset-btn">🗑️ Reset Payment</button>
   </div>
 
@@ -245,7 +275,7 @@
   <div class="modal-overlay" id="packageModal">
     <div class="modal-content">
       <h3 style="margin-top: 0; color: #1e293b;">Unlock Conversation</h3>
-      <p style="font-size: 13px; color: #64748b;">Choose a package to message <span id="targetProfileName" style="font-weight: 600;"></span> (Note: Receiver pays KES 11 to reply):</p>
+      <p style="font-size: 13px; color: #64748b;">Choose a package to message <span id="targetProfileName" style="font-weight: 600;"></span> (Receiver pays KES 11 response fee):</p>
       
       <div class="package-option" onclick="selectPackage(49, '3 New Chats')">
         <div style="font-weight: 700; color: #1e293b;">⚡ Starter Package: KES 49</div>
