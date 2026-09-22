@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up - Kmeet</title>
+
+  <!-- Browser Tab Icon -->
+  <link rel="icon" type="image/png" href="/heart.png.png">
+  <base target="_self">
+
   <style>
     * {
       box-sizing: border-box;
@@ -106,10 +111,10 @@
     <h2>Create Your Account</h2>
     <form id="signupForm">
       <div class="form-group">
-        <label for="userId">User ID</label>
-        <input type="text" id="userId" required placeholder="Choose a unique User ID (e.g., alex_99)">
+        <label for="displayName">Full Name</label>
+        <input type="text" id="displayName" required placeholder="Enter your full name">
       </div>
-      <div class="form-group">
+      <div class="email-group form-group">
         <label for="email">Email</label>
         <input type="email" id="email" required placeholder="Enter your email">
       </div>
@@ -150,26 +155,31 @@
       e.preventDefault();
       errorMsg.textContent = "";
 
-      const userId = document.getElementById('userId').value.trim();
+      const name = document.getElementById('displayName').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
       try {
-        // 1. Create account
+        // 1. Create account in Firebase Auth
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // 2. Set Firebase Auth display name as User ID
-        await updateProfile(user, { displayName: userId });
+        // 2. Set Firebase Auth display name
+        await updateProfile(user, { displayName: name });
 
-        // 3. Initialize Firestore document with User ID
+        // 3. Initialize Firestore document
         await setDoc(doc(db, "users", user.uid), {
-          userId: userId,
+          name: name,
           email: email,
           createdAt: new Date().toISOString()
         }, { merge: true });
 
-        // 4. Redirect to onboarding
+        // 4. Set local session storage keys so homepage and app routing recognize the logged-in user state immediately
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userName', name);
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // 5. Redirect to onboarding / interests setup
         window.location.href = "interests.html";
       } catch (error) {
         errorMsg.textContent = error.message;
