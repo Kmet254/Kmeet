@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +14,198 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" type="image/png" href="img/star.png">
-    <link rel="stylesheet" href="myweb.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d0b0e;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Container */
+        .header {
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(rgba(13, 11, 14, 0.55), rgba(4, 9, 30, 0.75)), url('bg34.jpg');
+            background-color: lightgrey;
+            background-blend-mode: multiply;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: scroll;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px 40px 24px;
+        }
+
+        /* Navigation Layout */
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .main-nav h2 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #d1cdca;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .heart-icon {
+            color: #e07a5f;
+        }
+
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #e07a5f;
+        }
+
+        /* Hero Glass Card Container */
+        .hero-content {
+            text-align: center;
+            color: #ffffff;
+            max-width: 440px;
+            width: 100%;
+            margin: auto;
+            transform: none; 
+            
+            padding: 36px 28px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hero-content h2 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-family: 'Poppins', sans-serif;
+            color: #fceee9;
+        }
+
+        .hero-content p {
+            font-size: 13px;
+            color: #d1cdca;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.5;
+        }
+
+        /* Email Form & Input Styling */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .auth-form input[type="email"] {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .auth-form input[type="email"]:focus {
+            border-color: #e07a5f;
+        }
+
+        .auth-form input[type="email"]::placeholder {
+            color: #9a9499;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            background-color: #e07a5f;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.15s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #d0694e;
+            transform: translateY(-1px);
+        }
+
+        .login-option {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #b5ada7;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-link {
+            color: #ffffff;
+            text-decoration: underline;
+            margin-left: 5px;
+            font-weight: 500;
+        }
+
+        /* Smooth Page Transition */
+        body.fade-out {
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+
+        /* Hidden Class State */
+        .hero-content.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -22,7 +213,7 @@
         <nav class="main-nav">
             <div class="logo">
                 <a href="#">
-                    <img src="img/Kmeet.jpg.jfif" alt="Kmeet Logo" width="50" height="40">
+                    <img src="Kmeet.jpg.jfif" alt="Kmeet Logo" width="50" height="40">
                 </a>
             </div>
             
@@ -43,7 +234,6 @@
             <div id="guestState">
                 <h2>KMEET YOUR HEARTS TRUE ECHO</h2>
                 <p>Find a connection built for intentional,<br> romantic courtship</p>
-                <p>A sanctuary for intentional courtship</p>
                 <form id="signupForm" class="auth-form">
                     <div class="input-group">
                         <input 
@@ -53,7 +243,7 @@
                             required 
                         >
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Account</button>
+                    <button type="submit" class="btn-primary">Create Account</button>
                 </form>
 
                 <div class="login-option">
@@ -72,50 +262,44 @@
                     <div class="home-interests-tags" id="homeInterests"></div>
 
                     <div class="home-profile-actions">
-                         <a href="discover.html" class="btn btn-primary" style="margin-bottom: 6px;">
+                         <a href="discover.html" class="btn-primary" style="margin-bottom: 6px; display: inline-block; text-decoration: none; text-align: center;">
                             <i class="fa-solid fa-compass"></i> Discover People
                          </a>
-                         <a href="profile.html" class="btn btn-primary">View Full Profile</a>
-                         <button id="homeLogoutBtn" class="btn-link-logout">Log Out</button>
+                         <a href="profile.html" class="btn-primary" style="display: inline-block; text-decoration: none; text-align: center; margin-bottom: 6px;">View Full Profile</a>
+                         <button id="homeLogoutBtn" class="btn-link" style="background: none; border: none; cursor: pointer;">Log Out</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div></div> <!-- Spacer for flex alignment -->
     </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
             const guestState = document.getElementById('guestState');
             const userState = document.getElementById('userState');
             const navProfileLink = document.getElementById('navProfileLink');
 
-            // 1. Check LocalStorage for existing profile data
             const savedEmail = localStorage.getItem('userEmail');
             const savedAvatar = localStorage.getItem('userAvatar');
             const savedInterests = JSON.parse(localStorage.getItem('userInterests')) || [];
 
             if (savedEmail) {
-                // User is logged in: swap signup form with profile display
                 guestState.style.display = 'none';
                 userState.style.display = 'block';
 
-                // Set nav link to Profile page
                 navProfileLink.innerHTML = `<a href="profile.html">MY PROFILE</a>`;
 
-                // Set User Details
                 document.getElementById('homeUserEmail').textContent = savedEmail;
                 const username = savedEmail.split('@')[0];
                 document.getElementById('homeUserName').textContent = username.charAt(0).toUpperCase() + username.slice(1);
 
-                // Set User Avatar
                 if (savedAvatar) {
                     document.getElementById('homeUserAvatar').src = savedAvatar;
                 } else {
                     document.getElementById('homeUserAvatar').src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80';
                 }
 
-                // Render Interests Tags
                 const interestsContainer = document.getElementById('homeInterests');
                 if (savedInterests.length > 0) {
                     interestsContainer.innerHTML = savedInterests.slice(0, 4).map(item => `
@@ -124,7 +308,6 @@
                 }
             }
 
-            // 2. Signup Form Submission & Smooth Redirection
             const signupForm = document.getElementById('signupForm');
             if (signupForm) {
                 signupForm.addEventListener('submit', function(e) {
@@ -141,7 +324,6 @@
                 });
             }
 
-            // 3. Logout Action on Home Page
             const homeLogoutBtn = document.getElementById('homeLogoutBtn');
             if (homeLogoutBtn) {
                 homeLogoutBtn.addEventListener('click', function() {
@@ -153,4 +335,4 @@
     </script>
 
 </body>
-</html>''
+</html>
