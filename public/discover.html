@@ -155,7 +155,7 @@
     alert("Saved browser data cleared successfully!");
   }
 
-  // M-Pesa STK Push Trigger with Absolute URL
+  // M-Pesa STK Push Trigger with Relative URL
   async function triggerMpesaPayment() {
     let inputPhone = prompt("Enter your Safaricom phone number:", "0723535019");
 
@@ -175,8 +175,8 @@
     console.log(`Sending STK Push request for phone: ${formattedPhone}`);
 
     try {
-      // Using absolute URL to prevent network routing drops when navigating from login pages
-      const response = await fetch('http://localhost:5000/api/stkpush', {
+      // Using relative URL so it works seamlessly both locally and live on Render
+      const response = await fetch('/api/stkpush', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -211,7 +211,7 @@
 
     } catch (err) {
       console.error('Network / Firewall Error Details:', err);
-      alert('Failed to reach server. Make sure your server is running via run.bat.');
+      alert('Failed to reach server. Check your connection or server logs.');
     }
   }
   </script>
