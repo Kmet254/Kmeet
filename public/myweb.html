@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kmeet - Find Your Connection</title>
 
+    <!-- Browser Tab Icon (Favicon) -->
+    <link rel="icon" type="image/jpeg" href="Kmeet.jpg.jfif">
+
     <!-- Forces all anchor tags and form actions to stay in the current tab -->
     <base target="_self">
 
@@ -56,33 +59,11 @@
             max-width: 1100px;
         }
 
-        /* Fixed Modern Logo Styling */
-        .logo-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            background: linear-gradient(135deg, #e07a5f, #b85d43);
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 18px;
-            box-shadow: 0 2px 4px rgba(224, 122, 95, 0.3);
-        }
-
-        .logo-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
+        .logo img {
+            max-height: 50px;
+            width: auto;
+            object-fit: contain;
+            display: block;
         }
 
         .main-nav h2 {
@@ -240,9 +221,8 @@
     <section class="header">
         <nav class="main-nav">
             <div class="logo">
-                <a href="myweb.html" class="logo-link">
-                    <div class="logo-icon">K</div>
-                    <span class="logo-text">Kmeet</span>
+                <a href="myweb.html">
+                    <img src="Kmeet.jpg.jfif" alt="Kmeet Logo">
                 </a>
             </div>
             
