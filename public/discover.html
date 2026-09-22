@@ -1,455 +1,242 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discover - Kmeet</title>
-  <link rel="icon" type="image/png" href="/heart.png.png">
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
-      padding: 20px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Matches - Kmeet</title>
 
-    .top-bar {
-      max-width: 1200px;
-      margin: 0 auto 20px auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #ffffff;
-      padding: 15px 24px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+    <!-- Browser Tab Icon -->
+    <link rel="icon" type="image/png" href="/heart.png.png">
+    <base target="_self">
 
-    .top-bar-left {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .btn-my-profile {
-      background-color: #f1f5f9;
-      color: #334155;
-      border: 1px solid #cbd5e1;
-      padding: 8px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      border-radius: 20px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: background 0.2s;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d0b0e;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(rgba(13, 11, 14, 0.55), rgba(4, 9, 30, 0.75)), url('img/bg34.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
 
-    .btn-my-profile:hover {
-      background-color: #e2e8f0;
-    }
+        /* Top Navigation */
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px 24px;
+            background: rgba(13, 11, 14, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-    .logo-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
+        .logo img {
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
 
-    .logo-icon {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white;
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
-      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
-    }
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
 
-    .top-bar h1 {
-      margin: 0;
-      font-size: 18px;
-      color: #1a202c;
-    }
+        .nav-links ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
 
-    .online-count-text {
-      font-size: 13px;
-      font-weight: 400;
-      color: #64748b;
-    }
+        .nav-links a:hover {
+            color: #e07a5f;
+        }
 
-    .reset-btn {
-      background-color: #ef4444;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      border-radius: 20px;
-      cursor: pointer;
-    }
+        /* Discover Container */
+        .discover-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
 
-    /* Grid Layout */
-    .grid-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
+        .discover-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .card {
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
+        .discover-header h2 {
+            font-size: 26px;
+            color: #fceee9;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
 
-    .card-img-wrapper {
-      position: relative;
-      width: 100%;
-      height: 240px;
-    }
+        .discover-header p {
+            font-size: 13px;
+            color: #d1cdca;
+        }
 
-    .card-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        /* Matches Grid */
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding-bottom: 40px;
+        }
 
-    .online-badge {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background-color: #10b981;
-      color: white;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+        .match-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            overflow: hidden;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
 
-    .card-body {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
+        .match-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e07a5f;
+            margin-bottom: 14px;
+        }
 
-    .card-name {
-      margin: 0 0 4px 0;
-      font-size: 17px;
-      font-weight: 700;
-      color: #1a202c;
-    }
+        .match-card h3 {
+            font-size: 18px;
+            color: #fceee9;
+            margin-bottom: 6px;
+        }
 
-    .card-location {
-      margin: 0 0 8px 0;
-      font-size: 13px;
-      color: #64748b;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+        .match-card p {
+            font-size: 12px;
+            color: #d1cdca;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
 
-    .card-bio {
-      margin: 0 0 16px 0;
-      font-size: 13px;
-      color: #475569;
-      flex-grow: 1;
-    }
+        .btn-chat {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            background-color: #e07a5f;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.3s ease;
+        }
 
-    .card-actions {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .btn-say-hi {
-      flex: 1;
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .btn-say-hello {
-      flex: 1;
-      background-color: #64748b;
-      color: white;
-      border: none;
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .btn-view-profile {
-      width: 100%;
-      background-color: #0ea5e9;
-      color: white;
-      border: none;
-      padding: 9px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    /* Modal Styling for Pricing Packages */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal-content {
-      background: #fff;
-      padding: 24px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-
-    .package-option {
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 14px;
-      margin: 10px 0;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s;
-    }
-
-    .package-option:hover {
-      border-color: #2563eb;
-      background: #f0fdf4;
-    }
-
-    /* Payment Success Notification Box */
-    #payment-success-box {
-      display: none;
-      max-width: 500px;
-      margin: 20px auto;
-      background-color: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-    }
-  </style>
+        .btn-chat:hover {
+            background-color: #d0694e;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="top-bar">
-    <div class="top-bar-left">
-      <a href="profile.html" class="btn-my-profile">← My Profile</a>
-      
-      <!-- Clickable Logo leading to myweb.html -->
-      <a href="myweb.html" class="logo-link">
-        <div class="logo-icon">K</div>
-        <h1>Kmeet <span class="online-count-text">(<span id="profile-count">0</span> Online)</span></h1>
-      </a>
-    </div>
-    <button onclick="clearSavedData()" class="reset-btn">🗑️ Reset Payment</button>
-  </div>
-
-  <!-- Green Payment Status Box -->
-  <div id="payment-success-box">
-    <div style="color: #065f46; font-weight: 700; font-size: 15px;">✔ Package Unlocked!</div>
-    <div style="color: #1e293b; font-size: 13px; margin-top: 4px;">
-      M-Pesa prompt sent to <strong id="mpesa-phone-display">07XXXXXXXX</strong>
-    </div>
-    <div id="package-badge-desc" style="color: #047857; font-weight: 700; font-size: 14px; margin-top: 4px;">Active Package Unlocked</div>
-  </div>
-
-  <!-- Profile Grid -->
-  <div class="grid-container" id="profilesGrid">
-    <!-- Rendered via JavaScript -->
-  </div>
-
-  <!-- Package Selection Modal -->
-  <div class="modal-overlay" id="packageModal">
-    <div class="modal-content">
-      <h3 style="margin-top: 0; color: #1e293b;">Unlock Conversation</h3>
-      <p style="font-size: 13px; color: #64748b;">Choose a package to message <span id="targetProfileName" style="font-weight: 600;"></span> (Receiver pays KES 11 response fee):</p>
-      
-      <div class="package-option" onclick="selectPackage(49, '3 New Chats')">
-        <div style="font-weight: 700; color: #1e293b;">⚡ Starter Package: KES 49</div>
-        <div style="font-size: 12px; color: #64748b;">Includes 3 New Chats</div>
-      </div>
-
-      <div class="package-option" onclick="selectPackage(100, '10 Chats Bonus')">
-        <div style="font-weight: 700; color: #2563eb;">🔥 Bonus Package: KES 100</div>
-        <div style="font-size: 12px; color: #64748b;">Includes 10 Chats Bonus</div>
-      </div>
-
-      <button onclick="closeModal()" style="background: #e2e8f0; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 10px;">Cancel</button>
-    </div>
-  </div>
-
-  <script>
-    const profiles = [
-      { name: "juxleezbetshaz, 20s", location: "📍 Kenya", bio: "Hello! I am new to Kmeet.", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" },
-      { name: "Brian, 27", location: "📍 Nairobi", bio: "Family-oriented & faithful. Passionate about personal growth.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" },
-      { name: "Amina, 23", location: "📍 Mombasa", bio: "Value honesty, laughter, and calm evenings.", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" },
-      { name: "hg, 32", location: "📍 likoko", bio: "hhrr", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80" },
-      { name: "Sharon, 25", location: "📍 Nakuru", bio: "Faith, family & future. Appreciate kind gestures.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80" },
-      { name: "David, 28", location: "📍 Eldoret", bio: "Builder, reader & believer. Looking for purpose.", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&auto=format&fit=crop&q=80" },
-      { name: "Mercy, 22", location: "📍 Kisumu", bio: "Kind-hearted and joyful. Love outdoor walks.", avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop&q=80" },
-      { name: "Daniel, 29", location: "📍 Thika", bio: "Seeking a traditional, intentional courtship.", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&auto=format&fit=crop&q=80" },
-      { name: "Faith, 24", location: "📍 Kiambu", bio: "Loves nature and deep talks over coffee.", avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&auto=format&fit=crop&q=80" },
-      { name: "Victor, 27", location: "📍 Nyeri", bio: "Driven, honest & warm. Clear communication.", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&auto=format&fit=crop&q=80" },
-      { name: "Joy, 23", location: "📍 Machakos", bio: "Positive energy & purpose-driven.", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&auto=format&fit=crop&q=80" },
-      { name: "Emmanuel, 26", location: "📍 Meru", bio: "Christ-centered relationship builder.", avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80" },
-      { name: "Cynthia, 25", location: "📍 Kakamega", bio: "Creative soul and listener.", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" },
-      { name: "Ian, 28", location: "📍 Kisii", bio: "Loyal and growth-focused.", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80" },
-      { name: "Esther, 24", location: "📍 Malindi", bio: "Family values & laughter.", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&auto=format&fit=crop&q=80" },
-      { name: "Collins, 27", location: "📍 Kericho", bio: "Calm, focused & caring.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" },
-      { name: "Rachel, 26", location: "📍 Naivasha", bio: "Intentional and genuine.", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" },
-      { name: "Baraka, 29", location: "📍 Kitale", bio: "Hardworking & romantic.", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80" },
-      { name: "Vivian, 23", location: "📍 Embu", bio: "Kindness, ambition, and grace.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80" },
-      { name: "Dennis, 28", location: "📍 Eldoret", bio: "Ready for the marriage journey.", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&auto=format&fit=crop&q=80" }
-    ];
-
-    let selectedTargetUser = "";
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const container = document.getElementById('profilesGrid');
-      document.getElementById('profile-count').innerText = profiles.length;
-
-      container.innerHTML = profiles.map((p, index) => `
-        <div class="card">
-          <div class="card-img-wrapper">
-            <img src="${p.avatar}" alt="${p.name}" class="card-img">
-            <span class="online-badge">Online</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-name">${p.name}</h3>
-            <p class="card-location">${p.location}</p>
-            <p class="card-bio">${p.bio}</p>
-            
-            <div class="card-actions">
-              <button onclick="openPackageModal('${p.name.split(',')[0]}')" class="btn-say-hi">Say Hi 💬</button>
-              <button onclick="openPackageModal('${p.name.split(',')[0]}')" class="btn-say-hello">Say Hello 👋</button>
-            </div>
-            
-            <button onclick="alert('Viewing full profile for ${p.name.split(',')[0]}')" class="btn-view-profile">View Profile 👤</button>
-          </div>
+    <!-- Navigation Header -->
+    <nav class="main-nav">
+        <div class="logo">
+            <a href="myweb.html">
+                <img src="/Kmeet.jpg_2.jfif" alt="Kmeet Logo">
+            </a>
         </div>
-      `).join('');
+        <div class="nav-links">
+            <ul>
+                <li><a href="discover.html" style="color: #e07a5f;">DISCOVER</a></li>
+                <li><a href="profile.html">PROFILE</a></li>
+                <li><a href="myweb.html">HOME</a></li>
+            </ul>
+        </div>
+    </nav>
 
-      const hasPaid = localStorage.getItem('hasPaid');
-      const savedPhone = localStorage.getItem('lastPhone');
-      const savedPackage = localStorage.getItem('packageDesc');
-      if (hasPaid === 'true' && savedPhone) {
-        document.getElementById('mpesa-phone-display').innerText = savedPhone;
-        document.getElementById('package-badge-desc').innerText = savedPackage || 'Active Package Unlocked';
-        document.getElementById('payment-success-box').style.display = 'block';
-      }
-    });
+    <!-- Main Content -->
+    <div class="discover-container">
+        <div class="discover-header">
+            <h2>Intentional Profiles</h2>
+            <p>Connect securely with verified members looking for serious courtship.</p>
+        </div>
 
-    function openPackageModal(profileName) {
-      const hasPaid = localStorage.getItem('hasPaid');
-      if (hasPaid === 'true') {
-        alert(`Opening secure chat with ${profileName}... (Receiver pays KES 11 response fee)`);
-        return;
-      }
-      selectedTargetUser = profileName;
-      document.getElementById('targetProfileName').innerText = profileName;
-      document.getElementById('packageModal').style.display = 'flex';
-    }
+        <div class="matches-grid">
+            <!-- Brian's Profile Card -->
+            <div class="match-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80" alt="Brian" class="match-avatar">
+                <h3>Brian, 26</h3>
+                <p>Passionate about tech, deep conversations, and building an intentional, lifelong partnership.</p>
+                <button onclick="startChatWith('Brian')" class="btn-chat">
+                    <i class="fa-solid fa-comments"></i> Chat with Brian
+                </button>
+            </div>
 
-    function closeModal() {
-      document.getElementById('packageModal').style.display = 'none';
-    }
+            <!-- Additional Sample Match Card -->
+            <div class="match-card">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80" alt="David" class="match-avatar">
+                <h3>David, 28</h3>
+                <p>Enjoys outdoor adventures, faith-centered living, and meaningful family-oriented values.</p>
+                <button onclick="startChatWith('David')" class="btn-chat">
+                    <i class="fa-solid fa-comments"></i> Chat with David
+                </button>
+            </div>
+        </div>
+    </div>
 
-    function selectPackage(amount, packageDescription) {
-      closeModal();
-      triggerMpesaPayment(amount, packageDescription);
-    }
+    <script>
+        // Check session validity and route chat requests through the KES 11 fee gate
+        function startChatWith(recipientName) {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-    function clearSavedData() {
-      localStorage.clear();
-      sessionStorage.clear();
-      document.getElementById('payment-success-box').style.display = 'none';
-      alert("Payment status reset successfully!");
-    }
+            if (isLoggedIn !== 'true') {
+                alert("Please log in to start a secure conversation.");
+                window.location.href = 'login.html';
+                return;
+            }
 
-    async function triggerMpesaPayment(amount, packageDescription) {
-      let inputPhone = prompt(`Enter your Safaricom phone number to pay KES ${amount} for ${packageDescription}:`, "072335...");
-      if (!inputPhone) return;
+            // Save selected recipient
+            localStorage.setItem('chatRecipient', recipientName);
 
-      let formattedPhone = inputPhone.replace(/[^0-9]/g, '');
-      if (formattedPhone.startsWith('0')) {
-        formattedPhone = '254' + formattedPhone.substring(1);
-      } else if (formattedPhone.startsWith('7') || formattedPhone.startsWith('1')) {
-        formattedPhone = '254' + formattedPhone;
-      }
+            // Check if user has already paid the KES 11 response fee
+            const isPaid = localStorage.getItem('isPaid');
 
-      try {
-        const response = await fetch('/api/stkpush', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: formattedPhone, amount: amount }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.ResponseCode === '0') {
-          document.getElementById('mpesa-phone-display').innerText = inputPhone;
-          document.getElementById('package-badge-desc').innerText = `Unlocked: ${packageDescription} (KES ${amount})`;
-          document.getElementById('payment-success-box').style.display = 'block';
-
-          localStorage.setItem('hasPaid', 'true');
-          localStorage.setItem('lastPhone', inputPhone);
-          localStorage.setItem('packageDesc', `Unlocked: ${packageDescription} (KES ${amount})`);
-
-          alert(`STK Push prompt sent to ${formattedPhone} for KES ${amount}! Enter PIN to complete.`);
-        } else {
-          alert('Payment Request Failed: ' + (data.error || data.errorMessage || 'Unable to complete request.'));
+            if (isPaid === 'true') {
+                // If paid, go straight to chat room
+                window.location.href = 'chat.html';
+            } else {
+                // If not paid, redirect to the KES 11 payment prompt page
+                window.location.href = 'pay-fee.html';
+            }
         }
-      } catch (err) {
-        console.error('Network Error:', err);
-        alert('Failed to reach server. Check your connection.');
-      }
-    }
-  </script>
-
+    </script>
 </body>
 </html>
