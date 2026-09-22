@@ -11,7 +11,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -70,160 +70,139 @@
             color: #e07a5f;
         }
 
-        /* Discover Layout with Active Chats Sidebar */
-        .discover-layout {
+        /* Discover Layout Container */
+        .discover-container {
             max-width: 1200px;
             width: 100%;
             margin: 30px auto;
             padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 30px;
             flex: 1;
         }
 
-        @media (max-width: 900px) {
-            .discover-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .discover-main h2 {
-            font-size: 26px;
+        .discover-container h2 {
+            font-size: 24px;
             color: #fceee9;
-            margin-bottom: 8px;
-            font-family: 'Playfair Display', serif;
+            margin-bottom: 6px;
         }
 
-        .discover-main p {
+        .discover-container p.subtitle {
             font-size: 13px;
             color: #d1cdca;
             margin-bottom: 25px;
         }
 
-        /* Matches Grid */
+        /* Matches Grid - Fully scrollable wrapping all profiles */
         .matches-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 20px;
-            padding-bottom: 40px;
+            padding-bottom: 80px;
+            width: 100%;
         }
 
         .match-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            padding: 20px;
+            background: #ffffff;
+            color: #333333;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
+            position: relative;
         }
 
-        .match-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
+        .card-img-container {
+            width: 100%;
+            height: 240px;
+            position: relative;
+            background: #eaeaea;
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 2px solid #e07a5f;
-            margin-bottom: 12px;
         }
 
-        .match-card h3 {
+        .online-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #2ecc71;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .card-body {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-body h3 {
             font-size: 16px;
-            color: #fceee9;
+            color: #111;
             margin-bottom: 4px;
         }
 
-        .match-card p {
-            font-size: 11px;
-            color: #d1cdca;
-            margin-bottom: 14px;
-            line-height: 1.4;
+        .card-body .location {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
         }
 
-        .btn-chat {
-            width: 100%;
-            padding: 9px;
+        .card-body .bio {
+            font-size: 12px;
+            color: #444;
+            margin-bottom: 14px;
+            flex: 1;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .btn-action {
+            padding: 8px;
             border: none;
-            border-radius: 25px;
-            background-color: #e07a5f;
-            color: #ffffff;
+            border-radius: 6px;
             font-size: 12px;
             font-weight: 500;
             cursor: pointer;
+            text-align: center;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            transition: background 0.3s ease;
+            gap: 4px;
+            text-decoration: none;
         }
 
-        .btn-chat.unlocked {
-            background-color: #2ecc71;
+        .btn-say-hi {
+            background-color: #007bff;
+            color: white;
         }
 
-        .btn-chat:hover {
-            opacity: 0.9;
+        .btn-say-hello {
+            background-color: #6c757d;
+            color: white;
         }
 
-        /* Active Chats Sidebar */
-        .active-chats-sidebar {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 20px;
-            height: fit-content;
+        .btn-view-profile {
+            background-color: #17a2b8;
+            color: white;
+            width: 100%;
         }
 
-        .active-chats-sidebar h3 {
-            font-size: 16px;
-            color: #fceee9;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 10px;
-        }
-
-        .unlocked-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .unlocked-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.06);
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 13px;
-        }
-
-        .unlocked-item span {
-            color: #ffffff;
-            font-weight: 500;
-        }
-
-        .btn-resume {
-            background: #2ecc71;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-
-        .empty-chats {
-            font-size: 12px;
-            color: #a09a9f;
-            text-align: center;
-            padding: 10px 0;
+        .btn-action:hover {
+            opacity: 0.85;
         }
     </style>
 </head>
@@ -245,100 +224,90 @@
         </div>
     </nav>
 
-    <!-- Main Layout Container -->
-    <div class="discover-layout">
-        
-        <!-- Left: Discover Grid -->
-        <div class="discover-main">
-            <h2>Intentional Profiles</h2>
-            <p>Connect securely with verified members. Pay once per match to unlock direct communication.</p>
+    <!-- Main Container -->
+    <div class="discover-container">
+        <h2>Discover Matches</h2>
+        <p class="subtitle">Tap any profile to view details, connect, or respond with KES 11.</p>
 
-            <div class="matches-grid" id="matchesGrid">
-                <!-- Profile Cards will dynamically render here so none disappear unexpectedly -->
-            </div>
+        <div class="matches-grid" id="matchesGrid">
+            <!-- Dynamically populated profiles list -->
         </div>
-
-        <!-- Right: Unlocked Active Chats Sidebar -->
-        <div class="active-chats-sidebar">
-            <h3><i class="fa-solid fa-comments"></i> Unlocked Chats</h3>
-            <div id="unlockedList" class="unlocked-list">
-                <!-- Dynamically populated paid chats appear here -->
-            </div>
-        </div>
-
     </div>
 
     <script>
-        // Sample list of profiles available on the platform
+        // Expanded list of 35 profiles to ensure your page is fully packed and scrollable
         const profiles = [
-            { id: 'brian', name: 'Brian, 26', desc: 'Passionate about tech, deep conversations, and lifelong partnership.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80' },
-            { id: 'david', name: 'David, 28', desc: 'Enjoys outdoor adventures, faith-centered living, and family values.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80' },
-            { id: 'kevin', name: 'Kevin, 30', desc: 'Architect, music lover, looking for someone genuine to build with.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80' }
+            { id: 1, name: 'juxleezbetshaz, 20s', location: 'Kenya', bio: 'Hello! I am new to Kmeet.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 2, name: 'hg, 32', location: 'Likoko', bio: 'Looking forward to meeting genuine people here.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 3, name: 'Brian, 26', location: 'Nairobi', bio: 'Passionate about tech, deep conversations, and intentional partnership.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 4, name: 'Brenda, 24', location: 'Mombasa', bio: 'Loves interior design and faith-centered living.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 5, name: 'David, 28', location: 'Kisumu', bio: 'Enjoys outdoor hiking and entrepreneurship.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 6, name: 'Sharon, 25', location: 'Nakuru', bio: 'Healthcare professional ready to settle down.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 7, name: 'Kevin, 30', location: 'Eldoret', bio: 'Architect and music lover looking for shared core values.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 8, name: 'Mercy, 27', location: 'Thika', bio: 'Passionate educator valuing honesty and good communication.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 9, name: 'Collins, 29', location: 'Nairobi', bio: 'Software engineer seeking a serious relationship.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 10, name: 'Faith, 23', location: 'Kiambu', bio: 'Creative writer looking for an authentic connection.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 11, name: 'Ian, 27', location: 'Machakos', bio: 'Finance analyst who loves board games and cooking.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 12, name: 'Audrey, 26', location: 'Nyeri', bio: 'Digital marketer seeking purposeful adventure.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 13, name: 'Victor, 31', location: 'Kisumu', bio: 'Business owner looking for stability and family goals.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 14, name: 'Joy, 25', location: 'Mombasa', bio: 'Lawyer in training with a passion for volunteering.', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 15, name: 'Dennis, 29', location: 'Nakuru', bio: 'Civil engineer seeking a God-fearing partner.', img: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 16, name: 'Cynthia, 24', location: 'Nairobi', bio: 'Graphic designer who loves art galleries and music.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 17, name: 'Eric, 28', location: 'Eldoret', bio: 'Agripreneur passionate about sustainable living.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 18, name: 'Esther, 26', location: 'Thika', bio: 'Accountant looking for someone dependable and kind.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 19, name: 'Allan, 32', location: 'Nairobi', bio: 'Consultant valuing transparency and true partnership.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 20, name: 'Gloria, 25', location: 'Mombasa', bio: 'Pharmacist seeking mature relationship support.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 21, name: 'Samuel, 27', location: 'Kisumu', bio: 'Logistics coordinator enjoying travel and peace.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 22, name: 'Rachel, 27', location: 'Nakuru', bio: 'HR professional seeking long-term commitment.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 23, name: 'Mark, 29', location: 'Nairobi', bio: 'Fitness coach who loves weekend cycling and nutrition.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 24, name: 'Lilian, 26', location: 'Eldoret', bio: 'Baking enthusiast and accountant looking for love.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 25, name: 'Chris, 31', location: 'Mombasa', bio: 'Marine biologist passionate about coastal cleanups.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 26, name: 'Beatrice, 24', location: 'Kisumu', bio: 'Journalist who loves storytelling and poetry nights.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 27, name: 'George, 28', location: 'Nakuru', bio: 'Mechanical engineer looking for a serious match.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 28, name: 'Anita, 25', location: 'Thika', bio: 'Customer relations specialist who loves making friends.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 29, name: 'Peter, 30', location: 'Nairobi', bio: 'Data scientist seeking someone calm and understanding.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 30, name: 'Grace, 27', location: 'Kiambu', bio: 'Nurse with a warm heart and a passion for travel.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 31, name: 'Tony, 29', location: 'Machakos', bio: 'Musician and sound engineer looking for inspiration.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 32, name: 'Winnie, 24', location: 'Nyeri', bio: 'Chef who loves experimenting with traditional dishes.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 33, name: 'Moses, 32', location: 'Kisumu', bio: 'University lecturer seeking an intellectual connection.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 34, name: 'Pamela, 26', location: 'Mombasa', bio: 'Tour consultant who loves exploring wildlife parks.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 35, name: 'Steven, 28', location: 'Nakuru', bio: 'Real estate agent ready to build a lasting future.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80', online: true }
         ];
 
-        function renderDiscoverPage() {
+        function renderProfiles() {
             const grid = document.getElementById('matchesGrid');
-            const unlockedSidebar = document.getElementById('unlockedList');
-            
-            // Get array of unlocked chats from localStorage (stored as JSON)
-            const paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
-
-            // Render all profile cards
-            grid.innerHTML = profiles.map(profile => {
-                const isUnlocked = paidChats.includes(profile.name);
-                return `
-                    <div class="match-card">
-                        <img src="${profile.img}" alt="${profile.name}" class="match-avatar">
-                        <h3>${profile.name}</h3>
-                        <p>${profile.desc}</p>
-                        <button onclick="handleChatClick('${profile.name}')" class="btn-chat ${isUnlocked ? 'unlocked' : ''}">
-                            <i class="fa-solid ${isUnlocked ? 'fa-comment-dots' : 'fa-lock'}"></i> 
-                            ${isUnlocked ? 'Open Chat' : 'Chat (KES 11)'}
+            grid.innerHTML = profiles.map(p => `
+                <div class="match-card">
+                    <div class="card-img-container">
+                        <img src="${p.img}" alt="${p.name}">
+                        ${p.online ? '<span class="online-badge">ONLINE</span>' : ''}
+                    </div>
+                    <div class="card-body">
+                        <h3>${p.name}</h3>
+                        <div class="location"><i class="fa-solid fa-location-dot"></i> ${p.location}</div>
+                        <div class="bio">${p.bio}</div>
+                        <div class="card-actions">
+                            <button onclick="selectProfile('${p.name}')" class="btn-action btn-say-hi">
+                                <i class="fa-solid fa-hand"></i> Say Hi
+                            </button>
+                            <button onclick="selectProfile('${p.name}')" class="btn-action btn-say-hello">
+                                <i class="fa-solid fa-hands-clapping"></i> Hello
+                            </button>
+                        </div>
+                        <button onclick="selectProfile('${p.name}')" class="btn-action btn-view-profile">
+                            <i class="fa-solid fa-user"></i> View Profile
                         </button>
                     </div>
-                `;
-            }).join('');
-
-            // Render sidebar for active/unlocked chats
-            if (paidChats.length > 0) {
-                unlockedSidebar.innerHTML = paidChats.map(name => `
-                    <div class="unlocked-item">
-                        <span>${name}</span>
-                        <button onclick="openUnlockedChat('${name}')" class="btn-resume">Chat</button>
-                    </div>
-                `).join('');
-            } else {
-                unlockedSidebar.innerHTML = `<div class="empty-chats">No active chats unlocked yet. Tap any profile to start!</div>`;
-            }
+                </div>
+            `).join('');
         }
 
-        function handleChatClick(recipientName) {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            if (isLoggedIn !== 'true') {
-                alert("Please log in first.");
-                window.location.href = 'login.html';
-                return;
-            }
-
-            localStorage.setItem('chatRecipient', recipientName);
-
-            const paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
-
-            if (paidChats.includes(recipientName)) {
-                // Already paid for this person, go straight to chat
-                window.location.href = 'chat.html';
-            } else {
-                // Route to payment fee prompt for this specific match
-                window.location.href = 'pay-fee.html';
-            }
+        function selectProfile(name) {
+            localStorage.setItem('chatRecipient', name);
+            window.location.href = 'pay-fee.html';
         }
 
-        function openUnlockedChat(recipientName) {
-            localStorage.setItem('chatRecipient', recipientName);
-            window.location.href = 'chat.html';
-        }
-
-        document.addEventListener('DOMContentLoaded', renderDiscoverPage);
+        document.addEventListener('DOMContentLoaded', renderProfiles);
     </script>
 </body>
 </html>
