@@ -50,10 +50,11 @@
       background-color: #e2e8f0;
     }
 
-    .logo-container {
+    .logo-link {
       display: flex;
       align-items: center;
       gap: 10px;
+      text-decoration: none;
     }
 
     .logo-icon {
@@ -277,10 +278,12 @@
   <div class="top-bar">
     <div class="top-bar-left">
       <a href="profile.html" class="btn-my-profile">← My Profile</a>
-      <div class="logo-container">
+      
+      <!-- Clickable Logo leading to myweb.html -->
+      <a href="myweb.html" class="logo-link">
         <div class="logo-icon">K</div>
         <h1>Kmeet <span class="online-count-text">(<span id="profile-count">0</span> Online)</span></h1>
-      </div>
+      </a>
     </div>
     <button onclick="clearSavedData()" class="reset-btn">🗑️ Reset Payment</button>
   </div>
