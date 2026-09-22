@@ -1,220 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discover - M-Pesa Test</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f7fafc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Matches - Kmeet</title>
 
-    .discover-container {
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      width: 100%;
-      max-width: 450px;
-      padding: 20px;
-      box-sizing: border-box;
-    }
+    <!-- Browser Tab Icon -->
+    <link rel="icon" type="image/png" href="/heart.png.png">
+    <base target="_self">
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #edf2f7;
-      padding-bottom: 12px;
-      margin-bottom: 20px;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .title {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 700;
-      color: #1a202c;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d0b0e;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(rgba(13, 11, 14, 0.55), rgba(4, 9, 30, 0.75)), url('img/bg34.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
 
-    .btn-group {
-      display: flex;
-      gap: 8px;
-    }
+        /* Top Navigation */
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px 24px;
+            background: rgba(13, 11, 14, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-    .renew-btn {
-      background-color: #10b981;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      font-size: 14px;
-      font-weight: 700;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
+        .logo img {
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
 
-    .renew-btn:hover {
-      background-color: #059669;
-    }
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
 
-    .reset-btn {
-      background-color: #ef4444;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 600;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
+        .nav-links ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
 
-    .reset-btn:hover {
-      background-color: #dc2626;
-    }
+        .nav-links a:hover {
+            color: #e07a5f;
+        }
 
-    .content-body {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      color: #334155;
-      font-size: 15px;
-    }
+        /* Discover Layout with Active Chats Sidebar */
+        .discover-layout {
+            max-width: 1250px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            flex: 1;
+        }
 
-    #payment-success-box {
-      display: none;
-      background-color: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      border-radius: 16px;
-      padding: 16px;
-      text-align: center;
-      margin-top: 10px;
-    }
+        @media (max-width: 950px) {
+            .discover-layout {
+                grid-template-columns: 1fr;
+            }
+        }
 
-    .success-title {
-      color: #065f46;
-      font-weight: 700;
-      font-size: 16px;
-    }
+        .discover-main h2 {
+            font-size: 26px;
+            color: #fceee9;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
 
-    .success-desc {
-      color: #1e293b;
-      font-size: 14px;
-      margin-top: 6px;
-    }
+        .discover-main p {
+            font-size: 13px;
+            color: #d1cdca;
+            margin-bottom: 25px;
+        }
 
-    .success-badge {
-      color: #047857;
-      font-weight: 700;
-      font-size: 15px;
-      margin-top: 6px;
-    }
-  </style>
+        /* Matches Grid */
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            padding-bottom: 40px;
+        }
+
+        .match-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .match-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e07a5f;
+            margin-bottom: 12px;
+        }
+
+        .match-card h3 {
+            font-size: 16px;
+            color: #fceee9;
+            margin-bottom: 4px;
+        }
+
+        .match-card p {
+            font-size: 11px;
+            color: #d1cdca;
+            margin-bottom: 14px;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .btn-chat {
+            width: 100%;
+            padding: 9px;
+            border: none;
+            border-radius: 25px;
+            background-color: #e07a5f;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-chat.unlocked {
+            background-color: #2ecc71;
+        }
+
+        .btn-chat:hover {
+            opacity: 0.9;
+        }
+
+        /* Active Chats Sidebar */
+        .active-chats-sidebar {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .active-chats-sidebar h3 {
+            font-size: 16px;
+            color: #fceee9;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .unlocked-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .unlocked-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .unlocked-item span {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .btn-resume {
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .empty-chats {
+            font-size: 12px;
+            color: #a09a9f;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="discover-container">
-    <div class="header">
-      <h2 class="title">Discover Page</h2>
-      <div class="btn-group">
-        <button onclick="triggerMpesaPayment()" class="renew-btn">⚡ Renew</button>
-        <button onclick="clearSavedData()" class="reset-btn" title="Clear saved data">🗑️ Reset Data</button>
-      </div>
-    </div>
-
-    <div class="content-body">
-      <p>Welcome to the discover feed. Click the renew button above to test your M-Pesa STK push integration.</p>
-
-      <!-- Green Payment Status Box -->
-      <div id="payment-success-box">
-        <div class="success-title">✔ Package Unlocked!</div>
-        <div class="success-desc">
-          M-Pesa prompt sent to <strong id="mpesa-phone-display">07XXXXXXXX</strong>
+    <!-- Navigation Header -->
+    <nav class="main-nav">
+        <div class="logo">
+            <a href="myweb.html">
+                <img src="/Kmeet.jpg_2.jfif" alt="Kmeet Logo">
+            </a>
         </div>
-        <div class="success-badge">Added +3 Conversations (KES 49)</div>
-      </div>
+        <div class="nav-links">
+            <ul>
+                <li><a href="discover.html" style="color: #e07a5f;">DISCOVER</a></li>
+                <li><a href="profile.html">PROFILE</a></li>
+                <li><a href="myweb.html">HOME</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Layout Container -->
+    <div class="discover-layout">
+        
+        <!-- Left: Discover Grid -->
+        <div class="discover-main">
+            <h2>Intentional Profiles</h2>
+            <p>Connect securely with verified members looking for serious courtship. Pay once per match to unlock communication.</p>
+
+            <div class="matches-grid" id="matchesGrid">
+                <!-- Profile Cards dynamically rendered here -->
+            </div>
+        </div>
+
+        <!-- Right: Unlocked Active Chats Sidebar -->
+        <div class="active-chats-sidebar">
+            <h3><i class="fa-solid fa-comments"></i> Unlocked Chats</h3>
+            <div id="unlockedList" class="unlocked-list">
+                <!-- Paid chats appear here -->
+            </div>
+        </div>
+
     </div>
-  </div>
 
-  <script>
-  // Clears local browser cache / storage
-  function clearSavedData() {
-    localStorage.clear();
-    sessionStorage.clear();
-    
-    const successBox = document.getElementById('payment-success-box');
-    if (successBox) successBox.style.display = 'none';
+    <script>
+        // 22 Active Intentional Profiles
+        const profiles = [
+            { id: 1, name: 'Brian, 26', desc: 'Passionate about tech, deep conversations, and building an intentional partnership.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80' },
+            { id: 2, name: 'Brenda, 24', desc: 'Loves interior design, faith-centered living, and meaningful family-oriented values.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80' },
+            { id: 3, name: 'David, 28', desc: 'Enjoys outdoor hiking, entrepreneurship, and looking for a genuine lifelong companion.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80' },
+            { id: 4, name: 'Sharon, 25', desc: 'Healthcare professional seeking someone honest, supportive, and ready to settle down.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80' },
+            { id: 5, name: 'Kevin, 30', desc: 'Architect and music lover looking for a partner with shared core values.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80' },
+            { id: 6, name: 'Mercy, 27', desc: 'Passionate educator who values honesty, good communication, and shared laughter.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80' },
+            { id: 7, name: 'Collins, 29', desc: 'Software engineer seeking a serious relationship built on trust and mutual respect.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80' },
+            { id: 8, name: 'Faith, 23', desc: 'Creative writer looking for an authentic connection and someone loyal.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80' },
+            { id: 9, name: 'Ian, 27', desc: 'Finance analyst who loves board games, cooking, and purposeful courtship.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80' },
+            { id: 10, name: 'Audrey, 26', desc: 'Digital marketer seeking a purposeful partner for life’s adventures.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80' },
+            { id: 11, name: 'Victor, 31', desc: 'Business owner looking for stability, mutual growth, and family goals.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80' },
+            { id: 12, name: 'Joy, 25', desc: 'Lawyer in training with a passion for volunteering and quiet Sunday walks.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80' },
+            { id: 13, name: 'Dennis, 29', desc: 'Civil engineer seeking a God-fearing partner for an intentional future.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80' },
+            { id: 14, name: 'Cynthia, 24', desc: 'Graphic designer who loves art galleries, acoustic music, and deep conversations.', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80' },
+            { id: 15, name: 'Eric, 28', desc: 'Agripreneur passionate about sustainable living and finding a lifelong mate.', img: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&auto=format&fit=crop&q=80' },
+            { id: 16, name: 'Esther, 26', desc: 'Accountant looking for someone dependable, kind, and family-oriented.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80' },
+            { id: 17, name: 'Allan, 32', desc: 'Consultant valuing transparency, emotional intelligence, and true partnership.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80' },
+            { id: 18, name: 'Gloria, 25', desc: 'Pharmacist seeking a mature relationship built on mutual support.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80' },
+            { id: 19, name: 'Samuel, 27', desc: 'Logistics coordinator who enjoys traveling and building a peaceful home.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80' },
+            { id: 20, name: 'Diana, 24', desc: 'Event planner looking for an ambitious and intentional gentleman.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80' },
+            { id: 21, name: 'Felix, 30', desc: 'Pilot who loves exploring new cultures and settling down with the right person.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80' },
+            { id: 22, name: 'Rachel, 27', desc: 'HR professional seeking genuine chemistry and long-term commitment.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80' }
+        ];
 
-    console.log("Cleared Local Storage and Session Storage.");
-    alert("Saved browser data cleared successfully!");
-  }
+        function renderDiscoverPage() {
+            const grid = document.getElementById('matchesGrid');
+            const unlockedSidebar = document.getElementById('unlockedList');
+            
+            const paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
 
-  // M-Pesa STK Push Trigger with Absolute URL
-  async function triggerMpesaPayment() {
-    let inputPhone = prompt("Enter your Safaricom phone number:", "0723535019");
+            // Render all 22 profiles
+            grid.innerHTML = profiles.map(profile => {
+                const isUnlocked = paidChats.includes(profile.name);
+                return `
+                    <div class="match-card">
+                        <img src="${profile.img}" alt="${profile.name}" class="match-avatar">
+                        <h3>${profile.name}</h3>
+                        <p>${profile.desc}</p>
+                        <button onclick="handleChatClick('${profile.name}')" class="btn-chat ${isUnlocked ? 'unlocked' : ''}">
+                            <i class="fa-solid ${isUnlocked ? 'fa-comment-dots' : 'fa-lock'}"></i> 
+                            ${isUnlocked ? 'Open Chat' : 'Chat (KES 11)'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
 
-    if (!inputPhone) {
-      return;
-    }
-
-    let formattedPhone = inputPhone.replace(/[^0-9]/g, '');
-    if (formattedPhone.startsWith('0')) {
-      formattedPhone = '254' + formattedPhone.substring(1);
-    } else if (formattedPhone.startsWith('7') || formattedPhone.startsWith('1')) {
-      formattedPhone = '254' + formattedPhone;
-    }
-
-    const amount = 49;
-
-    console.log(`Sending STK Push request for phone: ${formattedPhone}`);
-
-    try {
-      // Using absolute URL to prevent network routing drops when navigating from login pages
-      const response = await fetch('http://localhost:5000/api/stkpush', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phone: formattedPhone,
-          amount: amount
-        }),
-      });
-
-      console.log("Server response status:", response.status);
-      const data = await response.json();
-      console.log("Server response payload:", data);
-
-      if (response.ok && data.ResponseCode === '0') {
-        const phoneDisplay = document.getElementById('mpesa-phone-display');
-        if (phoneDisplay) {
-          phoneDisplay.innerText = inputPhone;
+            // Render active sidebar chats
+            if (paidChats.length > 0) {
+                unlockedSidebar.innerHTML = paidChats.map(name => `
+                    <div class="unlocked-item">
+                        <span>${name}</span>
+                        <button onclick="openUnlockedChat('${name}')" class="btn-resume">Chat</button>
+                    </div>
+                `).join('');
+            } else {
+                unlockedSidebar.innerHTML = `<div class="empty-chats">No active chats unlocked yet. Tap any profile to start!</div>`;
+            }
         }
 
-        const successBox = document.getElementById('payment-success-box');
-        if (successBox) {
-          successBox.style.display = 'block';
+        function handleChatClick(recipientName) {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                alert("Please log in first.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            localStorage.setItem('chatRecipient', recipientName);
+
+            const paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
+
+            if (paidChats.includes(recipientName)) {
+                window.location.href = 'chat.html';
+            } else {
+                window.location.href = 'pay-fee.html';
+            }
         }
 
-        localStorage.setItem('lastPhone', formattedPhone);
-        alert(`STK Push prompt sent to ${formattedPhone}! Check your phone for the M-Pesa PIN prompt.`);
+        function openUnlockedChat(recipientName) {
+            localStorage.setItem('chatRecipient', recipientName);
+            window.location.href = 'chat.html';
+        }
 
-      } else {
-        alert('Payment Request Failed: ' + (data.error || data.errorMessage || 'Unable to complete request.'));
-      }
-
-    } catch (err) {
-      console.error('Network / Firewall Error Details:', err);
-      alert('Failed to reach server. Make sure your server is running via run.bat.');
-    }
-  }
-  </script>
-
+        document.addEventListener('DOMContentLoaded', renderDiscoverPage);
+    </script>
 </body>
 </html>
