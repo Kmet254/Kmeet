@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discover - M-Pesa Test</title>
+  <title>Discover - Kmeet</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -22,7 +22,7 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       width: 100%;
       max-width: 450px;
-      padding: 20px;
+      padding: 24px;
       box-sizing: border-box;
     }
 
@@ -42,33 +42,12 @@
       color: #1a202c;
     }
 
-    .btn-group {
-      display: flex;
-      gap: 8px;
-    }
-
-    .renew-btn {
-      background-color: #10b981;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      font-size: 14px;
-      font-weight: 700;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .renew-btn:hover {
-      background-color: #059669;
-    }
-
     .reset-btn {
       background-color: #ef4444;
       color: white;
       border: none;
-      padding: 8px 12px;
-      font-size: 13px;
+      padding: 6px 12px;
+      font-size: 12px;
       font-weight: 600;
       border-radius: 20px;
       cursor: pointer;
@@ -87,11 +66,49 @@
       font-size: 15px;
     }
 
+    .profile-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-info h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #1e293b;
+    }
+
+    .profile-info p {
+      margin: 4px 0 0 0;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .chat-btn {
+      background-color: #e07a5f;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .chat-btn:hover {
+      background-color: #cf694e;
+    }
+
     #payment-success-box {
       display: none;
       background-color: #ecfdf5;
       border: 1px solid #a7f3d0;
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 16px;
       text-align: center;
       margin-top: 10px;
@@ -100,20 +117,20 @@
     .success-title {
       color: #065f46;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .success-desc {
       color: #1e293b;
-      font-size: 14px;
-      margin-top: 6px;
+      font-size: 13px;
+      margin-top: 4px;
     }
 
     .success-badge {
       color: #047857;
       font-weight: 700;
-      font-size: 15px;
-      margin-top: 6px;
+      font-size: 14px;
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -121,15 +138,30 @@
 
   <div class="discover-container">
     <div class="header">
-      <h2 class="title">Discover Page</h2>
-      <div class="btn-group">
-        <button onclick="triggerMpesaPayment()" class="renew-btn">⚡ Renew</button>
-        <button onclick="clearSavedData()" class="reset-btn" title="Clear saved data">🗑️ Reset Data</button>
-      </div>
+      <h2 class="title">Discover Profiles</h2>
+      <button onclick="clearSavedData()" class="reset-btn" title="Reset payment data">🗑️ Reset Data</button>
     </div>
 
     <div class="content-body">
-      <p>Welcome to the discover feed. Click the renew button above to test your M-Pesa STK push integration.</p>
+      <p style="font-size: 13px; color: #64748b; margin: 0;">Browse profiles freely. Click chat to connect (requires KES 49 package unlock).</p>
+      
+      <!-- Profile 1 -->
+      <div class="profile-card">
+        <div class="profile-info">
+          <h3>Brenda, 24</h3>
+          <p>Looking for intentional courtship</p>
+        </div>
+        <button onclick="handleChatClick('Brenda')" class="chat-btn">💬 Chat</button>
+      </div>
+
+      <!-- Profile 2 -->
+      <div class="profile-card">
+        <div class="profile-info">
+          <h3>Brian, 27</h3>
+          <p>Faithful, ambitious & family-oriented</p>
+        </div>
+        <button onclick="handleChatClick('Brian')" class="chat-btn">💬 Chat</button>
+      </div>
 
       <!-- Green Payment Status Box -->
       <div id="payment-success-box">
@@ -143,77 +175,86 @@
   </div>
 
   <script>
-  // Clears local browser cache / storage
-  function clearSavedData() {
-    localStorage.clear();
-    sessionStorage.clear();
-    
-    const successBox = document.getElementById('payment-success-box');
-    if (successBox) successBox.style.display = 'none';
+    // Check payment status on load and show success box if previously paid
+    document.addEventListener('DOMContentLoaded', () => {
+      const hasPaid = localStorage.getItem('hasPaid');
+      const savedPhone = localStorage.getItem('lastPhone');
+      if (hasPaid === 'true' && savedPhone) {
+        document.getElementById('mpesa-phone-display').innerText = savedPhone;
+        document.getElementById('payment-success-box').style.display = 'block';
+      }
+    });
 
-    console.log("Cleared Local Storage and Session Storage.");
-    alert("Saved browser data cleared successfully!");
-  }
+    // Clears local browser cache / storage
+    function clearSavedData() {
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      const successBox = document.getElementById('payment-success-box');
+      if (successBox) successBox.style.display = 'none';
 
-  // M-Pesa STK Push Trigger with Relative URL
-  async function triggerMpesaPayment() {
-    let inputPhone = prompt("Enter your Safaricom phone number:", "0723535019");
-
-    if (!inputPhone) {
-      return;
+      alert("Payment status reset successfully!");
     }
 
-    let formattedPhone = inputPhone.replace(/[^0-9]/g, '');
-    if (formattedPhone.startsWith('0')) {
-      formattedPhone = '254' + formattedPhone.substring(1);
-    } else if (formattedPhone.startsWith('7') || formattedPhone.startsWith('1')) {
-      formattedPhone = '254' + formattedPhone;
-    }
+    // Triggered when user clicks Chat on any profile
+    function handleChatClick(profileName) {
+      const hasPaid = localStorage.getItem('hasPaid');
 
-    const amount = 49;
-
-    console.log(`Sending STK Push request for phone: ${formattedPhone}`);
-
-    try {
-      // Using relative URL so it works seamlessly both locally and live on Render
-      const response = await fetch('/api/stkpush', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phone: formattedPhone,
-          amount: amount
-        }),
-      });
-
-      console.log("Server response status:", response.status);
-      const data = await response.json();
-      console.log("Server response payload:", data);
-
-      if (response.ok && data.ResponseCode === '0') {
-        const phoneDisplay = document.getElementById('mpesa-phone-display');
-        if (phoneDisplay) {
-          phoneDisplay.innerText = inputPhone;
-        }
-
-        const successBox = document.getElementById('payment-success-box');
-        if (successBox) {
-          successBox.style.display = 'block';
-        }
-
-        localStorage.setItem('lastPhone', formattedPhone);
-        alert(`STK Push prompt sent to ${formattedPhone}! Check your phone for the M-Pesa PIN prompt.`);
-
+      if (!hasPaid || hasPaid !== 'true') {
+        alert(`To chat with ${profileName}, you need to unlock conversations. Let's process the KES 49 M-Pesa payment.`);
+        triggerMpesaPayment();
       } else {
-        alert('Payment Request Failed: ' + (data.error || data.errorMessage || 'Unable to complete request.'));
+        alert(`Opening secure chat with ${profileName}...`);
+      }
+    }
+
+    // M-Pesa STK Push Trigger
+    async function triggerMpesaPayment() {
+      let inputPhone = prompt("Enter your Safaricom phone number for STK Push:", "072335...");
+
+      if (!inputPhone) return;
+
+      let formattedPhone = inputPhone.replace(/[^0-9]/g, '');
+      if (formattedPhone.startsWith('0')) {
+        formattedPhone = '254' + formattedPhone.substring(1);
+      } else if (formattedPhone.startsWith('7') || formattedPhone.startsWith('1')) {
+        formattedPhone = '254' + formattedPhone;
       }
 
-    } catch (err) {
-      console.error('Network / Firewall Error Details:', err);
-      alert('Failed to reach server. Check your connection or server logs.');
+      const amount = 49;
+
+      try {
+        const response = await fetch('/api/stkpush', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            phone: formattedPhone,
+            amount: amount
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.ResponseCode === '0') {
+          document.getElementById('mpesa-phone-display').innerText = inputPhone;
+          document.getElementById('payment-success-box').style.display = 'block';
+
+          localStorage.setItem('hasPaid', 'true');
+          localStorage.setItem('lastPhone', inputPhone);
+
+          alert(`STK Push prompt sent to ${formattedPhone}! Check your phone to complete payment.`);
+
+        } else {
+          alert('Payment Request Failed: ' + (data.error || data.errorMessage || 'Unable to complete request.'));
+        }
+
+      } catch (err) {
+        console.error('Network Error:', err);
+        alert('Failed to reach server. Check your connection.');
+      }
     }
-  }
   </script>
 
 </body>
