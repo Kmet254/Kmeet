@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #0d0b0e;
@@ -29,6 +33,7 @@
             background-size: cover;
             padding: 20px;
         }
+
         .fee-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
@@ -41,23 +46,32 @@
             padding: 36px 28px;
             text-align: center;
         }
+
         .fee-card h2 {
             font-size: 20px;
             color: #fceee9;
             margin-bottom: 12px;
         }
+
         .fee-card p {
             font-size: 13px;
             color: #d1cdca;
             line-height: 1.5;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
+
+        .recipient-highlight {
+            color: #e07a5f;
+            font-weight: 600;
+        }
+
         .amount-badge {
             font-size: 24px;
             font-weight: 600;
             color: #e07a5f;
             margin-bottom: 20px;
         }
+
         .btn-pay {
             width: 100%;
             padding: 14px;
@@ -70,9 +84,11 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
+
         .btn-pay:hover {
             background-color: #27ae60;
         }
+
         .back-link {
             display: block;
             margin-top: 15px;
@@ -80,14 +96,17 @@
             color: #b5ada7;
             text-decoration: none;
         }
-        .back-link:hover { color: #fff; }
+
+        .back-link:hover {
+            color: #fff;
+        }
     </style>
 </head>
 <body>
 
     <div class="fee-card">
         <h2>Unlock Secure Chat</h2>
-        <p>Opening secure chat with Brian. A small intent response fee is required to verify genuine courtship interest.</p>
+        <p>Opening secure chat with <span id="recipientName" class="recipient-highlight">Brian</span>. A small KES 11 response fee is required to verify genuine courtship interest.</p>
         
         <div class="amount-badge">KES 11</div>
 
@@ -97,19 +116,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve current chat recipient from localStorage
+            const recipient = localStorage.getItem('chatRecipient') || 'Brian';
+            document.getElementById('recipientName').textContent = recipient;
+
             const payBtn = document.getElementById('payBtn');
 
             payBtn.addEventListener('click', function() {
                 payBtn.textContent = "Processing payment...";
                 payBtn.style.opacity = "0.7";
 
-                // Simulate payment gateway delay (or hook your M-Pesa API response here)
+                // Simulate payment gateway delay
                 setTimeout(function() {
-                    // 1. Mark payment as successful in localStorage
-                    localStorage.setItem('isPaid', 'true');
-                    localStorage.setItem('chatRecipient', 'Brian');
+                    // 1. Add current recipient to the paidChats array safely
+                    let paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
+                    if (!paidChats.includes(recipient)) {
+                        paidChats.push(recipient);
+                        localStorage.setItem('paidChats', JSON.stringify(paidChats));
+                    }
 
-                    // 2. Automatically redirect to the chat page
+                    // 2. Set legacy payment flag
+                    localStorage.setItem('isPaid', 'true');
+
+                    // 3. Redirect into the secure chat room
                     window.location.href = 'chat.html';
                 }, 1500);
             });
