@@ -70,11 +70,46 @@
             color: #e07a5f;
         }
 
+        /* Quota Banner */
+        .quota-banner {
+            background: rgba(224, 122, 95, 0.2);
+            border: 1px solid #e07a5f;
+            max-width: 1200px;
+            margin: 20px auto 0 auto;
+            width: calc(100% - 40px);
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .quota-banner span {
+            font-weight: 600;
+            color: #fceee9;
+        }
+
+        .btn-top-up {
+            background: #e07a5f;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .btn-top-up:hover {
+            opacity: 0.9;
+        }
+
         /* Discover Layout Container */
         .discover-container {
             max-width: 1200px;
             width: 100%;
-            margin: 30px auto;
+            margin: 20px auto;
             padding: 0 20px;
             flex: 1;
         }
@@ -91,7 +126,7 @@
             margin-bottom: 25px;
         }
 
-        /* Matches Grid - Fully scrollable wrapping all profiles */
+        /* Matches Grid */
         .matches-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -224,10 +259,16 @@
         </div>
     </nav>
 
+    <!-- Quota Status Banner -->
+    <div class="quota-banner">
+        <div>Chat Pass Status: <span id="quotaDisplay">0 chats remaining</span></div>
+        <button class="btn-top-up" onclick="forceOpenBundleModal()">Top Up Bundle</button>
+    </div>
+
     <!-- Main Container -->
     <div class="discover-container">
         <h2>Discover Matches</h2>
-        <p class="subtitle">Tap any profile to view details, connect, or respond with KES 11.</p>
+        <p class="subtitle">Tap any profile to initiate conversation or view details.</p>
 
         <div class="matches-grid" id="matchesGrid">
             <!-- Dynamically populated profiles list -->
@@ -235,7 +276,7 @@
     </div>
 
     <script>
-        // Expanded list of 35 profiles to ensure your page is fully packed and scrollable
+        // 35 Profiles List
         const profiles = [
             { id: 1, name: 'juxleezbetshaz, 20s', location: 'Kenya', bio: 'Hello! I am new to Kmeet.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: true },
             { id: 2, name: 'hg, 32', location: 'Likoko', bio: 'Looking forward to meeting genuine people here.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: true },
@@ -300,10 +341,66 @@
                     </div>
                 </div>
             `).join('');
+            
+            updateQuotaDisplay();
+        }
+
+        function updateQuotaDisplay() {
+            const quota = localStorage.getItem('chatQuota') || '0';
+            document.getElementById('quotaDisplay').innerText = `${quota} chats remaining`;
         }
 
         function selectProfile(name) {
-            localStorage.setItem('chatRecipient', name);
+            let chatQuota = parseInt(localStorage.getItem('chatQuota') || '0');
+
+            if (chatQuota > 0) {
+                // Deduct one chat from sender quota and proceed to chat room
+                chatQuota--;
+                localStorage.setItem('chatQuota', chatQuota.toString());
+                localStorage.setItem('activeChatRecipient', name);
+                alert(`Using 1 chat pass! You have ${chatQuota} chats remaining. Opening chat with ${name}...`);
+                window.location.href = 'chat.html';
+            } else {
+                // No quota left, show bundle package selection modal (KES 49 or KES 100)
+                showSenderBundleModal(name);
+            }
+        }
+
+        function forceOpenBundleModal() {
+            showSenderBundleModal('a member');
+        }
+
+        function showSenderBundleModal(recipientName) {
+            localStorage.setItem('chatRecipient', recipientName);
+            
+            let existingModal = document.getElementById('senderBundleModal');
+            if (existingModal) existingModal.remove();
+
+            const modalHTML = `
+                <div id="senderBundleModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);">
+                    <div style="background: #17141a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 30px; max-width: 400px; width: 90%; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+                        <h3 style="color: #fceee9; font-size: 20px; margin-bottom: 8px;">Choose Your Chat Bundle</h3>
+                        <p style="color: #d1cdca; font-size: 13px; margin-bottom: 20px;">You need an active chat pass to initiate contact. Select a package below:</p>
+                        
+                        <div onclick="selectSenderTier('49')" style="background: rgba(224,122,95,0.1); border: 1px solid #e07a5f; border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #fceee9; font-size: 15px;">Starter Package (KES 49)</div>
+                            <div style="font-size: 12px; color: #d1cdca;">Get 3 chats to initiate conversation.</div>
+                        </div>
+
+                        <div onclick="selectSenderTier('100')" style="background: rgba(46,204,113,0.1); border: 1px solid #2ecc71; border-radius: 10px; padding: 15px; margin-bottom: 20px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #fceee9; font-size: 15px;">Bonus VIP Package (KES 100)</div>
+                            <div style="font-size: 12px; color: #d1cdca;">Get 8 extended chats to reach multiple members.</div>
+                        </div>
+
+                        <button onclick="document.getElementById('senderBundleModal').remove()" style="background: transparent; border: none; color: #a09a9f; font-size: 13px; cursor: pointer; width: 100%; text-align: center;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function selectSenderTier(tier) {
+            localStorage.setItem('activePaymentTier', tier); // '49' or '100'
             window.location.href = 'pay-fee.html';
         }
 
