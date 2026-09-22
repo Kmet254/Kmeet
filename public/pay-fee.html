@@ -43,8 +43,8 @@
             padding: 15px;
             margin-bottom: 20px;
         }
-        .tier-box h3 { font-size: 18px; color: #fceee9; margin-bottom: 5px; }
-        .tier-box span { font-size: 14px; color: #e07a5f; font-weight: 600; }
+        .tier-box h3 { font-size: 16px; color: #fceee9; margin-bottom: 5px; }
+        .tier-box span { font-size: 18px; color: #e07a5f; font-weight: 600; display: block; margin-top: 4px; }
         .form-group { text-align: left; margin-bottom: 15px; }
         label { display: block; font-size: 12px; color: #d1cdca; margin-bottom: 6px; }
         input {
@@ -79,11 +79,11 @@
 <body>
 
     <div class="payment-card">
-        <h2>Unlock Secure Chat</h2>
-        <p id="paymentDescription">Processing transaction for your selected match connection.</p>
+        <h2 id="pageTitle">Unlock Secure Chat</h2>
+        <p id="paymentDescription">Please complete your M-Pesa transaction to proceed.</p>
 
         <div class="tier-box">
-            <h3 id="planTitle">Chat Pass</h3>
+            <h3 id="planTitle">Selected Package</h3>
             <span id="planPrice">KES --</span>
         </div>
 
@@ -99,27 +99,31 @@
     </div>
 
     <script>
-        // Determine which fee/tier is active based on local storage state or defaults
+        // Read active tier ('11', '49', or '100') and recipient name from storage
+        const currentTier = localStorage.getItem('activePaymentTier') || '11';
         const recipient = localStorage.getItem('chatRecipient') || 'Member';
-        const currentTier = localStorage.getItem('activePaymentTier') || '11'; // default to 11 if receiver fee
 
+        const pageTitleEl = document.getElementById('pageTitle');
         const titleEl = document.getElementById('planTitle');
         const priceEl = document.getElementById('planPrice');
         const descEl = document.getElementById('paymentDescription');
         const payBtn = document.getElementById('payButton');
 
         if (currentTier === '49') {
-            titleEl.innerText = "Starter Bundle (3 Chats)";
+            pageTitleEl.innerText = "Starter Chat Bundle";
+            titleEl.innerText = "Starter Package (3 Chats)";
             priceEl.innerText = "KES 49";
-            descEl.innerText = `Unlock your ability to start conversations with up to 3 different members.`;
+            descEl.innerText = "Unlock your ability to start conversations with up to 3 different members before needing to renew.";
             payBtn.innerText = "Pay KES 49 via M-Pesa";
         } else if (currentTier === '100') {
-            titleEl.innerText = "Bonus VIP Bundle (8 Chats)";
+            pageTitleEl.innerText = "Bonus VIP Chat Bundle";
+            titleEl.innerText = "Bonus Package (8 Chats)";
             priceEl.innerText = "KES 100";
-            descEl.innerText = `Unlock your extended pass to start conversations with up to 8 different members.`;
+            descEl.innerText = "Unlock your extended pass to start conversations with up to 8 different members before needing to renew.";
             payBtn.innerText = "Pay KES 100 via M-Pesa";
         } else {
-            // Standard KES 11 receiver response fee
+            // Default KES 11 receiver response fee
+            pageTitleEl.innerText = "Unlock Secure Chat";
             titleEl.innerText = `Connect with ${recipient}`;
             priceEl.innerText = "KES 11";
             descEl.innerText = `Pay the response fee to directly message ${recipient}.`;
@@ -134,17 +138,21 @@
                 return;
             }
 
-            // Simulate successful M-Pesa STK push response
-            alert(`STK Push sent to ${phone}. Simulating successful payment...`);
+            // Simulate M-Pesa STK push
+            alert(`M-Pesa STK push sent to ${phone}. Processing payment...`);
 
             if (currentTier === '49') {
+                // Grant sender 3 chats
                 localStorage.setItem('chatQuota', '3');
+                alert("Payment successful! You have unlocked 3 starter chats.");
                 window.location.href = 'discover.html';
             } else if (currentTier === '100') {
+                // Grant sender 8 chats
                 localStorage.setItem('chatQuota', '8');
+                alert("Payment successful! You have unlocked 8 bonus VIP chats.");
                 window.location.href = 'discover.html';
             } else {
-                // Record that this specific recipient's chat is unlocked for the user via KES 11
+                // Unlock individual receiver for KES 11 fee
                 let paidChats = JSON.parse(localStorage.getItem('paidChats') || '[]');
                 if (!paidChats.includes(recipient)) {
                     paidChats.push(recipient);
