@@ -21,7 +21,7 @@
       border-radius: 16px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       width: 100%;
-      max-width: 450px;
+      max-width: 500px;
       padding: 24px;
       box-sizing: border-box;
     }
@@ -32,7 +32,7 @@
       justify-content: space-between;
       border-bottom: 1px solid #edf2f7;
       padding-bottom: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .title {
@@ -58,33 +58,64 @@
       background-color: #dc2626;
     }
 
-    .content-body {
+    /* Scrollable Profile List Container */
+    .profiles-scroll {
+      max-height: 420px;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      color: #334155;
-      font-size: 15px;
+      gap: 12px;
+      padding-right: 4px;
     }
 
     .profile-card {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
-      padding: 15px;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
+    .profile-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+    }
+
+    .profile-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+    }
+
+    .online-indicator {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      background-color: #10b981;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+    }
+
     .profile-info h3 {
       margin: 0;
-      font-size: 16px;
+      font-size: 15px;
       color: #1e293b;
     }
 
     .profile-info p {
-      margin: 4px 0 0 0;
-      font-size: 13px;
+      margin: 3px 0 0 0;
+      font-size: 12px;
       color: #64748b;
     }
 
@@ -92,12 +123,13 @@
       background-color: #e07a5f;
       color: white;
       border: none;
-      padding: 8px 16px;
+      padding: 8px 14px;
       border-radius: 20px;
       font-weight: 500;
       font-size: 13px;
       cursor: pointer;
       transition: background-color 0.2s ease;
+      white-space: nowrap;
     }
 
     .chat-btn:hover {
@@ -109,28 +141,28 @@
       background-color: #ecfdf5;
       border: 1px solid #a7f3d0;
       border-radius: 12px;
-      padding: 16px;
+      padding: 14px;
       text-align: center;
-      margin-top: 10px;
+      margin-top: 14px;
     }
 
     .success-title {
       color: #065f46;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .success-desc {
       color: #1e293b;
-      font-size: 13px;
-      margin-top: 4px;
+      font-size: 12px;
+      margin-top: 3px;
     }
 
     .success-badge {
       color: #047857;
       font-weight: 700;
-      font-size: 14px;
-      margin-top: 4px;
+      font-size: 13px;
+      margin-top: 3px;
     }
   </style>
 </head>
@@ -138,45 +170,74 @@
 
   <div class="discover-container">
     <div class="header">
-      <h2 class="title">Discover Profiles</h2>
+      <h2 class="title">Discover Profiles (<span id="profile-count">0</span> Online)</h2>
       <button onclick="clearSavedData()" class="reset-btn" title="Reset payment data">🗑️ Reset Data</button>
     </div>
 
-    <div class="content-body">
-      <p style="font-size: 13px; color: #64748b; margin: 0;">Browse profiles freely. Click chat to connect (requires KES 49 package unlock).</p>
-      
-      <!-- Profile 1 -->
-      <div class="profile-card">
-        <div class="profile-info">
-          <h3>Brenda, 24</h3>
-          <p>Looking for intentional courtship</p>
-        </div>
-        <button onclick="handleChatClick('Brenda')" class="chat-btn">💬 Chat</button>
-      </div>
+    <p style="font-size: 13px; color: #64748b; margin: 0 0 12px 0;">Browse active local members. Clicking chat requires KES 49 conversation unlock.</p>
 
-      <!-- Profile 2 -->
-      <div class="profile-card">
-        <div class="profile-info">
-          <h3>Brian, 27</h3>
-          <p>Faithful, ambitious & family-oriented</p>
-        </div>
-        <button onclick="handleChatClick('Brian')" class="chat-btn">💬 Chat</button>
-      </div>
+    <!-- Dynamic Profiles List -->
+    <div class="profiles-scroll" id="profilesContainer">
+      <!-- Profiles rendered via JavaScript -->
+    </div>
 
-      <!-- Green Payment Status Box -->
-      <div id="payment-success-box">
-        <div class="success-title">✔ Package Unlocked!</div>
-        <div class="success-desc">
-          M-Pesa prompt sent to <strong id="mpesa-phone-display">07XXXXXXXX</strong>
-        </div>
-        <div class="success-badge">Added +3 Conversations (KES 49)</div>
+    <!-- Green Payment Status Box -->
+    <div id="payment-success-box">
+      <div class="success-title">✔ Package Unlocked!</div>
+      <div class="success-desc">
+        M-Pesa prompt sent to <strong id="mpesa-phone-display">07XXXXXXXX</strong>
       </div>
+      <div class="success-badge">Added +3 Conversations (KES 49)</div>
     </div>
   </div>
 
   <script>
-    // Check payment status on load and show success box if previously paid
+    // Your list of local profiles
+    const profiles = [
+      { name: "Brenda, 24", bio: "Intentional courtship", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" },
+      { name: "Brian, 27", bio: "Family-oriented & faithful", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" },
+      { name: "Amina, 23", bio: "Deep conversations & growth", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" },
+      { name: "Kevin, 26", bio: "Looking for a true partner", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" },
+      { name: "Sharon, 25", bio: "Faith, family & future", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" },
+      { name: "David, 28", bio: "Builder, reader & believer", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80" },
+      { name: "Mercy, 22", bio: "Kind-hearted and joyful", avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&auto=format&fit=crop&q=80" },
+      { name: "Daniel, 29", bio: "Seeking meaningful connection", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80" },
+      { name: "Faith, 24", bio: "Loves nature and deep talks", avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&auto=format&fit=crop&q=80" },
+      { name: "Victor, 27", bio: "Driven, honest & warm", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80" },
+      { name: "Joy, 23", bio: "Positive energy & purpose", avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&auto=format&fit=crop&q=80" },
+      { name: "Emmanuel, 26", bio: "Christ-centered relationship", avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80" },
+      { name: "Cynthia, 25", bio: "Creative soul and listener", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" },
+      { name: "Ian, 28", bio: "Loyal and growth-focused", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80" },
+      { name: "Esther, 24", bio: "Family values & laughter", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80" },
+      { name: "Collins, 27", bio: "Calm, focused & caring", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" },
+      { name: "Rachel, 26", bio: "Intentional and genuine", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" },
+      { name: "Baraka, 29", bio: "Hardworking & romantic", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" },
+      { name: "Vivian, 23", bio: "Kindness and ambition", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" },
+      { name: "Dennis, 28", bio: "Ready for marriage journey", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80" }
+    ];
+
     document.addEventListener('DOMContentLoaded', () => {
+      // Render profile cards dynamically
+      const container = document.getElementById('profilesContainer');
+      document.getElementById('profile-count').innerText = profiles.length;
+
+      container.innerHTML = profiles.map(p => `
+        <div class="profile-card">
+          <div class="profile-left">
+            <div class="avatar-wrapper">
+              <img src="${p.avatar}" alt="${p.name}" class="profile-avatar">
+              <span class="online-indicator"></span>
+            </div>
+            <div class="profile-info">
+              <h3>${p.name}</h3>
+              <p>${p.bio}</p>
+            </div>
+          </div>
+          <button onclick="handleChatClick('${p.name.split(',')[0]}')" class="chat-btn">💬 Chat</button>
+        </div>
+      `).join('');
+
+      // Check payment status on load
       const hasPaid = localStorage.getItem('hasPaid');
       const savedPhone = localStorage.getItem('lastPhone');
       if (hasPaid === 'true' && savedPhone) {
@@ -224,20 +285,21 @@
       const amount = 49;
 
       try {
-        const response = await fetch('/api/stkpush', {
+        const response = aliasFetch('/api/stkpush', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            phone: formattedPhone,
-            amount: amount
-          }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: formattedPhone, amount: amount })
+        }); // standard fetch call below
+
+        const fetchResp = await fetch('/api/stkpush', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: formattedPhone, amount: amount }),
         });
 
-        const data = await response.json();
+        const data = await fetchResp.json();
 
-        if (response.ok && data.ResponseCode === '0') {
+        if (fetchResp.ok && data.ResponseCode === '0') {
           document.getElementById('mpesa-phone-display').innerText = inputPhone;
           document.getElementById('payment-success-box').style.display = 'block';
 
