@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - Kmeet</title>
+  <title>Log In - Kmeet</title>
+
+  <!-- Browser Tab Icon -->
+  <link rel="icon" type="image/png" href="/heart.png.png">
+  <base target="_self">
+
   <style>
     * {
       box-sizing: border-box;
@@ -103,32 +108,27 @@
 <body>
 
   <div class="auth-card">
-    <h2>Create Your Account</h2>
-    <form id="signupForm">
-      <div class="form-group">
-        <label for="displayName">Full Name</label>
-        <input type="text" id="displayName" required placeholder="Enter your full name">
-      </div>
+    <h2>Welcome Back</h2>
+    <form id="loginForm">
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" required placeholder="Enter your email">
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" required placeholder="Create a password (min 6 chars)">
+        <input type="password" id="password" required placeholder="Enter your password">
       </div>
-      <button type="submit" class="auth-btn">Sign Up</button>
+      <button type="submit" class="auth-btn">Log In</button>
       <p id="errorMsg" class="error-msg"></p>
     </form>
     <div class="switch-link">
-      Already have an account? <a href="login.html">Log in</a>
+      Don't have an account? <a href="myweb.html">Sign up</a>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
@@ -141,36 +141,27 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    const signupForm = document.getElementById('signupForm');
+    const loginForm = document.getElementById('loginForm');
     const errorMsg = document.getElementById('errorMsg');
 
-    signupForm.addEventListener('submit', async (e) => {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorMsg.textContent = "";
 
-      const name = document.getElementById('displayName').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
       try {
-        // 1. Create account
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        // Authenticate with Firebase
+        await signInWithEmailAndPassword(auth, email, password);
 
-        // 2. Set Firebase Auth display name
-        await updateProfile(user, { displayName: name });
+        // Also update localStorage keys so legacy views/home page templates recognize the session immediately
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('isLoggedIn', 'true');
 
-        // 3. Initialize Firestore document
-        await setDoc(doc(db, "users", user.uid), {
-          name: name,
-          email: email,
-          createdAt: new Date().toISOString()
-        }, { merge: true });
-
-        // 4. Redirect to onboarding
-        window.location.href = "interests.html";
+        // Redirect to profile or discover page after successful login
+        window.location.href = "profile.html";
       } catch (error) {
         errorMsg.textContent = error.message;
       }
