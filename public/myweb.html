@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kmeet - Find Your Connection</title>
 
-    <!-- Browser Tab Icon (Favicon) from public folder -->
-    <link rel="icon" type="image/png" href="heart.png.png">
+    <!-- Browser Tab Icon (Favicon) -->
+    <link rel="icon" type="image/png" href="/heart.png.png">
 
     <!-- Forces all anchor tags and form actions to stay in the current tab -->
     <base target="_self">
@@ -137,6 +137,57 @@
             line-height: 1.5;
         }
 
+        /* Profile Preview Specific Styles */
+        .home-profile-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e07a5f;
+            transition: transform 0.2s ease;
+        }
+
+        .home-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .home-email {
+            font-size: 12px;
+            color: #9a9499;
+            margin-bottom: 10px;
+        }
+
+        .home-interests-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .home-tag {
+            background: rgba(224, 122, 95, 0.2);
+            color: #fceee9;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(224, 122, 95, 0.4);
+        }
+
+        .home-profile-actions {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 8px;
+        }
+
         /* Email Form & Input Styling */
         .auth-form {
             display: flex;
@@ -206,14 +257,6 @@
             transform: translateY(-8px);
             transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
         }
-
-        /* Hidden Class State */
-        .hero-content.hidden {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
@@ -222,7 +265,7 @@
         <nav class="main-nav">
             <div class="logo">
                 <a href="myweb.html">
-                    <img src="Kmeet.jpg_2.jfif" alt="Kmeet Logo">
+                    <img src="/Kmeet.jpg_2.jfif" alt="Kmeet Logo">
                 </a>
             </div>
             
@@ -240,6 +283,7 @@
         </nav>
         
         <div class="hero-content" id="heroCard">
+            <!-- STATE 1: GUEST / SIGNUP -->
             <div id="guestState">
                 <h2>KMEET YOUR HEARTS TRUE ECHO</h2>
                 <p>Find a connection built for intentional,<br> romantic courtship</p>
@@ -264,23 +308,26 @@
             <!-- STATE 2: LOGGED IN USER -->
             <div id="userState" style="display: none;">
                 <div class="home-profile-preview">
-                    <img id="homeUserAvatar" src="" alt="Profile Photo" class="home-avatar">
+                    <!-- Wrapped Avatar in a clickable link to profile page -->
+                    <a href="profile.html" title="View Full Profile">
+                        <img id="homeUserAvatar" src="" alt="Profile Photo" class="home-avatar">
+                    </a>
                     <h2 id="homeUserName">Welcome Back</h2>
                     <p id="homeUserEmail" class="home-email"></p>
                     
                     <div class="home-interests-tags" id="homeInterests"></div>
 
                     <div class="home-profile-actions">
-                         <a href="discover.html" class="btn-primary" style="margin-bottom: 6px; display: inline-block; text-decoration: none; text-align: center;">
+                         <a href="discover.html" class="btn-primary" style="text-decoration: none; text-align: center;">
                             <i class="fa-solid fa-compass"></i> Discover People
                          </a>
-                         <a href="profile.html" class="btn-primary" style="display: inline-block; text-decoration: none; text-align: center; margin-bottom: 6px;">View Full Profile</a>
-                         <button id="homeLogoutBtn" class="btn-link" style="background: none; border: none; cursor: pointer;">Log Out</button>
+                         <a href="profile.html" class="btn-primary" style="text-decoration: none; text-align: center;">View Full Profile</a>
+                         <button id="homeLogoutBtn" class="btn-link" style="background: none; border: none; cursor: pointer; color: #b5ada7; margin-top: 5px;">Log Out</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div></div> <!-- Spacer for flex alignment -->
+        <div></div> 
     </section>
 
     <script>
@@ -289,11 +336,13 @@
             const userState = document.getElementById('userState');
             const navProfileLink = document.getElementById('navProfileLink');
 
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
             const savedEmail = localStorage.getItem('userEmail');
             const savedAvatar = localStorage.getItem('userAvatar');
             const savedInterests = JSON.parse(localStorage.getItem('userInterests')) || [];
 
-            if (savedEmail) {
+            // Check if user is logged in persistently
+            if (isLoggedIn === 'true' && savedEmail) {
                 guestState.style.display = 'none';
                 userState.style.display = 'block';
 
@@ -324,6 +373,7 @@
                     
                     const emailInput = this.querySelector('input[type="email"]').value;
                     localStorage.setItem('userEmail', emailInput);
+                    localStorage.setItem('isLoggedIn', 'true'); // Persist login state
                     
                     document.body.classList.add('fade-out');
                     
