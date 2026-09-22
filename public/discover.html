@@ -50,10 +50,36 @@
       background-color: #e2e8f0;
     }
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+    }
+
     .top-bar h1 {
       margin: 0;
-      font-size: 20px;
+      font-size: 18px;
       color: #1a202c;
+    }
+
+    .online-count-text {
+      font-size: 13px;
+      font-weight: 400;
+      color: #64748b;
     }
 
     .reset-btn {
@@ -250,9 +276,11 @@
 
   <div class="top-bar">
     <div class="top-bar-left">
-      <!-- Fixed link pointing directly to profile.html -->
       <a href="profile.html" class="btn-my-profile">← My Profile</a>
-      <h1>Kmeet Discover (<span id="profile-count">0</span> Online)</h1>
+      <div class="logo-container">
+        <div class="logo-icon">K</div>
+        <h1>Kmeet <span class="online-count-text">(<span id="profile-count">0</span> Online)</span></h1>
+      </div>
     </div>
     <button onclick="clearSavedData()" class="reset-btn">🗑️ Reset Payment</button>
   </div>
