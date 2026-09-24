@@ -233,11 +233,32 @@
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: background 0.3s ease, transform 0.15s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .btn-primary:hover {
             background-color: #d0694e;
             transform: translateY(-1px);
+        }
+
+        .btn-secondary-explore {
+            background: rgba(224, 122, 95, 0.15);
+            border: 1px solid rgba(224, 122, 95, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .btn-secondary-explore:hover {
+            background: rgba(224, 122, 95, 0.3);
+        }
+
+        .divider-text {
+            font-size: 11px;
+            color: #9a9499;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .login-option {
@@ -290,6 +311,14 @@
             <div id="guestState">
                 <h2>KMEET YOUR HEARTS TRUE ECHO</h2>
                 <p>Find a connection built for intentional,<br> romantic courtship</p>
+                
+                <!-- NEW: Discover First Button -->
+                <a href="discover.html" class="btn-primary btn-secondary-explore">
+                    <i class="fa-solid fa-compass"></i> Explore Profiles First
+                </a>
+
+                <div class="divider-text">- or create account -</div>
+
                 <form id="signupForm" class="auth-form">
                     <div class="input-group">
                         <input 
