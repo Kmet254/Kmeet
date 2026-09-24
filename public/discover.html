@@ -270,7 +270,7 @@
     <!-- Main Container -->
     <div class="discover-container">
         <h2>Discover Matches</h2>
-        <p class="subtitle">Tap any profile to initiate conversation or view details.</p>
+        <p class="subtitle">Tap any profile to send a free intro greeting or view details.</p>
 
         <div class="matches-grid" id="matchesGrid">
             <!-- Dynamically populated profiles list -->
@@ -330,10 +330,10 @@
                         <div class="location"><i class="fa-solid fa-location-dot"></i> ${p.location}</div>
                         <div class="bio">${p.bio}</div>
                         <div class="card-actions">
-                            <button onclick="selectProfile('${p.name}')" class="btn-action btn-say-hi">
+                            <button onclick="openIntroChat('${p.name}', 'Hi')" class="btn-action btn-say-hi">
                                 <i class="fa-solid fa-hand"></i> Say Hi
                             </button>
-                            <button onclick="selectProfile('${p.name}')" class="btn-action btn-say-hello">
+                            <button onclick="openIntroChat('${p.name}', 'Hey')" class="btn-action btn-say-hello">
                                 <i class="fa-solid fa-hands-clapping"></i> Hello
                             </button>
                         </div>
@@ -371,20 +371,43 @@
             }
         }
 
-        function selectProfile(name) {
+        // Opens the restricted free Intro Chat popup modal
+        function openIntroChat(recipientName, greetingText) {
             if (!checkAuthAndProceed()) return;
 
-            let chatQuota = parseInt(localStorage.getItem('chatQuota') || '0');
+            let existingModal = document.getElementById('introChatModal');
+            if (existingModal) existingModal.remove();
 
-            if (chatQuota > 0) {
-                chatQuota--;
-                localStorage.setItem('chatQuota', chatQuota.toString());
-                localStorage.setItem('activeChatRecipient', name);
-                alert(`Using 1 chat pass! You have ${chatQuota} chats remaining. Opening chat with ${name}...`);
-                window.location.href = 'chat.html';
-            } else {
-                showSenderBundleModal(name);
-            }
+            const modalHTML = `
+                <div id="introChatModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);">
+                    <div style="background: #17141a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 25px; max-width: 420px; width: 90%; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #fceee9; font-size: 18px;">Chat with ${recipientName}</h3>
+                            <button onclick="document.getElementById('introChatModal').remove()" style="background:none; border:none; color:#aaa; font-size:16px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 12px; margin-bottom: 15px; max-height: 180px; overflow-y: auto;">
+                            <div style="font-size: 11px; color: #a09a9f; text-align: center; margin-bottom: 8px;">Free Intro Session Active (Restricted to Hi/Hey)</div>
+                            <div style="background: #e07a5f; color: white; padding: 8px 12px; border-radius: 8px; font-size: 13px; max-width: 80%; margin-left: auto; margin-bottom: 8px;">
+                                ${greetingText}
+                            </div>
+                            <div style="background: #2a262f; color: #fceee9; padding: 8px 12px; border-radius: 8px; font-size: 13px; max-width: 80%;">
+                                Hello there! Thanks for reaching out. 😊
+                            </div>
+                        </div>
+
+                        <p style="font-size: 12px; color: #d1cdca; margin-bottom: 15px; text-align: center;">
+                            Want to send more messages or continue the conversation? Top up a bundle!
+                        </p>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="document.getElementById('introChatModal').remove(); window.location.href='discover.html';" style="flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; padding: 10px; border-radius: 8px; font-size: 13px; cursor: pointer;">Back to Discover</button>
+                            <button onclick="document.getElementById('introChatModal').remove(); showSenderBundleModal('${recipientName}');" style="flex: 1; background: #e07a5f; border: none; color: white; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer;">Add More Chats</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
 
         function forceOpenBundleModal() {
@@ -402,11 +425,11 @@
                 <div id="senderBundleModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);">
                     <div style="background: #17141a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 30px; max-width: 400px; width: 90%; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
                         <h3 style="color: #fceee9; font-size: 20px; margin-bottom: 8px;">Choose Your Chat Bundle</h3>
-                        <p style="color: #d1cdca; font-size: 13px; margin-bottom: 20px;">You need an active chat pass to initiate contact. Select a package below:</p>
+                        <p style="color: #d1cdca; font-size: 13px; margin-bottom: 20px;">You need an active chat pass to unlock extended messaging. Select a package below:</p>
                         
                         <div onclick="selectSenderTier('49')" style="background: rgba(224,122,95,0.1); border: 1px solid #e07a5f; border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: pointer;">
                             <div style="font-weight: 600; color: #fceee9; font-size: 15px;">Starter Package (KES 49)</div>
-                            <div style="font-size: 12px; color: #d1cdca;">Get 3 chats to initiate conversation.</div>
+                            <div style="font-size: 12px; color: #d1cdca;">Get 3 chats to continue conversation.</div>
                         </div>
 
                         <div onclick="selectSenderTier('100')" style="background: rgba(46,204,113,0.1); border: 1px solid #2ecc71; border-radius: 10px; padding: 15px; margin-bottom: 20px; cursor: pointer;">
@@ -424,7 +447,6 @@
         function closeBundleModalAndStay() {
             const modal = document.getElementById('senderBundleModal');
             if (modal) modal.remove();
-            // Redirects or stays directly on the discover page view
             window.location.href = 'discover.html';
         }
 
