@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Kmeet</title>
+    <title>My Profile - Kmeet</title>
 
     <!-- Browser Tab Icon -->
     <link rel="icon" type="image/png" href="/heart.png.png">
@@ -11,7 +11,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -28,225 +28,361 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             background: linear-gradient(rgba(13, 11, 14, 0.55), rgba(4, 9, 30, 0.75)), url('img/bg34.jpg') no-repeat center center fixed;
             background-size: cover;
-            padding: 20px;
+        }
+
+        /* Top Navigation */
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px 24px;
+            background: rgba(13, 11, 14, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(224, 122, 95, 0.5);
+            display: block;
+        }
+
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #e07a5f;
+        }
+
+        /* Profile Layout Container */
+        .profile-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
         }
 
         .profile-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(23, 20, 26, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            width: 100%;
-            max-width: 440px;
-            padding: 36px 28px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
         }
 
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
+        .avatar-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 20px;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #e07a5f;
-            margin-bottom: 16px;
+            border: 3px solid #e07a5f;
         }
 
-        h2 {
+        .upload-btn-label {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #e07a5f;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: opacity 0.2s;
+        }
+
+        .upload-btn-label:hover {
+            opacity: 0.9;
+        }
+
+        #profileImageInput {
+            display: none;
+        }
+
+        .profile-name {
             font-size: 22px;
-            font-weight: 600;
             color: #fceee9;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        .profile-email {
+        .profile-meta {
             font-size: 13px;
             color: #d1cdca;
             margin-bottom: 20px;
         }
 
-        .interests-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            justify-content: center;
-            margin-bottom: 24px;
+        .profile-bio {
+            font-size: 14px;
+            color: #bbb;
+            max-width: 500px;
+            margin-bottom: 30px;
+            line-height: 1.5;
         }
 
-        .tag {
-            background: rgba(224, 122, 95, 0.2);
-            color: #fceee9;
-            font-size: 11px;
-            padding: 4px 10px;
+        .subscription-box {
+            background: rgba(224, 122, 95, 0.1);
+            border: 1px solid #e07a5f;
             border-radius: 12px;
-            border: 1px solid rgba(224, 122, 95, 0.4);
-        }
-
-        /* Action Buttons Grid */
-        .profile-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            padding: 15px 25px;
             width: 100%;
-        }
-
-        .btn-group-row {
+            max-width: 500px;
             display: flex;
-            gap: 10px;
-            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 13px;
         }
 
-        .btn-primary {
-            flex: 1;
-            padding: 12px;
+        .subscription-box span {
+            font-weight: 600;
+            color: #fceee9;
+        }
+
+        .btn-top-up {
+            background: #e07a5f;
+            color: white;
             border: none;
-            border-radius: 25px;
-            background-color: #e07a5f;
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background 0.3s ease;
+            font-size: 12px;
+            font-weight: 500;
         }
 
-        .btn-primary:hover {
-            background-color: #d0694e;
+        .btn-top-up:hover {
+            opacity: 0.9;
         }
 
-        .btn-secondary {
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .btn-main {
             flex: 1;
-            padding: 12px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 14px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: 500;
-            text-decoration: none;
             cursor: pointer;
+            text-align: center;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: background 0.3s ease;
+            gap: 6px;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .btn-discover {
+            background: #2a262f;
+            color: #fceee9;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .btn-logout {
-            background: none;
-            border: none;
-            color: #b5ada7;
-            font-size: 13px;
-            cursor: pointer;
-            margin-top: 15px;
-            text-decoration: underline;
+            background: #c0392b;
+            color: white;
         }
 
-        .btn-logout:hover {
-            color: #ffffff;
+        .btn-main:hover {
+            opacity: 0.85;
         }
     </style>
 </head>
 <body>
 
-    <div class="profile-card">
-        <img id="profileAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Profile Avatar" class="profile-avatar">
-        
-        <h2 id="profileName">Profile</h2>
-        <p id="profileEmail" class="profile-email">Loading details...</p>
-
-        <div class="interests-container" id="profileInterests">
-            <!-- Dynamic Interests Tags / Bio will load here -->
+    <!-- Navigation Header -->
+    <nav class="main-nav">
+        <div class="logo">
+            <a href="myweb.html" onclick="localStorage.removeItem('viewedProfile')">
+                <img src="/Kmeet.jpg_2.jfif" alt="Kmeet Logo">
+            </a>
         </div>
+        <div class="nav-links">
+            <ul>
+                <li><a href="discover.html" onclick="localStorage.removeItem('viewedProfile')">DISCOVER</a></li>
+                <li><a href="profile.html" style="color: #e07a5f;" onclick="localStorage.removeItem('viewedProfile')">PROFILE</a></li>
+                <li><a href="myweb.html" onclick="localStorage.removeItem('viewedProfile')">HOME</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <div class="profile-actions">
-            <!-- Row holding Discover and Home buttons -->
-            <div class="btn-group-row">
-                <a href="discover.html" class="btn-primary" onclick="localStorage.removeItem('viewedProfile')">
-                    <i class="fa-solid fa-compass"></i> Discover
-                </a>
-                <a href="myweb.html" class="btn-secondary" onclick="localStorage.removeItem('viewedProfile')">
-                    <i class="fa-solid fa-house"></i> Home
-                </a>
-            </div>
-
-            <!-- Log Out Action (Only shown or active for logged-in user session) -->
-            <button id="logoutBtn" class="btn-logout">Log Out</button>
+    <!-- Main Profile Container -->
+    <div class="profile-container">
+        <div class="profile-card" id="profileCardContent">
+            <!-- Dynamically populated profile info -->
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if we are viewing a specific match profile from discover.html
-            const viewedProfileData = localStorage.getItem('viewedProfile');
-
-            if (viewedProfileData) {
-                // Load the match's info
-                const match = JSON.parse(viewedProfileData);
-                document.getElementById('profileName').textContent = match.name;
-                document.getElementById('profileEmail').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${match.location}`;
-                document.getElementById('profileAvatar').src = match.img;
-                
-                // Use the bio container to show their bio
-                const interestsContainer = document.getElementById('profileInterests');
-                interestsContainer.innerHTML = `<p style="font-size: 13px; color: #fceee9; line-height: 1.5; padding: 0 10px;">${match.bio}</p>`;
-                
-                // If looking at someone else's profile, hide the log out button
-                const logoutBtn = document.getElementById('logoutBtn');
-                if (logoutBtn) logoutBtn.style.display = 'none';
-
-            } else {
-                // Otherwise, load the logged-in user's own profile session details
-                const savedEmail = localStorage.getItem('userEmail');
-                const savedName = localStorage.getItem('userName');
-                const savedAvatar = localStorage.getItem('userAvatar');
-                const savedInterests = JSON.parse(localStorage.getItem('userInterests')) || [];
-
-                if (savedEmail) {
-                    document.getElementById('profileEmail').textContent = savedEmail;
-                }
-
-                if (savedName) {
-                    document.getElementById('profileName').textContent = savedName;
-                } else if (savedEmail) {
-                    const derivedName = savedEmail.split('@')[0];
-                    document.getElementById('profileName').textContent = derivedName.charAt(0).toUpperCase() + derivedName.slice(1);
-                }
-
-                if (savedAvatar) {
-                    document.getElementById('profileAvatar').src = savedAvatar;
-                }
-
-                const interestsContainer = document.getElementById('profileInterests');
-                if (savedInterests.length > 0) {
-                    interestsContainer.innerHTML = savedInterests.map(tag => `<span class="tag">${tag}</span>`).join('');
-                } else {
-                    interestsContainer.innerHTML = `<span style="font-size: 12px; color: #9a9499;">No interests added yet.</span>`;
-                }
-
-                // Handle Logout
-                const logoutBtn = document.getElementById('logoutBtn');
-                if (logoutBtn) {
-                    logoutBtn.addEventListener('click', function() {
-                        localStorage.clear();
-                        window.location.href = 'myweb.html';
-                    });
-                }
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                alert("Please log in to view your profile.");
+                window.location.href = 'myweb.html';
+                return false;
             }
-        });
+            return true;
+        }
+
+        function renderProfileData() {
+            if (!checkAuth()) return;
+
+            // Check if viewing someone else's profile from Discover grid
+            const viewedProfileStr = localStorage.getItem('viewedProfile');
+            let profileData;
+
+            if (viewedProfileStr) {
+                profileData = JSON.parse(viewedProfileStr);
+            } else {
+                // Default current user profile data
+                profileData = {
+                    name: localStorage.getItem('userName') || 'Kmeet Member',
+                    location: localStorage.getItem('userLocation') || 'Kenya',
+                    bio: localStorage.getItem('userBio') || 'Looking for a genuine, respectful connection that could lead to something wonderful and lasting.',
+                    img: localStorage.getItem('userProfilePic') || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80',
+                    isOwnProfile: true
+                };
+            }
+
+            const quota = localStorage.getItem('chatQuota') || '0';
+
+            const card = document.getElementById('profileCardContent');
+            card.innerHTML = `
+                <div class="avatar-container">
+                    <img id="userAvatar" src="${profileData.img}" alt="Profile Picture">
+                    ${profileData.isOwnProfile ? `
+                        <label for="profileImageInput" class="upload-btn-label" title="Upload low-MB profile photo">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="profileImageInput" accept="image/*" onchange="compressAndUploadPic(event)">
+                    ` : ''}
+                </div>
+
+                <h2 class="profile-name">${profileData.name}</h2>
+                <div class="profile-meta"><i class="fa-solid fa-location-dot"></i> ${profileData.location}</div>
+                <div class="profile-bio">${profileData.bio}</div>
+
+                ${profileData.isOwnProfile ? `
+                    <div class="subscription-box">
+                        <div>Chat Pass Quota: <span id="profileQuotaDisplay">${quota} chats remaining</span></div>
+                        <button class="btn-top-up" onclick="window.location.href='pay-fee.html'">Top Up</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="discover.html" class="btn-main btn-discover" onclick="localStorage.removeItem('viewedProfile')">
+                            <i class="fa-solid fa-compass"></i> Discover
+                        </a>
+                        <button onclick="logoutUser()" class="btn-main btn-logout">
+                            <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                        </button>
+                    </div>
+                ` : `
+                    <div class="action-buttons">
+                        <a href="discover.html" class="btn-main btn-discover" onclick="localStorage.removeItem('viewedProfile')">
+                            <i class="fa-solid fa-arrow-left"></i> Back to Discover
+                        </a>
+                    </div>
+                `}
+            `;
+        }
+
+        // Automatic image compression function to keep file size low (under 1 MB)
+        function compressAndUploadPic(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Set max dimensions for optimal avatar size (400x400 pixels)
+                    const MAX_WIDTH = 400;
+                    const MAX_HEIGHT = 400;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Compress into JPEG format with 0.7 (70%) quality to minimize MB size drastically
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+
+                    // Save optimized low-MB image to storage
+                    localStorage.setItem('userProfilePic', compressedDataUrl);
+                    
+                    // Update preview immediately
+                    document.getElementById('userAvatar').src = compressedDataUrl;
+                    alert("Profile picture successfully compressed and updated!");
+                };
+            };
+        }
+
+        function logoutUser() {
+            if (confirm("Are you sure you want to log out?")) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('viewedProfile');
+                window.location.href = 'myweb.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderProfileData);
     </script>
 </body>
 </html>
