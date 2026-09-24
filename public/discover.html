@@ -278,43 +278,43 @@
     </div>
 
     <script>
-        // 35 Profiles List
+        // 35 Profiles with unique edited bios
         const profiles = [
-            { id: 1, name: 'juxleezbetshaz, 20s', location: 'Kenya', bio: 'Hello! I am new to Kmeet.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 2, name: 'hg, 32', location: 'Likoko', bio: 'Looking forward to meeting genuine people here.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 3, name: 'Brian, 26', location: 'Nairobi', bio: 'Passionate about tech, deep conversations, and intentional partnership.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 4, name: 'Brenda, 24', location: 'Mombasa', bio: 'Loves interior design and faith-centered living.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 5, name: 'David, 28', location: 'Kisumu', bio: 'Enjoys outdoor hiking and entrepreneurship.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 6, name: 'Sharon, 25', location: 'Nakuru', bio: 'Healthcare professional ready to settle down.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 7, name: 'Kevin, 30', location: 'Eldoret', bio: 'Architect and music lover looking for shared core values.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 8, name: 'Mercy, 27', location: 'Thika', bio: 'Passionate educator valuing honesty and good communication.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 9, name: 'Collins, 29', location: 'Nairobi', bio: 'Software engineer seeking a serious relationship.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 10, name: 'Faith, 23', location: 'Kiambu', bio: 'Creative writer looking for an authentic connection.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 11, name: 'Ian, 27', location: 'Machakos', bio: 'Finance analyst who loves board games and cooking.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 12, name: 'Audrey, 26', location: 'Nyeri', bio: 'Digital marketer seeking purposeful adventure.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 13, name: 'Victor, 31', location: 'Kisumu', bio: 'Business owner looking for stability and family goals.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 14, name: 'Joy, 25', location: 'Mombasa', bio: 'Lawyer in training with a passion for volunteering.', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 15, name: 'Dennis, 29', location: 'Nakuru', bio: 'Civil engineer seeking a God-fearing partner.', img: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 16, name: 'Cynthia, 24', location: 'Nairobi', bio: 'Graphic designer who loves art galleries and music.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 17, name: 'Eric, 28', location: 'Eldoret', bio: 'Agripreneur passionate about sustainable living.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 18, name: 'Esther, 26', location: 'Thika', bio: 'Accountant looking for someone dependable and kind.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 19, name: 'Allan, 32', location: 'Nairobi', bio: 'Consultant valuing transparency and true partnership.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 20, name: 'Gloria, 25', location: 'Mombasa', bio: 'Pharmacist seeking mature relationship support.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 21, name: 'Samuel, 27', location: 'Kisumu', bio: 'Logistics coordinator enjoying travel and peace.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 22, name: 'Rachel, 27', location: 'Nakuru', bio: 'HR professional seeking long-term commitment.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 23, name: 'Mark, 29', location: 'Nairobi', bio: 'Fitness coach who loves weekend cycling and nutrition.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 24, name: 'Lilian, 26', location: 'Eldoret', bio: 'Baking enthusiast and accountant looking for love.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 25, name: 'Chris, 31', location: 'Mombasa', bio: 'Marine biologist passionate about coastal cleanups.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 26, name: 'Beatrice, 24', location: 'Kisumu', bio: 'Journalist who loves storytelling and poetry nights.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 27, name: 'George, 28', location: 'Nakuru', bio: 'Mechanical engineer looking for a serious match.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 28, name: 'Anita, 25', location: 'Thika', bio: 'Customer relations specialist who loves making friends.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 29, name: 'Peter, 30', location: 'Nairobi', bio: 'Data scientist seeking someone calm and understanding.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 30, name: 'Grace, 27', location: 'Kiambu', bio: 'Nurse with a warm heart and a passion for travel.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 31, name: 'Tony, 29', location: 'Machakos', bio: 'Musician and sound engineer looking for inspiration.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 32, name: 'Winnie, 24', location: 'Nyeri', bio: 'Chef who loves experimenting with traditional dishes.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 33, name: 'Moses, 32', location: 'Kisumu', bio: 'University lecturer seeking an intellectual connection.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80', online: true },
-            { id: 34, name: 'Pamela, 26', location: 'Mombasa', bio: 'Tour consultant who loves exploring wildlife parks.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80', online: false },
-            { id: 35, name: 'Steven, 28', location: 'Nakuru', bio: 'Real estate agent ready to build a lasting future.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80', online: true }
+            { id: 1, name: 'juxleezbetshaz, 20s', location: 'Kenya', bio: 'Looking for a genuine, respectful connection that could lead to something wonderful and lasting.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 2, name: 'hg, 32', location: 'Likoko', bio: 'I appreciate quiet evenings, honest communication, and finding joy in everyday moments.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 3, name: 'Brian, 26', location: 'Nairobi', bio: 'Passionate about tech innovations, deep meaningful conversations, and building an intentional future.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 4, name: 'Brenda, 24', location: 'Mombasa', bio: 'Loves interior design, coastal breezes, and a balanced, faith-centered lifestyle.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 5, name: 'David, 28', location: 'Kisumu', bio: 'Outdoor hiking enthusiast, entrepreneur, and always eager to learn new perspectives.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 6, name: 'Sharon, 25', location: 'Nakuru', bio: 'Healthcare professional with a caring heart, looking for a loyal and understanding companion.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 7, name: 'Kevin, 30', location: 'Eldoret', bio: 'Architect who loves good acoustic music, weekend drives, and shared core life values.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 8, name: 'Mercy, 27', location: 'Thika', bio: 'Passionate educator who values transparency, mutual respect, and lots of laughter.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 9, name: 'Collins, 29', location: 'Nairobi', bio: 'Software engineer seeking a serious relationship built on trust and mutual support.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 10, name: 'Faith, 23', location: 'Kiambu', bio: 'Creative writer looking for an authentic connection and someone to explore poetry and art with.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 11, name: 'Ian, 27', location: 'Machakos', bio: 'Finance analyst who enjoys board game nights, weekend cooking, and ambitious goals.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 12, name: 'Audrey, 26', location: 'Nyeri', bio: 'Digital marketer seeking purposeful adventure, coffee dates, and deep talks.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 13, name: 'Victor, 31', location: 'Kisumu', bio: 'Business owner looking for family stability, mutual growth, and peace of mind.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 14, name: 'Joy, 25', location: 'Mombasa', bio: 'Lawyer in training with a big heart for community volunteering and coastal sunsets.', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 15, name: 'Dennis, 29', location: 'Nakuru', bio: 'Civil engineer seeking a supportive, God-fearing partner to build life together.', img: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 16, name: 'Cynthia, 24', location: 'Nairobi', bio: 'Graphic designer who loves gallery hopping, indie music, and spontaneous road trips.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 17, name: 'Eric, 28', location: 'Eldoret', bio: 'Agripreneur passionate about sustainable farming, nature, and honest relationships.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 18, name: 'Esther, 26', location: 'Thika', bio: 'Accountant looking for someone dependable, kind-hearted, and ready for commitment.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 19, name: 'Allan, 32', location: 'Nairobi', bio: 'Consultant valuing transparency, emotional intelligence, and true partnership.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 20, name: 'Gloria, 25', location: 'Mombasa', bio: 'Pharmacist seeking mature relationship support and genuine emotional connection.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 21, name: 'Samuel, 27', location: 'Kisumu', bio: 'Logistics coordinator enjoying calm weekends, good books, and peaceful travel.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 22, name: 'Rachel, 27', location: 'Nakuru', bio: 'HR professional seeking long-term commitment, mutual respect, and loyal friendship.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 23, name: 'Mark, 29', location: 'Nairobi', bio: 'Fitness coach who loves weekend cycling, proper nutrition, and active lifestyles.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 24, name: 'Lilian, 26', location: 'Eldoret', bio: 'Baking enthusiast and number cruncher looking for a sweet, sincere connection.', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 25, name: 'Chris, 31', location: 'Mombasa', bio: 'Marine biologist passionate about ocean conservation, photography, and exploring.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 26, name: 'Beatrice, 24', location: 'Kisumu', bio: 'Journalist who loves storytelling, evening poetry nights, and warm conversations.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 27, name: 'George, 28', location: 'Nakuru', bio: 'Mechanical engineer looking for a serious match who shares a passion for growth.', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 28, name: 'Anita, 25', location: 'Thika', bio: 'Customer relations specialist who loves making friends and spreading positive vibes.', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 29, name: 'Peter, 30', location: 'Nairobi', bio: 'Data scientist seeking someone calm, witty, and ready for an authentic relationship.', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 30, name: 'Grace, 27', location: 'Kiambu', bio: 'Nurse with a warm heart, a love for adventure, and a desire for true companionship.', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 31, name: 'Tony, 29', location: 'Machakos', bio: 'Musician and sound engineer looking for creative synergy and sincere love.', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 32, name: 'Winnie, 24', location: 'Nyeri', bio: 'Chef who loves experimenting with traditional dishes and sharing meals with loved ones.', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 33, name: 'Moses, 32', location: 'Kisumu', bio: 'University lecturer seeking an intellectual connection and lifelong partnership.', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80', online: true },
+            { id: 34, name: 'Pamela, 26', location: 'Mombasa', bio: 'Tour consultant who loves exploring wildlife parks, camping, and meeting new people.', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&auto=format&fit=crop&q=80', online: false },
+            { id: 35, name: 'Steven, 28', location: 'Nakuru', bio: 'Real estate agent ready to build a lasting future and a warm, loving home.', img: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80', online: true }
         ];
 
         function renderProfiles() {
@@ -414,11 +414,18 @@
                             <div style="font-size: 12px; color: #d1cdca;">Get 8 extended chats to reach multiple members.</div>
                         </div>
 
-                        <button onclick="document.getElementById('senderBundleModal').remove()" style="background: transparent; border: none; color: #a09a9f; font-size: 13px; cursor: pointer; width: 100%; text-align: center;">Cancel</button>
+                        <button onclick="closeBundleModalAndStay()" style="background: transparent; border: none; color: #a09a9f; font-size: 13px; cursor: pointer; width: 100%; text-align: center;">Cancel</button>
                     </div>
                 </div>
             `;
             document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeBundleModalAndStay() {
+            const modal = document.getElementById('senderBundleModal');
+            if (modal) modal.remove();
+            // Redirects or stays directly on the discover page view
+            window.location.href = 'discover.html';
         }
 
         function selectSenderTier(tier) {
