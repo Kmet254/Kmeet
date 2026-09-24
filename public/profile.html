@@ -150,7 +150,7 @@
             font-size: 14px;
             color: #bbb;
             max-width: 500px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             line-height: 1.5;
         }
 
@@ -164,7 +164,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-size: 13px;
         }
 
@@ -190,7 +190,15 @@
 
         .action-buttons {
             display: flex;
-            gap: 15px;
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons-row2 {
+            display: flex;
+            gap: 10px;
             width: 100%;
             max-width: 500px;
         }
@@ -215,6 +223,11 @@
             background: #2a262f;
             color: #fceee9;
             border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-edit {
+            background: #e07a5f;
+            color: white;
         }
 
         .btn-logout {
@@ -266,14 +279,12 @@
         function renderProfileData() {
             if (!checkAuth()) return;
 
-            // Check if viewing someone else's profile from Discover grid
             const viewedProfileStr = localStorage.getItem('viewedProfile');
             let profileData;
 
             if (viewedProfileStr) {
                 profileData = JSON.parse(viewedProfileStr);
             } else {
-                // Default current user profile data
                 profileData = {
                     name: localStorage.getItem('userName') || 'Kmeet Member',
                     location: localStorage.getItem('userLocation') || 'Kenya',
@@ -308,9 +319,14 @@
                     </div>
 
                     <div class="action-buttons">
+                        <button onclick="openEditBioModal()" class="btn-main btn-edit">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+                        </button>
                         <a href="discover.html" class="btn-main btn-discover" onclick="localStorage.removeItem('viewedProfile')">
                             <i class="fa-solid fa-compass"></i> Discover
                         </a>
+                    </div>
+                    <div class="action-buttons-row2">
                         <button onclick="logoutUser()" class="btn-main btn-logout">
                             <i class="fa-solid fa-right-from-bracket"></i> Log Out
                         </button>
@@ -323,6 +339,59 @@
                     </div>
                 `}
             `;
+        }
+
+        // Open Edit Bio & Name Modal Popup
+        function openEditBioModal() {
+            const currentName = localStorage.getItem('userName') || 'Kmeet Member';
+            const currentBio = localStorage.getItem('userBio') || 'Looking for a genuine, respectful connection that could lead to something wonderful and lasting.';
+
+            let existingModal = document.getElementById('editBioModal');
+            if (existingModal) existingModal.remove();
+
+            const modalHTML = `
+                <div id="editBioModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);">
+                    <div style="background: #17141a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 25px; max-width: 420px; width: 90%; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #fceee9; font-size: 18px;">Edit Your Profile</h3>
+                            <button onclick="document.getElementById('editBioModal').remove()" style="background:none; border:none; color:#aaa; font-size:16px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="font-size: 12px; color: #d1cdca; display: block; margin-bottom: 4px;">Display Name</label>
+                            <input type="text" id="editNameInput" value="${currentName}" style="width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 10px; color: white; font-family: 'Poppins', sans-serif; font-size: 13px;">
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="font-size: 12px; color: #d1cdca; display: block; margin-bottom: 4px;">Your Bio / About Me</label>
+                            <textarea id="editBioInput" rows="4" style="width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 10px; color: white; font-family: 'Poppins', sans-serif; font-size: 13px; resize: none;">${currentBio}</textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="document.getElementById('editBioModal').remove()" style="flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ccc; padding: 10px; border-radius: 8px; font-size: 13px; cursor: pointer;">Cancel</button>
+                            <button onclick="saveProfileBioChanges()" style="flex: 1; background: #e07a5f; border: none; color: white; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer;">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function saveProfileBioChanges() {
+            const newName = document.getElementById('editNameInput').value.trim();
+            const newBio = document.getElementById('editBioInput').value.trim();
+
+            if (!newName) {
+                alert("Name cannot be empty!");
+                return;
+            }
+
+            localStorage.setItem('userName', newName);
+            localStorage.setItem('userBio', newBio || 'Looking for a genuine, respectful connection.');
+
+            document.getElementById('editBioModal').remove();
+            renderProfileData();
+            alert("Profile successfully updated!");
         }
 
         // Automatic image compression function to keep file size low (under 1 MB)
@@ -339,7 +408,6 @@
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
 
-                    // Set max dimensions for optimal avatar size (400x400 pixels)
                     const MAX_WIDTH = 400;
                     const MAX_HEIGHT = 400;
                     let width = img.width;
@@ -361,13 +429,9 @@
                     canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Compress into JPEG format with 0.7 (70%) quality to minimize MB size drastically
                     const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
 
-                    // Save optimized low-MB image to storage
                     localStorage.setItem('userProfilePic', compressedDataUrl);
-                    
-                    // Update preview immediately
                     document.getElementById('userAvatar').src = compressedDataUrl;
                     alert("Profile picture successfully compressed and updated!");
                 };
