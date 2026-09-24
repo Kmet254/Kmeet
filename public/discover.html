@@ -364,8 +364,6 @@
         }
 
         function viewProfile(profileId) {
-            if (!checkAuthAndProceed()) return;
-
             const profile = profiles.find(p => p.id === profileId);
             if (profile) {
                 localStorage.setItem('viewedProfile', JSON.stringify(profile));
