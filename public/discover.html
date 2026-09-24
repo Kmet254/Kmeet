@@ -36,7 +36,7 @@
             height: 45px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(224, 122, 95, 0.5); /* Optional soft border matching your theme */
+            border: 2px solid rgba(224, 122, 95, 0.5);
             display: block;
         }
 
@@ -358,7 +358,20 @@
             document.getElementById('quotaDisplay').innerText = `${quota} chats remaining`;
         }
 
+        function checkAuthAndProceed(callback) {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                alert("Please create an account or log in to interact with profiles!");
+                localStorage.setItem('redirectAfterAuth', 'discover.html');
+                window.location.href = 'myweb.html';
+                return false;
+            }
+            return true;
+        }
+
         function selectProfile(name) {
+            if (!checkAuthAndProceed()) return;
+
             let chatQuota = parseInt(localStorage.getItem('chatQuota') || '0');
 
             if (chatQuota > 0) {
@@ -375,6 +388,7 @@
         }
 
         function forceOpenBundleModal() {
+            if (!checkAuthAndProceed()) return;
             showSenderBundleModal('a member');
         }
 
