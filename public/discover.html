@@ -31,14 +31,6 @@
             background: linear-gradient(rgba(13, 11, 14, 0.55), rgba(4, 9, 30, 0.75)), url('img/bg34.jpg') no-repeat center center fixed;
             background-size: cover;
         }
-        .logo img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(224, 122, 95, 0.5);
-            display: block;
-        }
 
         /* Top Navigation */
         .main-nav {
@@ -53,9 +45,11 @@
         }
 
         .logo img {
-            max-height: 40px;
-            width: auto;
-            object-fit: contain;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(224, 122, 95, 0.5);
             display: block;
         }
 
@@ -254,15 +248,15 @@
     <!-- Navigation Header -->
     <nav class="main-nav">
         <div class="logo">
-            <a href="myweb.html">
+            <a href="myweb.html" onclick="localStorage.removeItem('viewedProfile')">
                 <img src="/Kmeet.jpg_2.jfif" alt="Kmeet Logo">
             </a>
         </div>
         <div class="nav-links">
             <ul>
-                <li><a href="discover.html" style="color: #e07a5f;">DISCOVER</a></li>
-                <li><a href="profile.html">PROFILE</a></li>
-                <li><a href="myweb.html">HOME</a></li>
+                <li><a href="discover.html" style="color: #e07a5f;" onclick="localStorage.removeItem('viewedProfile')">DISCOVER</a></li>
+                <li><a href="profile.html" onclick="localStorage.removeItem('viewedProfile')">PROFILE</a></li>
+                <li><a href="myweb.html" onclick="localStorage.removeItem('viewedProfile')">HOME</a></li>
             </ul>
         </div>
     </nav>
@@ -343,7 +337,7 @@
                                 <i class="fa-solid fa-hands-clapping"></i> Hello
                             </button>
                         </div>
-                        <button onclick="selectProfile('${p.name}')" class="btn-action btn-view-profile">
+                        <button onclick="viewProfile(${p.id})" class="btn-action btn-view-profile">
                             <i class="fa-solid fa-user"></i> View Profile
                         </button>
                     </div>
@@ -358,7 +352,7 @@
             document.getElementById('quotaDisplay').innerText = `${quota} chats remaining`;
         }
 
-        function checkAuthAndProceed(callback) {
+        function checkAuthAndProceed() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (!isLoggedIn) {
                 alert("Please create an account or log in to interact with profiles!");
@@ -369,20 +363,28 @@
             return true;
         }
 
+        function viewProfile(profileId) {
+            if (!checkAuthAndProceed()) return;
+
+            const profile = profiles.find(p => p.id === profileId);
+            if (profile) {
+                localStorage.setItem('viewedProfile', JSON.stringify(profile));
+                window.location.href = 'profile.html';
+            }
+        }
+
         function selectProfile(name) {
             if (!checkAuthAndProceed()) return;
 
             let chatQuota = parseInt(localStorage.getItem('chatQuota') || '0');
 
             if (chatQuota > 0) {
-                // Deduct one chat from sender quota and proceed to chat room
                 chatQuota--;
                 localStorage.setItem('chatQuota', chatQuota.toString());
                 localStorage.setItem('activeChatRecipient', name);
                 alert(`Using 1 chat pass! You have ${chatQuota} chats remaining. Opening chat with ${name}...`);
                 window.location.href = 'chat.html';
             } else {
-                // No quota left, show bundle package selection modal (KES 49 or KES 100)
                 showSenderBundleModal(name);
             }
         }
@@ -422,7 +424,7 @@
         }
 
         function selectSenderTier(tier) {
-            localStorage.setItem('activePaymentTier', tier); // '49' or '100'
+            localStorage.setItem('activePaymentTier', tier);
             window.location.href = 'pay-fee.html';
         }
 
