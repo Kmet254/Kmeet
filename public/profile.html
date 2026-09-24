@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Kmeet</title>
+    <title>Profile - Kmeet</title>
 
     <!-- Browser Tab Icon -->
     <link rel="icon" type="image/png" href="/heart.png.png">
@@ -165,66 +165,86 @@
     <div class="profile-card">
         <img id="profileAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Profile Avatar" class="profile-avatar">
         
-        <h2 id="profileName">My Profile</h2>
-        <p id="profileEmail" class="profile-email">Loading email...</p>
+        <h2 id="profileName">Profile</h2>
+        <p id="profileEmail" class="profile-email">Loading details...</p>
 
         <div class="interests-container" id="profileInterests">
-            <!-- Dynamic Interests Tags will load here -->
+            <!-- Dynamic Interests Tags / Bio will load here -->
         </div>
 
         <div class="profile-actions">
             <!-- Row holding Discover and Home buttons -->
             <div class="btn-group-row">
-                <a href="discover.html" class="btn-primary">
+                <a href="discover.html" class="btn-primary" onclick="localStorage.removeItem('viewedProfile')">
                     <i class="fa-solid fa-compass"></i> Discover
                 </a>
-                <a href="myweb.html" class="btn-secondary">
+                <a href="myweb.html" class="btn-secondary" onclick="localStorage.removeItem('viewedProfile')">
                     <i class="fa-solid fa-house"></i> Home
                 </a>
             </div>
 
-            <!-- Log Out Action -->
+            <!-- Log Out Action (Only shown or active for logged-in user session) -->
             <button id="logoutBtn" class="btn-logout">Log Out</button>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Fetch local session details
-            const savedEmail = localStorage.getItem('userEmail');
-            const savedName = localStorage.getItem('userName');
-            const savedAvatar = localStorage.getItem('userAvatar');
-            const savedInterests = JSON.parse(localStorage.getItem('userInterests')) || [];
+            // Check if we are viewing a specific match profile from discover.html
+            const viewedProfileData = localStorage.getItem('viewedProfile');
 
-            if (savedEmail) {
-                document.getElementById('profileEmail').textContent = savedEmail;
-            }
+            if (viewedProfileData) {
+                // Load the match's info
+                const match = JSON.parse(viewedProfileData);
+                document.getElementById('profileName').textContent = match.name;
+                document.getElementById('profileEmail').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${match.location}`;
+                document.getElementById('profileAvatar').src = match.img;
+                
+                // Use the bio container to show their bio
+                const interestsContainer = document.getElementById('profileInterests');
+                interestsContainer.innerHTML = `<p style="font-size: 13px; color: #fceee9; line-height: 1.5; padding: 0 10px;">${match.bio}</p>`;
+                
+                // If looking at someone else's profile, hide the log out button
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) logoutBtn.style.display = 'none';
 
-            if (savedName) {
-                document.getElementById('profileName').textContent = savedName;
-            } else if (savedEmail) {
-                const derivedName = savedEmail.split('@')[0];
-                document.getElementById('profileName').textContent = derivedName.charAt(0).toUpperCase() + derivedName.slice(1);
-            }
-
-            if (savedAvatar) {
-                document.getElementById('profileAvatar').src = savedAvatar;
-            }
-
-            const interestsContainer = document.getElementById('profileInterests');
-            if (savedInterests.length > 0) {
-                interestsContainer.innerHTML = savedInterests.map(tag => `<span class="tag">${tag}</span>`).join('');
             } else {
-                interestsContainer.innerHTML = `<span style="font-size: 12px; color: #9a9499;">No interests added yet.</span>`;
-            }
+                // Otherwise, load the logged-in user's own profile session details
+                const savedEmail = localStorage.getItem('userEmail');
+                const savedName = localStorage.getItem('userName');
+                const savedAvatar = localStorage.getItem('userAvatar');
+                const savedInterests = JSON.parse(localStorage.getItem('userInterests')) || [];
 
-            // Handle Logout
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function() {
-                    localStorage.clear();
-                    window.location.href = 'myweb.html';
-                });
+                if (savedEmail) {
+                    document.getElementById('profileEmail').textContent = savedEmail;
+                }
+
+                if (savedName) {
+                    document.getElementById('profileName').textContent = savedName;
+                } else if (savedEmail) {
+                    const derivedName = savedEmail.split('@')[0];
+                    document.getElementById('profileName').textContent = derivedName.charAt(0).toUpperCase() + derivedName.slice(1);
+                }
+
+                if (savedAvatar) {
+                    document.getElementById('profileAvatar').src = savedAvatar;
+                }
+
+                const interestsContainer = document.getElementById('profileInterests');
+                if (savedInterests.length > 0) {
+                    interestsContainer.innerHTML = savedInterests.map(tag => `<span class="tag">${tag}</span>`).join('');
+                } else {
+                    interestsContainer.innerHTML = `<span style="font-size: 12px; color: #9a9499;">No interests added yet.</span>`;
+                }
+
+                // Handle Logout
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', function() {
+                        localStorage.clear();
+                        window.location.href = 'myweb.html';
+                    });
+                }
             }
         });
     </script>
