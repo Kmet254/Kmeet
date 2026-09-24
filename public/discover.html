@@ -270,7 +270,7 @@
     <!-- Main Container -->
     <div class="discover-container">
         <h2>Discover Matches</h2>
-        <p class="subtitle">Tap any profile to send a free intro greeting or view details.</p>
+        <p class="subtitle">Tap any profile to send a greeting or view details.</p>
 
         <div class="matches-grid" id="matchesGrid">
             <!-- Dynamically populated profiles list -->
@@ -371,23 +371,40 @@
             }
         }
 
-        // Opens the restricted free Intro Chat popup modal
+        // Opens the greeting popup with a message wall to display user's current subscription and chat status
         function openIntroChat(recipientName, greetingText) {
             if (!checkAuthAndProceed()) return;
+
+            const quota = localStorage.getItem('chatQuota') || '0';
+            
+            // Save to active message wall history in localStorage
+            let messageWall = JSON.parse(localStorage.getItem('chatMessageWall') || '[]');
+            const existingChat = messageWall.find(c => c.recipient === recipientName);
+            if (!existingChat) {
+                messageWall.push({ recipient: recipientName, lastMessage: greetingText, time: 'Just now' });
+                localStorage.setItem('chatMessageWall', JSON.stringify(messageWall));
+            }
 
             let existingModal = document.getElementById('introChatModal');
             if (existingModal) existingModal.remove();
 
             const modalHTML = `
                 <div id="introChatModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);">
-                    <div style="background: #17141a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 25px; max-width: 420px; width: 90%; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div style="background: #17141a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 25px; max-width: 440px; width: 90%; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                             <h3 style="color: #fceee9; font-size: 18px;">Chat with ${recipientName}</h3>
                             <button onclick="document.getElementById('introChatModal').remove()" style="background:none; border:none; color:#aaa; font-size:16px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
                         </div>
+
+                        <!-- Subscription Status Pill -->
+                        <div style="background: rgba(224,122,95,0.15); border: 1px solid rgba(224,122,95,0.4); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                            <span style="color: #d1cdca;">Active Chat Pass:</span>
+                            <strong style="color: #fceee9;">${quota} Remaining</strong>
+                        </div>
                         
-                        <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 12px; margin-bottom: 15px; max-height: 180px; overflow-y: auto;">
-                            <div style="font-size: 11px; color: #a09a9f; text-align: center; margin-bottom: 8px;">Free Intro Session Active (Restricted to Hi/Hey)</div>
+                        <!-- Chat Box Interface -->
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 12px; margin-bottom: 12px; max-height: 140px; overflow-y: auto;">
                             <div style="background: #e07a5f; color: white; padding: 8px 12px; border-radius: 8px; font-size: 13px; max-width: 80%; margin-left: auto; margin-bottom: 8px;">
                                 ${greetingText}
                             </div>
@@ -396,8 +413,21 @@
                             </div>
                         </div>
 
+                        <!-- Message Wall Preview Section -->
+                        <div style="margin-bottom: 15px;">
+                            <div style="font-size: 11px; color: #a09a9f; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Your Chat Wall Overview</div>
+                            <div style="background: #110e13; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px; max-height: 90px; overflow-y: auto;">
+                                ${messageWall.map(item => `
+                                    <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                                        <span style="color: #fceee9; font-weight: 500;">${item.recipient}</span>
+                                        <span style="color: #888; font-size: 11px;">"${item.lastMessage}"</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
                         <p style="font-size: 12px; color: #d1cdca; margin-bottom: 15px; text-align: center;">
-                            Want to send more messages or continue the conversation? Top up a bundle!
+                            To unlock unlimited chatting or message other members, top up your subscription bundle!
                         </p>
 
                         <div style="display: flex; gap: 10px;">
@@ -425,16 +455,16 @@
                 <div id="senderBundleModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);">
                     <div style="background: #17141a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 30px; max-width: 400px; width: 90%; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
                         <h3 style="color: #fceee9; font-size: 20px; margin-bottom: 8px;">Choose Your Chat Bundle</h3>
-                        <p style="color: #d1cdca; font-size: 13px; margin-bottom: 20px;">You need an active chat pass to unlock extended messaging. Select a package below:</p>
+                        <p style="color: #d1cdca; font-size: 13px; margin-bottom: 20px;">Select a subscription package below to extend your messaging capability:</p>
                         
                         <div onclick="selectSenderTier('49')" style="background: rgba(224,122,95,0.1); border: 1px solid #e07a5f; border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: pointer;">
                             <div style="font-weight: 600; color: #fceee9; font-size: 15px;">Starter Package (KES 49)</div>
-                            <div style="font-size: 12px; color: #d1cdca;">Get 3 chats to continue conversation.</div>
+                            <div style="font-size: 12px; color: #d1cdca;">Get 3 active chats.</div>
                         </div>
 
                         <div onclick="selectSenderTier('100')" style="background: rgba(46,204,113,0.1); border: 1px solid #2ecc71; border-radius: 10px; padding: 15px; margin-bottom: 20px; cursor: pointer;">
                             <div style="font-weight: 600; color: #fceee9; font-size: 15px;">Bonus VIP Package (KES 100)</div>
-                            <div style="font-size: 12px; color: #d1cdca;">Get 8 extended chats to reach multiple members.</div>
+                            <div style="font-size: 12px; color: #d1cdca;">Get 8 active chats to reach multiple members.</div>
                         </div>
 
                         <button onclick="closeBundleModalAndStay()" style="background: transparent; border: none; color: #a09a9f; font-size: 13px; cursor: pointer; width: 100%; text-align: center;">Cancel</button>
