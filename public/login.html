@@ -89,19 +89,32 @@
       margin-top: 12px;
       margin-bottom: 0;
     }
+    .success-msg {
+      color: #28a745;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+    .forgot-container {
+      text-align: right;
+      margin-top: -8px;
+      margin-bottom: 16px;
+    }
+    .forgot-container a, .switch-link a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .forgot-container a:hover, .switch-link a:hover {
+      text-decoration: underline;
+    }
     .switch-link {
       text-align: center;
       margin-top: 20px;
       font-size: 14px;
       color: #666;
-    }
-    .switch-link a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .switch-link a:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
@@ -118,8 +131,15 @@
         <label for="password">Password</label>
         <input type="password" id="password" required placeholder="Enter your password">
       </div>
+      
+      <!-- Forgot Password Link -->
+      <div class="forgot-container">
+        <a href="#" id="forgotPasswordBtn">Forgot password?</a>
+      </div>
+
       <button type="submit" class="auth-btn">Log In</button>
       <p id="errorMsg" class="error-msg"></p>
+      <p id="successMsg" class="success-msg"></p>
     </form>
     <div class="switch-link">
       Don't have an account? <a href="myweb.html">Sign up</a>
@@ -128,7 +148,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
@@ -144,24 +164,48 @@
 
     const loginForm = document.getElementById('loginForm');
     const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+    const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
 
+    // Handle Login Form Submission
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorMsg.textContent = "";
+      successMsg.textContent = "";
 
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
       try {
-        // Authenticate with Firebase
         await signInWithEmailAndPassword(auth, email, password);
 
-        // Also update localStorage keys so legacy views/home page templates recognize the session immediately
         localStorage.setItem('userEmail', email);
         localStorage.setItem('isLoggedIn', 'true');
 
-        // Redirect to profile or discover page after successful login
         window.location.href = "profile.html";
+      } catch (error) {
+        errorMsg.textContent = error.message;
+      }
+    });
+
+    // Handle Password Reset Request
+    forgotPasswordBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      errorMsg.textContent = "";
+      successMsg.textContent = "";
+
+      const emailInput = document.getElementById('email');
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        errorMsg.textContent = "Please enter your email address above first, then click 'Forgot password?'.";
+        emailInput.focus();
+        return;
+      }
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        successMsg.textContent = "Password reset email sent! Check your inbox.";
       } catch (error) {
         errorMsg.textContent = error.message;
       }
