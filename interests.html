@@ -223,6 +223,9 @@
         errorMsg.textContent = err.message;
       }
     });
+const selectedInterests = ["Music", "Tech", "Travel"]; // (whatever they checked)
+sessionStorage.setItem('pendingInterests', JSON.stringify(selectedInterests));
+window.location.href = "signup.html";
   </script>
 </body>
 </html>
